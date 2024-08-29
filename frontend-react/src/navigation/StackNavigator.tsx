@@ -8,11 +8,11 @@ import TabNavigator from './TabNavigator';
 const StackNavigator: React.FC = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
         name='Onboarding'
         component={screens.Onboarding}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name='TabNavigator'
         component={TabNavigator}
@@ -33,22 +33,22 @@ const StackNavigator: React.FC = () => {
         component={screens.OrderHistory}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name='SignIn'
         component={screens.SignIn}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name='NewPassword'
         component={screens.NewPassword}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name='SignUp'
         component={screens.SignUp}
         options={{headerShown: false}}
-      />
-      <Stack.Screen
+      /> */}
+      {/* <Stack.Screen
         name='ConfirmationCode'
         component={screens.ConfirmationCode}
         options={{headerShown: false}}
@@ -67,7 +67,7 @@ const StackNavigator: React.FC = () => {
         name='ForgotPasswordSentEmail'
         component={screens.ForgotPasswordSentEmail}
         options={{headerShown: false}}
-      />
+      /> */}
 
       <Stack.Screen
         name='EditProfile'

@@ -1,5 +1,5 @@
 import {useRoute} from '@react-navigation/native';
-import React, {PropsWithChildren, useState} from 'react';
+import React, {PropsWithChildren, useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import {setScreen} from '../store/slices/tabSlice';
 import BurgerProfileItem from './BurgerProfileItem';
 import {statusBarHeight, homeIndicatorHeight} from '../utils';
 import {useAppNavigation, useAppSelector, useAppDispatch} from '../hooks';
+import {AuthContext} from '../context/AuthContext';
 
 type Props = PropsWithChildren<{
   skip?: boolean;
@@ -61,9 +62,10 @@ const Header: React.FC<Props> = ({
 
   const cart = useAppSelector((state) => state.cartSlice.list);
   const total = useAppSelector((state) => state.cartSlice.total);
-
-  const email = 'test@gmail.com';
+  const {logout, userInfor} = useContext(AuthContext);
+  const email = userInfor?.email;
   const userAvatar = 'https://george-fx.github.io/dine-hub/10.jpg';
+
 
   const handleOnPress = () => {
     if (cart.length > 0) {
@@ -113,7 +115,7 @@ const Header: React.FC<Props> = ({
               borderRadius: 20 / 2,
             }}
           />
-          {userName && <Text style={{...textStyle}}>Jordan Hebert</Text>}
+          {userName && <Text style={{...textStyle}}>{userInfor?.user_name}</Text>}
         </TouchableOpacity>
       );
     }
@@ -227,7 +229,7 @@ const Header: React.FC<Props> = ({
           text={'Sign out'}
           onPress={() => {
             setShowModal(false);
-            navigation.navigate('SignIn');
+            logout();
           }}
         />
       </ScrollView>

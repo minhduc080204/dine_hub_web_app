@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, ViewStyle, TextStyle, TouchableOpacity} from 'react-native';
 
 import {text} from '../../text';
@@ -7,13 +7,15 @@ import {theme} from '../../constants';
 import {components} from '../../components';
 import {useAppNavigation} from '../../hooks';
 import {homeIndicatorHeight} from '../../utils';
+import {AuthContext} from '../../context/AuthContext';
 
 const SignIn: React.FC = (): JSX.Element => {
   const navigation = useAppNavigation();
-
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [rememberMe, setRememberMe] = useState<boolean>(false);
+
+  const {login} = useContext(AuthContext);
 
   const renderStatusBar = () => {
     return <components.StatusBar />;
@@ -25,6 +27,7 @@ const SignIn: React.FC = (): JSX.Element => {
 
   const renderWelcome = () => {
     return <text.H1 style={{marginBottom: 14}}>Welcome Back!</text.H1>;
+    
   };
 
   const renderDescription = () => {
@@ -150,7 +153,8 @@ const SignIn: React.FC = (): JSX.Element => {
         title='Sign in'
         containerStyle={{marginBottom: 20}}
         onPress={() => {
-          navigation.navigate('TabNavigator');
+          login(email, password);
+          // navigation.navigate('TabNavigator');
         }}
       />
     );

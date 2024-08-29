@@ -1,6 +1,6 @@
 import {useFonts} from 'expo-font';
 import {Provider} from 'react-redux';
-import React, {useCallback} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {components} from './src/components';
 import * as SplashScreen from 'expo-splash-screen';
 import {persistor, store} from './src/store/store';
@@ -9,6 +9,9 @@ import {PersistGate} from 'redux-persist/integration/react';
 import StackNavigator from './src/navigation/StackNavigator';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {AuthProvider} from './src/context/AuthContext';
+import AppNav from './src/navigation/AppNav';
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,9 +34,9 @@ export default function App() {
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <Provider store={store}>
         <PersistGate loading={<components.Loader />} persistor={persistor}>
-          <NavigationContainer>
-            <StackNavigator />
-          </NavigationContainer>
+          <AuthProvider>
+              <AppNav />
+          </AuthProvider>
         </PersistGate>
       </Provider>
       <FlashMessage position='top' floating={true} />

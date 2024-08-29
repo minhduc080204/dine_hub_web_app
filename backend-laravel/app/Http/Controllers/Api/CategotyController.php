@@ -13,6 +13,6 @@ class CategotyController extends Controller
     public function index()
     {
         $category = Category::all();
-        return response()->json($category);
+        return response()->json($category, 200);
     }
 }
