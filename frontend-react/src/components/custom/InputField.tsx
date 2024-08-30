@@ -1,8 +1,8 @@
-import React from 'react';
-import {View, TextInput, TouchableOpacity, Text} from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 
-import {theme} from '../../constants';
-import {svg} from '../../assets/svg';
+import { theme } from '../../constants';
+import { svg } from '../../assets/svg';
 
 type Props = {
   containerStyle?: object;
@@ -38,6 +38,7 @@ const InputField: React.FC<Props> = ({
   innerRef,
   maxLength,
 }): JSX.Element | null => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   return (
     <View
       style={{
@@ -88,7 +89,7 @@ const InputField: React.FC<Props> = ({
         keyboardType={keyboardType}
         placeholder={placeholder}
         placeholderTextColor={'#A7AFB7'}
-        secureTextEntry={secureTextEntry}
+        secureTextEntry={secureTextEntry && !isPasswordVisible}
         onChangeText={onChangeText}
         value={value}
         ref={innerRef}
@@ -119,12 +120,15 @@ const InputField: React.FC<Props> = ({
         </View>
       )}
       {checkIcon && (
-        <View style={{paddingHorizontal: 20}}>
+        <View style={{ paddingHorizontal: 20 }}>
           <svg.InputCheckSvg />
         </View>
       )}
       {eyeOffIcon && (
-        <TouchableOpacity style={{paddingHorizontal: 20}}>
+        <TouchableOpacity
+          style={{ paddingHorizontal: 20 }}
+          onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+        >
           <svg.EyeOffSvg />
         </TouchableOpacity>
       )}

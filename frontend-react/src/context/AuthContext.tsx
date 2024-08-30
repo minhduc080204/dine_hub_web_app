@@ -1,10 +1,13 @@
-import React, {createContext, useContext, useState, useEffect} from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setUser} from '../store/slices/userSlice';
+import { setUser } from '../store/slices/userSlice';
 import axiosInstance from '../config/axios/config';
+import { ENDPOINTS } from '../config';
+import { showMessage } from '../utils';
+import axios from 'axios';
 export const AuthContext = createContext<any>(null);
 
-export const AuthProvider = ({children}: any) => {
+export const AuthProvider = ({ children }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userToken, setUserToken] = useState<string | null>(null);
   const [userInfor, setUserInfor] = useState<string | null>(null);
@@ -12,14 +15,29 @@ export const AuthProvider = ({children}: any) => {
   const login = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.post('/auth/login', { email, password });
+      const res = await axiosInstance.post(ENDPOINTS.auth.login, { email, password });
       const token = res.data.access_token;
       const user = res.data.user;
       setUserToken(token);
       await AsyncStorage.setItem('userInfor', JSON.stringify(user));
       await AsyncStorage.setItem('userToken', token);
-    } catch (error) {
-      console.log(`Login error: ${error}`);
+    } catch (error: any) {
+      let codeErr = error.status;
+      if (codeErr == 401) {
+        return showMessage({
+          message: 'Login Failed :(',
+          description: `Wrong email or password. Try again!`,
+          type: 'danger',
+          icon: 'danger',
+        })
+      }  
+
+      return showMessage({
+        message: 'Login Failed :(',
+        description: `Lỗi ko xác định!`,
+        type: 'danger',
+        icon: 'danger',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -27,10 +45,15 @@ export const AuthProvider = ({children}: any) => {
 
   const register = async (name: string, email: string, password: string, password_c: string) => {
     if (password !== password_c) {
-      console.log('Mật khẩu xác nhận ko trùng khớp');
+      showMessage({
+        message: 'Retype password ',
+        description: `Password does not match!`,
+        type: 'warning',
+        icon: 'warning',
+      });
       return;
     }
-  
+
     const data = {
       user_name: name,
       email: email,
@@ -40,15 +63,26 @@ export const AuthProvider = ({children}: any) => {
 
     try {
       setIsLoading(true);
-      const res = await axiosInstance.post('/auth/register', data);
+      const res = await axiosInstance.post(ENDPOINTS.auth.register, data);
       const token = res.data.access_token;
       const user = res.data.user;
 
       setUserToken(token);
       await AsyncStorage.setItem('userInfor', JSON.stringify(user));
       await AsyncStorage.setItem('userToken', token);
-      
+
     } catch (error: any) {
+      console.log(error);
+      let codeErr = error.status;
+      if(codeErr==422){
+        return showMessage({
+          message: 'Use other Email',
+          description: `Email has been registered!`,
+          type: 'danger',
+          icon: 'danger',
+        });
+      }
+      
       if (error.response) {
         console.log(`Registration failed: ${error.response.data.message}`);
       } else {
@@ -58,12 +92,12 @@ export const AuthProvider = ({children}: any) => {
       setIsLoading(false);
     }
   };
-  
-  
+
+
 
   const logout = () => {
     setIsLoading(true);
-    setUserToken(null); 
+    setUserToken(null);
     AsyncStorage.removeItem('userInfor');
     AsyncStorage.removeItem('userToken');
     setIsLoading(false);
@@ -90,7 +124,7 @@ export const AuthProvider = ({children}: any) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{login, logout, register,isLoading, userToken, userInfor}}>
+    <AuthContext.Provider value={{ login, logout, register, isLoading, userToken, userInfor }}>
       {children}
     </AuthContext.Provider>
   );

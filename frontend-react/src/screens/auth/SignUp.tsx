@@ -8,6 +8,7 @@ import {components} from '../../components';
 import {useAppNavigation} from '../../hooks';
 import {homeIndicatorHeight} from '../../utils';
 import {AuthContext} from '../../context/AuthContext';
+import { validation } from '../../utils/validation';
 const SignUp: React.FC = (): JSX.Element => {
   const navigation = useAppNavigation();
 
@@ -85,7 +86,9 @@ const SignUp: React.FC = (): JSX.Element => {
         containerStyle={{marginBottom: 20}}
         onPress={() => {
           // navigation.navigate('VerifyYourPhoneNumber');
-          register(userName, email, password, confirmPassword);
+          if(validation({email, password})){
+            register(userName, email, password, confirmPassword);
+          }
         }}
       />
     );

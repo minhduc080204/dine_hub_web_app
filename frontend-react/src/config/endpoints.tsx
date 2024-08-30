@@ -17,6 +17,7 @@ export const ENDPOINTS = {
   },
   auth: {
     login: 'api/auth/login',
+    register: 'api/auth/register',
     updateUser: 'api/auth/user/update',
     emailVerify: 'api/auth/email/verify',
     createNewUser: 'api/auth/user/create',

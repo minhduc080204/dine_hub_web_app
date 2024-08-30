@@ -8,6 +8,7 @@ import {components} from '../../components';
 import {useAppNavigation} from '../../hooks';
 import {homeIndicatorHeight} from '../../utils';
 import {AuthContext} from '../../context/AuthContext';
+import { validation } from '../../utils/validation';
 
 const SignIn: React.FC = (): JSX.Element => {
   const navigation = useAppNavigation();
@@ -153,7 +154,9 @@ const SignIn: React.FC = (): JSX.Element => {
         title='Sign in'
         containerStyle={{marginBottom: 20}}
         onPress={() => {
-          login(email, password);
+          if(validation({email, password})){
+            login(email, password);
+          }
           // navigation.navigate('TabNavigator');
         }}
       />

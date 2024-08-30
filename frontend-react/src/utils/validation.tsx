@@ -11,14 +11,14 @@ export const validation = ({
   confirmPassword,
 }: ValidationType) => {
   let isValid = true;
-
+  
   if (userName !== undefined) {
     if (userName === '') {
       showMessage({
         message: 'Error',
         description: 'Please fill name field',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -28,8 +28,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Name must be at least 3 characters',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -41,8 +41,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Please fill email field',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -50,8 +50,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Email address is invalid',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -63,8 +63,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Please fill password field',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -72,8 +72,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Password must be at least 6 characters',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -85,8 +85,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Please fill confirm password field',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -94,8 +94,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Passwords do not match',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -107,8 +107,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Please fill phone number field',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -118,8 +118,8 @@ export const validation = ({
       //   showMessage({
       //     message: 'Error',
       //     description: 'Phone number is invalid',
-      //     type: 'danger',
-      //     icon: 'danger',
+      //     type: 'warning',
+      //     icon: 'warning',
       //   });
       //   isValid = false;
       //   return isValid;
@@ -128,8 +128,8 @@ export const validation = ({
         showMessage({
           message: 'Error',
           description: 'Phone number must be at least 9 characters',
-          type: 'danger',
-          icon: 'danger',
+          type: 'warning',
+          icon: 'warning',
         });
         isValid = false;
         return isValid;
@@ -140,8 +140,8 @@ export const validation = ({
     //   showMessage({
     //     message: 'Error',
     //     description: 'Phone number must be at least 9 characters',
-    //     type: 'danger',
-    //     icon: 'danger',
+    //     type: 'warning',
+    //     icon: 'warning',
     //   });
     //   isValid = false;
     //   return isValid;
@@ -153,8 +153,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Please fill OTP field',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -162,8 +162,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'OTP must be at least 5 characters',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -175,8 +175,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Please fill country field',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
@@ -184,8 +184,8 @@ export const validation = ({
       showMessage({
         message: 'Error',
         description: 'Country must be at least 3 characters',
-        type: 'danger',
-        icon: 'danger',
+        type: 'warning',
+        icon: 'warning',
       });
       isValid = false;
       return isValid;
