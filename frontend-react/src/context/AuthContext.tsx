@@ -10,22 +10,25 @@ export const AuthProvider = ({children}: any) => {
   const [userInfor, setUserInfor] = useState<string | null>(null);
 
   const login = async (email: string, password: string) => {
-    setIsLoading(true);
-    const res = await axiosInstance.post('/auth/login', {
-      email,
-      password,
-    });
-    const token = res.data.access_token;
-    const user = res.data.user;
-    setUserToken(token);
-    AsyncStorage.setItem('userInfor', JSON.stringify(user));
-    AsyncStorage.setItem('userToken', token);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const res = await axiosInstance.post('/auth/login', { email, password });
+      const token = res.data.access_token;
+      const user = res.data.user;
+      setUserToken(token);
+      await AsyncStorage.setItem('userInfor', JSON.stringify(user));
+      await AsyncStorage.setItem('userToken', token);
+    } catch (error) {
+      console.log(`Login error: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
   };
+  
 
   const logout = () => {
     setIsLoading(true);
-    setUserToken(null);
+    setUserToken(null); 
     AsyncStorage.removeItem('userInfor');
     AsyncStorage.removeItem('userToken');
     setIsLoading(false);
@@ -36,8 +39,8 @@ export const AuthProvider = ({children}: any) => {
       setIsLoading(true);
       let userToken = await AsyncStorage.getItem('userToken');
       let userInfor = await AsyncStorage.getItem('userInfor');
-      userInfor = JSON.parse(userInfor);
       if (userInfor) {
+        userInfor = JSON.parse(userInfor);
         setUserToken(userToken);
         setUserInfor(userInfor);
       }

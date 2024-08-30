@@ -6,6 +6,7 @@ const axiosInstance = axios.create({
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json',
+
   },
 });
 
@@ -23,16 +24,12 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Thêm một interceptor cho response
 axiosInstance.interceptors.response.use(
   response => {
-    // Xử lý response trước khi trả về dữ liệu
     return response;
   },
   error => {
-    // Xử lý lỗi response, ví dụ xử lý lỗi 401
     if (error.response && error.response.status === 401) {
-      // Xử lý logout, clear token, chuyển hướng sang tr
     }
     return Promise.reject(error);
   }
