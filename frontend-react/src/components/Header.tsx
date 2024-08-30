@@ -152,7 +152,7 @@ const Header: React.FC<Props> = ({
               marginBottom: 4,
             }}
           >
-            {'Jordan Hebert'}
+            {userInfor?.user_name}
           </Text>
           <Text
             style={{...theme.fonts.textStyle_14, color: theme.colors.textColor}}

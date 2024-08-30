@@ -24,6 +24,41 @@ export const AuthProvider = ({children}: any) => {
       setIsLoading(false);
     }
   };
+
+  const register = async (name: string, email: string, password: string, password_c: string) => {
+    if (password !== password_c) {
+      console.log('Mật khẩu xác nhận ko trùng khớp');
+      return;
+    }
+  
+    const data = {
+      user_name: name,
+      email: email,
+      password: password,
+      password_confirmation: password_c,
+    };
+
+    try {
+      setIsLoading(true);
+      const res = await axiosInstance.post('/auth/register', data);
+      const token = res.data.access_token;
+      const user = res.data.user;
+
+      setUserToken(token);
+      await AsyncStorage.setItem('userInfor', JSON.stringify(user));
+      await AsyncStorage.setItem('userToken', token);
+      
+    } catch (error: any) {
+      if (error.response) {
+        console.log(`Registration failed: ${error.response.data.message}`);
+      } else {
+        console.log(`Registration error: ${error.message}`);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   
 
   const logout = () => {
@@ -55,7 +90,7 @@ export const AuthProvider = ({children}: any) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{login, logout, isLoading, userToken, userInfor}}>
+    <AuthContext.Provider value={{login, logout, register,isLoading, userToken, userInfor}}>
       {children}
     </AuthContext.Provider>
   );

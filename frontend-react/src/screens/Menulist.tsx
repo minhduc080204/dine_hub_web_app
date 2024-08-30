@@ -130,6 +130,7 @@ const Menulist: React.FC<Props> = ({route}): JSX.Element => {
         }}
         style={{
           flexGrow: 0,
+          minHeight: 50,
         }}
         showsHorizontalScrollIndicator={false}
         renderItem={({item, index}) => {

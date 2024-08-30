@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import {View, ViewStyle, TextInput} from 'react-native';
 
 import {text} from '../../text';
@@ -7,7 +7,7 @@ import {theme} from '../../constants';
 import {components} from '../../components';
 import {useAppNavigation} from '../../hooks';
 import {homeIndicatorHeight} from '../../utils';
-
+import {AuthContext} from '../../context/AuthContext';
 const SignUp: React.FC = (): JSX.Element => {
   const navigation = useAppNavigation();
 
@@ -21,6 +21,7 @@ const SignUp: React.FC = (): JSX.Element => {
   const inp3Ref = useRef<TextInput>({focus: () => {}} as TextInput);
   const inp4Ref = useRef<TextInput>({focus: () => {}} as TextInput);
 
+  const {register} = useContext(AuthContext);
   const renderStatusBar = () => {
     return <components.StatusBar />;
   };
@@ -83,7 +84,8 @@ const SignUp: React.FC = (): JSX.Element => {
         title='Sign up'
         containerStyle={{marginBottom: 20}}
         onPress={() => {
-          navigation.navigate('VerifyYourPhoneNumber');
+          // navigation.navigate('VerifyYourPhoneNumber');
+          register(userName, email, password, confirmPassword);
         }}
       />
     );
