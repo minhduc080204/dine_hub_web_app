@@ -1,1 +1,3 @@
-Process: đặt hàng (fake data)
+Process: 
+  Đặt hàng (fake data)
+  Đăng nhập, đăng ký
