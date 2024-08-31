@@ -37,12 +37,12 @@ class UserStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            // 'user_name.required' => 'Tên không được để trống',
-            // 'email.required' => 'Email không được để trống',
-            // '422' => 'Email không đúng định dạng',
-            '409' => 'Email đã tồn tại',
-            // '400' => 'Mật khẩu không được để trống',
-            // '422' => 'Mật khẩu không trùng khớp',
+            'user_name.required' => 'Tên không được để trống',
+            'email.required' => 'Email không được để trống',
+            'email.email' => 'Email không đúng định dạng',
+            'email.unique' => 'Email đã tồn tại',
+            'password.required' => 'Mật khẩu không được để trống',
+            'password.confirmed' => 'Mật khẩu không trùng khớp',
         ];
     }
 }
