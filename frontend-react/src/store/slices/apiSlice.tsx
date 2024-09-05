@@ -45,6 +45,9 @@ export const apiSlice = createApi({
     getPromocodes: builder.query<{promocodes: PromocodeType[]}, void>({
       query: () => ENDPOINTS.get.promocodes,
     }),
+    getOrders: builder.query<{orders: OrderType[]}, void>({
+      query: () => ENDPOINTS.get.orders,
+    }),
 
     createOrder: builder.mutation<{ id: number }, OrderType>({
       query: (orderData) => ({
@@ -66,6 +69,7 @@ export const {
   useGetCarouselQuery,
   useGetCategoriesQuery,
   useGetPromocodesQuery,
+  useGetOrdersQuery,
   useCreateOrderMutation,
 } = apiSlice;
 

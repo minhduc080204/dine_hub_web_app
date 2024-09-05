@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -6,11 +6,13 @@ import { text } from '../text';
 import { svg } from '../assets/svg';
 import { theme } from '../constants';
 import { components } from '../components';
-import type { RootStackParamList } from '../types';
+import type { AppStateType, RootStackParamList } from '../types';
 import { resetCart } from '../store/slices/cartSlice';
 import { useAppSelector, useAppNavigation, useAppDispatch } from '../hooks';
 import { useCreateOrderMutation } from '../store/slices/apiSlice';
 import { OrderType } from '../types/OrderType';
+import { useSelector } from 'react-redux';
+import { AuthContext } from '../context/AuthContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Checkout'>;
 
@@ -19,28 +21,28 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
   const { total, subtotal, delivery, discount } = route.params;
   const navigation = useAppNavigation();
   const [loading, setLoading] = useState(false);
-
   const cart = useAppSelector((state) => state.cartSlice.list);
 
   const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
 
+  const {userInfor} = useContext(AuthContext)
   const handleOrder = async () => {
     let errrr;
     try {
       setLoading(true);
-      // Tạo dữ liệu đơn hàng giả
+      
       const fakeOrderData: OrderType = {
-        name: 'Jacob Bennett',
-        email: 'weuhaddedoulu-7218@yopmail.com',
-        phone_number: '+218 (435) 873-23-91',
+        name: userInfor.user_name+"aa",
+        email: userInfor.email+"aa",
+        phone_number: userInfor.phone_number+"aa",
         address: '9705 Abigail Meadow, Suite 318, 70164, Sipesfort, Oklahoma, United States',
-        total_price: 520.00,
-        subtotal_price: 495.00,
-        delivery_price: 15.00,
-        discount: 29.15,
+        total_price: Number(total),
+        subtotal_price: Number(subtotal),
+        delivery_price: Number(delivery),
+        discount: Number(discount),
         payment_status: 'Paid',
         order_status: 'Processing',
-        created_at: '2023-10-06T11:49:00Z',
+        created_at: new Date().toISOString(),
         product_id: 1, // Ví dụ ID sản phẩm
       };
       errrr = await createOrder(fakeOrderData);
