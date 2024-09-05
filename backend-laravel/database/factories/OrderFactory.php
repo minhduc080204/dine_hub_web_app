@@ -18,10 +18,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'phone_number' => $this->faker->phoneNumber,
-            'address' => $this->faker->address,
+            'user_id' => '1',
             'total_price' => $this->faker->randomFloat(2, 50, 1000),
             'subtotal_price' => $this->faker->randomFloat(2, 50, 1000),
             'delivery_price' => $this->faker->randomFloat(2, 5, 50),
