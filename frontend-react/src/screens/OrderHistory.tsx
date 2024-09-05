@@ -7,6 +7,7 @@ import {theme} from '../constants';
 import {components} from '../components';
 import {useAppNavigation} from '../hooks';
 import {homeIndicatorHeight as getHomeIndicatorHeight} from '../utils';
+import { useGetOrdersQuery } from '../store/slices/apiSlice';
 
 let history = [
   {
@@ -86,9 +87,15 @@ let history = [
   },
 ];
 
-// history = [];
 
 const OrderHistory: React.FC = (): JSX.Element => {
+  const {
+    data: ordersData,
+    error: ordersError,
+    isLoading: ordersLoading,
+  } = useGetOrdersQuery();
+  
+  const history = ordersData instanceof Array ? ordersData : [];
   const navigation = useAppNavigation();
   const [activeSections, setActiveSections] = useState<number[]>([]);
 

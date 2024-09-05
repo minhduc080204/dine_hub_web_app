@@ -5,12 +5,14 @@ import axiosInstance from '../config/axios/config';
 import {ENDPOINTS} from '../../../admin-reactjs/src';
 import {showMessage} from '../utils';
 import axios from 'axios';
+import {useDispatch} from 'react-redux';
 export const AuthContext = createContext<any>(null);
 
 export const AuthProvider = ({children}: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userToken, setUserToken] = useState<string | null>(null);
   const [userInfor, setUserInfor] = useState<string | null>(null);
+  const dispatch = useDispatch();
 
   const login = async (email: string, password: string) => {
     try {
@@ -21,9 +23,12 @@ export const AuthProvider = ({children}: any) => {
       });
       const token = res.data.access_token;
       const user = res.data.user;
+
       setUserToken(token);
       await AsyncStorage.setItem('userInfor', JSON.stringify(user));
       await AsyncStorage.setItem('userToken', token);
+
+      dispatch(setUser(user));
     } catch (error: any) {
       let codeErr = error.status;
       if (codeErr == 401) {
