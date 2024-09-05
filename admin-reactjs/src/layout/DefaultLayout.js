@@ -7,7 +7,7 @@ const DefaultLayout = () => {
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100">
         <AppHeader />
-        <div className="defaultlayout">          
+    <div className="defaultlayout">  
           <div className="body flex-grow-1">
             <AppContent />
           </div>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 
 import {PromocodeType} from '../../types';
-import {BASE_URL, ENDPOINTS, CONFIG} from '../../config';
+import {BASE_URL, ENDPOINTS, CONFIG} from '../../../../admin-reactjs/src';
 
 type Props = {
   loading: boolean;

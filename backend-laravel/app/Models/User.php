@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
@@ -18,15 +18,11 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'user_name',
         'email',
         'password',
     ];
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -1,5 +1,9 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {BASE_URL, AUTHORIZATION_TOKEN, ENDPOINTS} from '../../config';
+import {
+  BASE_URL,
+  AUTHORIZATION_TOKEN,
+  ENDPOINTS,
+} from '../../../../admin-reactjs/src';
 
 import {
   ProductType,
@@ -9,7 +13,7 @@ import {
   CategoryType,
   PromocodeType,
 } from '../../types';
-import { OrderType } from '../../types/OrderType';
+import {OrderType} from '../../types/OrderType';
 
 export const apiSlice = createApi({
   reducerPath: 'apiSlice',
@@ -49,14 +53,13 @@ export const apiSlice = createApi({
       query: () => ENDPOINTS.get.orders,
     }),
 
-    createOrder: builder.mutation<{ id: number }, OrderType>({
+    createOrder: builder.mutation<{id: number}, OrderType>({
       query: (orderData) => ({
         url: ENDPOINTS.post.order,
         method: 'POST',
         body: orderData,
       }),
     }),
-    
   }),
 });
 

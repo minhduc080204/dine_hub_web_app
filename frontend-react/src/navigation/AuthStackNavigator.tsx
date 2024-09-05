@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Stack } from '../hooks';
-import { screens } from '../screens';
+import {Stack} from '../hooks';
+import {screens} from '../screens';
 import TabNavigator from './TabNavigator';
 
 const AuthStackNavigator: React.FC = () => {

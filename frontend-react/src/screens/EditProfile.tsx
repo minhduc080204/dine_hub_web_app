@@ -9,7 +9,7 @@ import {components} from '../components';
 import {useAppNavigation} from '../hooks';
 import {validation} from '../utils/validation';
 import {setUser} from '../store/slices/userSlice';
-import {BASE_URL, ENDPOINTS, CONFIG} from '../config';
+import {BASE_URL, ENDPOINTS, CONFIG} from '../../../admin-reactjs/src';
 import {useAppSelector, useAppDispatch} from '../hooks';
 
 const EditProfile: React.FC = (): JSX.Element => {

@@ -66,7 +66,6 @@ const Header: React.FC<Props> = ({
   const email = userInfor?.email;
   const userAvatar = 'https://george-fx.github.io/dine-hub/10.jpg';
 
-
   const handleOnPress = () => {
     if (cart.length > 0) {
       dispatch(setScreen('Order'));
@@ -80,6 +79,7 @@ const Header: React.FC<Props> = ({
           onPress: () => console.log('OK Pressed'),
         },
       ]);
+      // navigation.navigate('OrderSuccessful');
     }
   };
 
@@ -115,7 +115,9 @@ const Header: React.FC<Props> = ({
               borderRadius: 20 / 2,
             }}
           />
-          {userName && <Text style={{...textStyle}}>{userInfor?.user_name}</Text>}
+          {userName && (
+            <Text style={{...textStyle}}>{userInfor?.user_name}</Text>
+          )}
         </TouchableOpacity>
       );
     }
