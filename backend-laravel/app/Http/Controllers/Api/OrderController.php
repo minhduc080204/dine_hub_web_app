@@ -5,11 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
+    public function index(){
+        $user = User::with('orders')->get();
+        return response()->json($user);
+    }
+    public function select($id){
+        $user = User::with('orders')->where('id',$id)->get();
+        return response()->json($user);
+    }
     public function newOrder(Request $request){
         try {
             $validated = $request->validate([

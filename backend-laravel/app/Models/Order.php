@@ -23,4 +23,9 @@ class Order extends Model
         'created_at',
         'product_id',
     ];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
