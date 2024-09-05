@@ -40,8 +40,8 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Product',
-    to: '/charts',
+    name: 'Products',
+    to: '/Products',
     icon: <CIcon icon={cilList} customClassName="nav-icon" />,
   },
   {
@@ -74,7 +74,6 @@ const _nav = [
     to: '/charts',
     icon: <CIcon icon={cilSatelite} customClassName="nav-icon" />,
   },
-  
   // {
   //   component: CNavGroup,
   //   name: 'Base',

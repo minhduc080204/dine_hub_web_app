@@ -21,7 +21,11 @@ import {components} from '../../components';
 import {setScreen} from '../../store/slices/tabSlice';
 import BottomTabBar from '../../navigation/BottomTabBar';
 import {useAppSelector, useAppNavigation} from '../../hooks';
-import {BASE_URL, ENDPOINTS, AUTHORIZATION_TOKEN} from '../../config';
+import {
+  BASE_URL,
+  ENDPOINTS,
+  AUTHORIZATION_TOKEN,
+} from '../../../../admin-reactjs/src';
 
 const Order: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();

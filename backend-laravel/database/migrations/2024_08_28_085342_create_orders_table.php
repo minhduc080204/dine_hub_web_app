@@ -13,10 +13,6 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id(); // Tạo trường id tự động tăng
-            $table->string('name'); // Tên khách hàng
-            $table->string('email'); // Email khách hàng
-            $table->string('phone_number'); // Số điện thoại
-            $table->text('address'); // Địa chỉ
             $table->decimal('total_price', 10, 2); // Tổng giá
             $table->decimal('subtotal_price', 10, 2); // Giá trước thuế
             $table->decimal('delivery_price', 10, 2); // Giá giao hàng
@@ -25,6 +21,8 @@ return new class extends Migration
             $table->string('order_status'); // Trạng thái đơn hàng
             $table->timestamps(); // Tạo created_at và updated_at
 
+            $table->unsignedBigInteger('user_id'); // Khóa ngoại tới bảng users
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('product_id'); // Khóa ngoại tới bảng products
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });

@@ -40,11 +40,11 @@ const FavoriteItem: React.FC<Props> = ({item}): JSX.Element => {
         }}
         imageStyle={{margin: 10}}
       >
-        {item.is_new && (
+        {/* {item.is_new && (
           <View style={{padding: 14}}>
             <svg.NewSvg />
           </View>
-        )}
+        )} */}
         <ProductInWishlist
           item={item}
           containerStyle={{

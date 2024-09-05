@@ -1,13 +1,13 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, {createContext, useContext, useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setUser } from '../store/slices/userSlice';
+import {setUser} from '../store/slices/userSlice';
 import axiosInstance from '../config/axios/config';
-import { ENDPOINTS } from '../config';
-import { showMessage } from '../utils';
+import {ENDPOINTS} from '../../../admin-reactjs/src';
+import {showMessage} from '../utils';
 import axios from 'axios';
 export const AuthContext = createContext<any>(null);
 
-export const AuthProvider = ({ children }: any) => {
+export const AuthProvider = ({children}: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userToken, setUserToken] = useState<string | null>(null);
   const [userInfor, setUserInfor] = useState<string | null>(null);
@@ -15,7 +15,10 @@ export const AuthProvider = ({ children }: any) => {
   const login = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.post(ENDPOINTS.auth.login, { email, password });
+      const res = await axiosInstance.post(ENDPOINTS.auth.login, {
+        email,
+        password,
+      });
       const token = res.data.access_token;
       const user = res.data.user;
       setUserToken(token);
@@ -29,8 +32,8 @@ export const AuthProvider = ({ children }: any) => {
           description: `Wrong email or password. Try again!`,
           type: 'danger',
           icon: 'danger',
-        })
-      }  
+        });
+      }
 
       return showMessage({
         message: 'Login Failed :(',
@@ -43,7 +46,12 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const register = async (name: string, email: string, password: string, password_c: string) => {
+  const register = async (
+    name: string,
+    email: string,
+    password: string,
+    password_c: string,
+  ) => {
     if (password !== password_c) {
       showMessage({
         message: 'Retype password ',
@@ -70,11 +78,10 @@ export const AuthProvider = ({ children }: any) => {
       setUserToken(token);
       await AsyncStorage.setItem('userInfor', JSON.stringify(user));
       await AsyncStorage.setItem('userToken', token);
-
     } catch (error: any) {
       console.log(error);
       let codeErr = error.status;
-      if(codeErr==422){
+      if (codeErr == 422) {
         return showMessage({
           message: 'Use other Email',
           description: `Email has been registered!`,
@@ -82,7 +89,7 @@ export const AuthProvider = ({ children }: any) => {
           icon: 'danger',
         });
       }
-      
+
       if (error.response) {
         console.log(`Registration failed: ${error.response.data.message}`);
       } else {
@@ -92,8 +99,6 @@ export const AuthProvider = ({ children }: any) => {
       setIsLoading(false);
     }
   };
-
-
 
   const logout = () => {
     setIsLoading(true);
@@ -124,7 +129,9 @@ export const AuthProvider = ({ children }: any) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, logout, register, isLoading, userToken, userInfor }}>
+    <AuthContext.Provider
+      value={{login, logout, register, isLoading, userToken, userInfor}}
+    >
       {children}
     </AuthContext.Provider>
   );

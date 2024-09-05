@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class Order extends Model
 {
     use HasFactory;
-    protected $table = 'order';
+    // protected $table = 'order';
     protected $fillable = [
         'name',
         'email',
@@ -23,4 +22,8 @@ class Order extends Model
         'created_at',
         'product_id',
     ];
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
