@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->id(); // Tạo trường id tự động tăng
             $table->string('address');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->decimal('total_price', 10, 2); // Tổng giá
             $table->decimal('subtotal_price', 10, 2); // Giá trước thuế
             $table->decimal('delivery_price', 10, 2); // Giá giao hàng

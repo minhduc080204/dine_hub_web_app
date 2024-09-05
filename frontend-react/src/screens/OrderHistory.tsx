@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 
-import {text} from '../text';
-import {theme} from '../constants';
-import {components} from '../components';
-import {useAppNavigation} from '../hooks';
-import {homeIndicatorHeight as getHomeIndicatorHeight} from '../utils';
-import { useGetOrdersQuery } from '../store/slices/apiSlice';
+import { components } from '../components';
+import { theme } from '../constants';
+import { AuthContext } from '../context/AuthContext';
+import { useAppNavigation } from '../hooks';
+import { useGetOrdersQuery, useGetProductsQuery } from '../store/slices/apiSlice';
+import { text } from '../text';
+import { OrderType } from '../types/OrderType';
+import { homeIndicatorHeight as getHomeIndicatorHeight } from '../utils';
 
 let history = [
   {
@@ -88,14 +90,33 @@ let history = [
 ];
 
 
+
+
 const OrderHistory: React.FC = (): JSX.Element => {
-  // const {
-  //   data: ordersData,
-  //   error: ordersError,
-  //   isLoading: ordersLoading,
-  // } = useGetOrdersQuery();
-  
-  // const history = ordersData instanceof Array ? ordersData : [];
+  const { userInfor } = useContext(AuthContext)
+  const { data: orders, error, isLoading } = useGetOrdersQuery(7);
+
+  const [history, setHistory] = useState<OrderType[]>([]);
+  const {
+    data: productsData,
+    error: productsError,
+    isLoading: productsLoading,
+  } = useGetProductsQuery();
+  const dishes = productsData instanceof Array ? productsData : [];
+  console.log(dishes);
+
+  useEffect(() => {
+    if (orders) {
+      setHistory(orders);
+    }
+  }, [orders]);
+
+  console.log(history);
+  // const history = dishes?.filter((dish) => {
+  //   return dish.category?.includes(selectedCategory);
+  //   return dish.category?.includes(selectedCategory);
+  // });
+
   const navigation = useAppNavigation();
   const [activeSections, setActiveSections] = useState<number[]>([]);
 
@@ -134,7 +155,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
             marginBottom: 7,
           }}
         >
-          <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
             <Text
               style={{
                 ...theme.fonts.DMSans_500Medium,
@@ -196,8 +217,8 @@ const OrderHistory: React.FC = (): JSX.Element => {
                 section.status === 'Shipping'
                   ? '#FFA462'
                   : section.status === 'Delivered'
-                  ? theme.colors.mainTurquoise
-                  : '#FA5555',
+                    ? theme.colors.mainTurquoise
+                    : '#FA5555',
             }}
           >
             <Text
@@ -234,7 +255,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
             marginBottom: 10,
           }}
         >
-          {section.products.map((item: any, index: number, array: []) => {
+          {section.products?.map((item: any, index: number, array: []) => {
             const isLastItem = index === array.length - 1;
             return (
               <View
@@ -313,7 +334,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
   const renderContent = () => {
     if (history.length > 0) {
       return (
-        <ScrollView contentContainerStyle={{paddingBottom: 20, flexGrow: 1}}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}>
           <Accordion
             activeSections={activeSections}
             sections={history}
@@ -322,8 +343,8 @@ const OrderHistory: React.FC = (): JSX.Element => {
             renderContent={accordionContent}
             duration={400}
             onChange={setSections}
-            containerStyle={{paddingTop: 10}}
-            sectionContainerStyle={{marginBottom: 10}}
+            containerStyle={{ paddingTop: 10 }}
+            sectionContainerStyle={{ marginBottom: 10 }}
           />
         </ScrollView>
       );
@@ -334,7 +355,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
     if (history.length === 0) {
       return (
         <ScrollView
-          contentContainerStyle={{flexGrow: 1, paddingTop: 10}}
+          contentContainerStyle={{ flexGrow: 1, paddingTop: 10 }}
           showsVerticalScrollIndicator={false}
         >
           <View
@@ -349,7 +370,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
             }}
           >
             <components.Image
-              source={{uri: 'https://george-fx.github.io/dine-hub/13.jpg'}}
+              source={{ uri: 'https://george-fx.github.io/dine-hub/13.jpg' }}
               style={{
                 width: theme.sizes.width - 100,
                 aspectRatio: 1,
@@ -364,7 +385,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
             >
               No Order History Yet!
             </text.H2>
-            <text.T16 style={{textAlign: 'center'}}>
+            <text.T16 style={{ textAlign: 'center' }}>
               It looks like your order history is empty.{'\n'}Place your order
               now to start building{'\n'}your history!
             </text.T16>

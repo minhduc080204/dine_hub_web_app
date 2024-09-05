@@ -30,9 +30,9 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
 
   const { userInfor } = useContext(AuthContext)
 
+
   const handleOrder = async () => {
-    let errrr;
-    if(address===""){
+    if (address === "") {
       return showMessage({
         message: 'Order Failed :(',
         description: `Please enter ADDRESS!`,
@@ -56,14 +56,18 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
         product_id: ["1", "2"],
         note: note,
       };
-      errrr = await createOrder(fakeOrderData);
-      console.log(errrr);
+      let res = await createOrder(fakeOrderData);
+      if (!res || !res.data) {
+        navigation.navigate('OrderFailed');
+        setLoading(false)
+        return;
+      }
     } catch (err) {
       navigation.navigate('OrderFailed');
       console.log(err);
-      console.log(errrr);
     }
     dispatch(resetCart());
+    setLoading(false)
     navigation.navigate('OrderSuccessful');
   };
 

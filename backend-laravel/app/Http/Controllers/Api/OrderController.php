@@ -13,47 +13,40 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $user = User::with('orders')->get();
-        return response()->json($user);
+        $order = Order::with('user','products')->get();
+        dd($order);
+        return response()->json($order);
     }
     public function select($id)
     {
-        $user = User::with('orders')->where('id', $id)->get();
-        return response()->json($user);
+        $order = Order::with('user')->where('user_id', $id)->get();
+        return response()->json($order);
     }
-    public function newOrder(Request $request)
-    {
+    public function newOrder(Request $request){
         try {
-            // Lấy dữ liệu từ request
-            $orderData = [
+            // Tạo đơn hàng mới
+            $order = Order::create([
                 'user_id' => $request->input('user_id'),
                 'address' => $request->input('address'),
+                'note' => $request->input('note'),
                 'total_price' => $request->input('total_price'),
                 'subtotal_price' => $request->input('subtotal_price'),
                 'delivery_price' => $request->input('delivery_price'),
                 'discount' => $request->input('discount'),
-                'payment_status' => $request->input('payment_status', 'Paid'), // giá trị mặc định là 'Paid'
-                'order_status' => $request->input('order_status', 'Processing'), // giá trị mặc định là 'Processing'
-                'created_at' => now(), // Lấy thời gian hiện tại
-                'note' => $request->input('note')
-            ];
-
-            // Tạo đơn hàng mới
-            $order = Order::create($orderData);
-
-            // Lưu danh sách sản phẩm (giả sử bảng order_product là bảng pivot)
-            $productIds = $request->input('product_id');
-            if (is_array($productIds)) {
-                $order->products()->attach($productIds);
-            }
+                'payment_status' => $request->input('payment_status', 'Paid'), // Giá trị mặc định là 'Paid'
+                'order_status' => $request->input('order_status', 'Processing'), // Giá trị mặc định là 'Processing'
+                'product_id' => json_encode($request->input('product_id')), // Chuyển mảng thành JSON
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
             // Trả về phản hồi JSON với mã đơn hàng vừa tạo
-            return response()->json(['id' => $order->id], 201);
+            return true;
         } catch (\Exception $e) {
-            // Ghi lỗi vào log
+            // Ghi lỗi vào log nếu có ngoại lệ
             Log::error('Order creation failed: ' . $e->getMessage());
 
-            return response()->json(['error' => 'Order creation failed', 'message' => $e->getMessage()], 500);
+            return false;
         }
     }
 }

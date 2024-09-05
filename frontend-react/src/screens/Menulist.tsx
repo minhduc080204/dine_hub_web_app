@@ -172,6 +172,8 @@ const Menulist: React.FC<Props> = ({route}): JSX.Element => {
 
   const renderContent = () => {
     const dishesByCategory = dishes?.filter((dish) => {
+      console.log(dish);
+      
       return dish.category?.includes(selectedCategory);
     });
     return (

@@ -45,8 +45,8 @@ export const apiSlice = createApi({
     getPromocodes: builder.query<{promocodes: PromocodeType[]}, void>({
       query: () => ENDPOINTS.get.promocodes,
     }),
-    getOrders: builder.query<{orders: OrderType[]}, void>({
-      query: () => ENDPOINTS.get.orders,
+    getOrders: builder.query<OrderType[], number>({
+      query: (orderId) => `${ENDPOINTS.get.orders}/${orderId}`,
     }),
 
     createOrder: builder.mutation<{ id: number }, OrderType>({
