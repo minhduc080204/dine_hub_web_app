@@ -11,40 +11,49 @@ use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $user = User::with('orders')->get();
         return response()->json($user);
     }
-    public function select($id){
-        $user = User::with('orders')->where('id',$id)->get();
+    public function select($id)
+    {
+        $user = User::with('orders')->where('id', $id)->get();
         return response()->json($user);
     }
-    public function newOrder(Request $request){
+    public function newOrder(Request $request)
+    {
         try {
-            $validated = $request->validate([
-                'name' => 'required|string',
-                'email' => 'required|email',
-                'phone_number' => 'required|string',
-                'address' => 'required|string',
-                'total_price' => 'required|numeric',
-                'subtotal_price' => 'required|numeric',
-                'delivery_price' => 'required|numeric',
-                'discount' => 'required|numeric',
-                'payment_status' => 'required|string',
-                'order_status' => 'required|string',
-                'created_at' => 'required|date',
-                'product_id' => 'required|integer|exists:products,id',
-            ]);
-    
+            // Lấy dữ liệu từ request
+            $orderData = [
+                'user_id' => $request->input('user_id'),
+                'address' => $request->input('address'),
+                'total_price' => $request->input('total_price'),
+                'subtotal_price' => $request->input('subtotal_price'),
+                'delivery_price' => $request->input('delivery_price'),
+                'discount' => $request->input('discount'),
+                'payment_status' => $request->input('payment_status', 'Paid'), // giá trị mặc định là 'Paid'
+                'order_status' => $request->input('order_status', 'Processing'), // giá trị mặc định là 'Processing'
+                'created_at' => now(), // Lấy thời gian hiện tại
+                'note' => $request->input('note')
+            ];
+
             // Tạo đơn hàng mới
-            $order = Order::create($validated);
-    
+            $order = Order::create($orderData);
+
+            // Lưu danh sách sản phẩm (giả sử bảng order_product là bảng pivot)
+            $productIds = $request->input('product_id');
+            if (is_array($productIds)) {
+                $order->products()->attach($productIds);
+            }
+
+            // Trả về phản hồi JSON với mã đơn hàng vừa tạo
             return response()->json(['id' => $order->id], 201);
         } catch (\Exception $e) {
             // Ghi lỗi vào log
             Log::error('Order creation failed: ' . $e->getMessage());
-        
+
             return response()->json(['error' => 'Order creation failed', 'message' => $e->getMessage()], 500);
-          }
+        }
     }
 }

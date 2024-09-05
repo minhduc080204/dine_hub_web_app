@@ -13,6 +13,7 @@ import { useCreateOrderMutation } from '../store/slices/apiSlice';
 import { OrderType } from '../types/OrderType';
 import { useSelector } from 'react-redux';
 import { AuthContext } from '../context/AuthContext';
+import { showMessage } from 'react-native-flash-message';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Checkout'>;
 
@@ -22,20 +23,29 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
   const navigation = useAppNavigation();
   const [loading, setLoading] = useState(false);
   const cart = useAppSelector((state) => state.cartSlice.list);
+  const [address, setAdress] = useState("");
+  const [note, setNote] = useState("");
 
   const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
 
-  const {userInfor} = useContext(AuthContext)
+  const { userInfor } = useContext(AuthContext)
+
   const handleOrder = async () => {
     let errrr;
+    if(address===""){
+      return showMessage({
+        message: 'Order Failed :(',
+        description: `Please enter ADDRESS!`,
+        type: 'warning',
+        icon: 'warning',
+      })
+    }
     try {
       setLoading(true);
-      
+
       const fakeOrderData: OrderType = {
-        name: userInfor.user_name+"aa",
-        email: userInfor.email+"aa",
-        phone_number: userInfor.phone_number+"aa",
-        address: '9705 Abigail Meadow, Suite 318, 70164, Sipesfort, Oklahoma, United States',
+        user_id: userInfor.id,
+        address: address,
         total_price: Number(total),
         subtotal_price: Number(subtotal),
         delivery_price: Number(delivery),
@@ -43,7 +53,8 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
         payment_status: 'Paid',
         order_status: 'Processing',
         created_at: new Date().toISOString(),
-        product_id: 1, // Ví dụ ID sản phẩm
+        product_id: ["1", "2"],
+        note: note,
       };
       errrr = await createOrder(fakeOrderData);
       console.log(errrr);
@@ -217,7 +228,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
     );
   };
 
-  const renderInputField = () => {
+  const renderAddressField = () => {
     return (
       <View
         style={{
@@ -227,7 +238,40 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
           borderRadius: 10,
         }}
       >
-        <components.InputFieldBig containerStyle={{ marginBottom: 14 }} />
+        <components.InputField
+          type='address'
+          placeholder='Enter address'
+          value={address}
+          onChangeText={
+            (text) => {
+              setAdress(text)
+            }
+          }
+        />
+
+      </View>
+    );
+  };
+
+  const renderNoteField = () => {
+    return (
+      <View
+        style={{
+          backgroundColor: theme.colors.white,
+          paddingHorizontal: 20,
+          paddingVertical: 20,
+          borderRadius: 10,
+        }}
+      >
+        <components.InputFieldBig
+          containerStyle={{ marginBottom: 14 }}
+          value={note}
+          onChangeText={
+            (text) => {
+              setNote(text)
+            }
+          }
+        />
         <components.Button
           loading={loading}
           title='Confirm order'
@@ -252,9 +296,10 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
         contentContainerStyle={{ ...contentContainerStyle }}
       >
         {renderOrderSummary()}
-        {renderShippingDetails()}
-        {renderPaymentMethod()}
-        {renderInputField()}
+        {/* {renderShippingDetails()} */}
+        {/* {renderPaymentMethod()} */}
+        {renderAddressField()}
+        {renderNoteField()}
       </components.KAScrollView>
     );
   };

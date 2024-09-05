@@ -89,13 +89,13 @@ let history = [
 
 
 const OrderHistory: React.FC = (): JSX.Element => {
-  const {
-    data: ordersData,
-    error: ordersError,
-    isLoading: ordersLoading,
-  } = useGetOrdersQuery();
+  // const {
+  //   data: ordersData,
+  //   error: ordersError,
+  //   isLoading: ordersLoading,
+  // } = useGetOrdersQuery();
   
-  const history = ordersData instanceof Array ? ordersData : [];
+  // const history = ordersData instanceof Array ? ordersData : [];
   const navigation = useAppNavigation();
   const [activeSections, setActiveSections] = useState<number[]>([]);
 

@@ -4,7 +4,7 @@ import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { theme } from '../../constants';
 import { svg } from '../../assets/svg';
 
-type Props = {
+type Props = { 
   containerStyle?: object;
   onChangeText?: (text: string) => void;
   value?: string;
@@ -73,7 +73,9 @@ const InputField: React.FC<Props> = ({
         {type === 'phone' && <svg.SmartphoneSvg />}
         {type === 'creditCard' && <svg.CreditCardSvg />}
         {type === 'expirationDate' && <svg.CalendarSvg />}
+        {type === 'address' && <svg.HomeSvg />}
       </View>
+
       <TextInput
         style={{
           flex: 1,
@@ -82,7 +84,8 @@ const InputField: React.FC<Props> = ({
           flexDirection: 'row',
           justifyContent: 'space-between',
           fontSize: 16,
-          marginLeft: 14,
+          marginLeft: 4,
+          paddingLeft: 15,
           color: theme.colors.mainColor,
           ...theme.fonts.DMSans_400Regular,
         }}

@@ -32,8 +32,10 @@ import CreditCardSvg from './CreditCardSvg';
 import ArrowRightSvg from './ArrowRightSvg';
 import SmartphoneSvg from './SmartphoneSvg';
 import CodeAppliedSvg from './CodeAppliedSvg';
+import HomeSvg from './HomeSvg';
 
 export const svg = {
+  HomeSvg,
   KeySvg,
   NewSvg,
   MapSvg,

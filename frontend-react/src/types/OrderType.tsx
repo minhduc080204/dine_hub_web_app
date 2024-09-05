@@ -1,7 +1,5 @@
 export type OrderType = {
-    name: string;
-    email: string;
-    phone_number: string;
+    user_id: number;
     address: string;
     total_price: number;
     subtotal_price: number;
@@ -10,6 +8,7 @@ export type OrderType = {
     payment_status: string;
     order_status: string;
     created_at: string;
-    product_id: number; // Đây là trường cần phải có trong OrderType
+    product_id: string[];
+    note: string;
   };
   

@@ -5,9 +5,11 @@ import {theme} from '../../constants';
 
 type Props = {
   containerStyle?: object;
+  onChangeText?: (text: string) => void;
+  value?: string;
 };
 
-const InputFieldBig: React.FC<Props> = ({containerStyle}): JSX.Element => {
+const InputFieldBig: React.FC<Props> = ({containerStyle, onChangeText, value}): JSX.Element => {
   return (
     <View
       style={{
@@ -29,7 +31,9 @@ const InputFieldBig: React.FC<Props> = ({containerStyle}): JSX.Element => {
           ...theme.fonts.DMSans_400Regular,
           fontSize: 16,
         }}
-        placeholder='Enter your comment'
+        placeholder='Enter your note'
+        value={value}
+        onChangeText={onChangeText}
         textAlignVertical='top'
         multiline={true}
         placeholderTextColor='#A8BCCC'

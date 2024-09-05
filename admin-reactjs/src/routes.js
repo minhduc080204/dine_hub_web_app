@@ -4,6 +4,8 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
+const Product = React.lazy(() => import('./views/product/Product'))
+
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -51,7 +53,7 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  // { path: '/product', name: 'Product', element: Product },
+  { path: '/product', name: 'Product', element: Product },
   // { path: '/promocode', name: 'Promocode', element: Promocode },
   // { path: '/category', name: 'Category', element: Category },
   // { path: '/tag', name: 'Tag', element: Tag },
