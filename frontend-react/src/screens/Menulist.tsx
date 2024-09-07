@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   View,
   Text,
@@ -9,11 +9,11 @@ import {
   ScrollView,
 } from 'react-native';
 
-import {text} from '../text';
-import {svg} from '../assets/svg';
-import {theme} from '../constants';
-import {components} from '../components';
-import type {ProductType, RootStackParamList} from '../types';
+import { text } from '../text';
+import { svg } from '../assets/svg';
+import { theme } from '../constants';
+import { components } from '../components';
+import type { ProductType, RootStackParamList } from '../types';
 import {
   useGetProductsQuery,
   useGetCategoriesQuery,
@@ -21,11 +21,10 @@ import {
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Menulist'>;
 
-const Menulist: React.FC<Props> = ({route}): JSX.Element => {
-  const {category} = route.params;
+const Menulist: React.FC<Props> = ({ route }): JSX.Element => {
+  const { category } = route.params;
 
   const [loading, setLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(category || '');
 
   const {
     data: productsData,
@@ -38,27 +37,32 @@ const Menulist: React.FC<Props> = ({route}): JSX.Element => {
     isLoading: categoriesLoading,
   } = useGetCategoriesQuery();
 
+  const [search, setSearch] = useState('');
+
+  const [selectedCategory, setSelectedCategory] = useState(category || '');
   const dishes = productsData instanceof Array ? productsData : [];
   const categories = categoriesData instanceof Array ? categoriesData : [];
 
-  const dishesByCategoryBase = dishes?.filter((dish) => {
-    return dish.category?.includes(selectedCategory);
-  });
+  const [dishesByCategory, SetDishesByCategory] = useState<ProductType[]>([]);
 
-  const [dishesByCategory, SetDishesByCategory]=useState<ProductType[]>([...dishesByCategoryBase]);
+  const getDishesByCategoryBase = ()=>{
+    return dishes?.filter(dish => dish.category.includes(selectedCategory)) || [];
+  }
 
-  const [search, setSearch] = useState('');
+  useEffect(() => {
+    SetDishesByCategory(getDishesByCategoryBase);
+  }, [selectedCategory, dishes]);
 
   const handleSearch = () => {
-    if(search.trim()===""){
-      SetDishesByCategory([...dishesByCategoryBase])
-    }else{
+    const dishesByCategoryBase = getDishesByCategoryBase();
+    if (search.trim() === "") {
+      SetDishesByCategory(dishesByCategoryBase);
+    } else {
       SetDishesByCategory(dishesByCategoryBase.filter(category =>
         category.name.toLowerCase().includes(search.toLowerCase())
       ));
     }
   }
-
   if (loading) {
     return <components.Loader />;
   }
@@ -158,7 +162,7 @@ const Menulist: React.FC<Props> = ({route}): JSX.Element => {
           minHeight: 50,
         }}
         showsHorizontalScrollIndicator={false}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           const last = index === categories.length - 1;
           return (
             <TouchableOpacity

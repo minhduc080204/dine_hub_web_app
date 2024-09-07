@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {View, Text, FlatList, ScrollView, TouchableOpacity} from 'react-native';
-import {responsiveWidth} from 'react-native-responsive-dimensions';
+import React, { useState } from 'react';
+import { View, Text, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import { responsiveWidth } from 'react-native-responsive-dimensions';
 
-import {useAppDispatch} from '../../hooks';
-import {components} from '../../components';
-import {useAppNavigation} from '../../hooks';
-import {theme, reviews} from '../../constants';
-import {setScreen} from '../../store/slices/tabSlice';
+import { useAppDispatch } from '../../hooks';
+import { components } from '../../components';
+import { useAppNavigation } from '../../hooks';
+import { theme, reviews } from '../../constants';
+import { setScreen } from '../../store/slices/tabSlice';
 import BottomTabBar from '../../navigation/BottomTabBar';
 import {
   useGetProductsQuery,
@@ -70,10 +70,10 @@ const Home: React.FC = (): JSX.Element => {
         <FlatList
           data={carousel}
           onMomentumScrollEnd={(e) => updateCurrentSlideIndex(e)}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <components.Image
-              source={{uri: item.image}}
-              style={{width: theme.sizes.width, height: 250, aspectRatio: 1.5}}
+              source={{ uri: item.image }}
+              style={{ width: theme.sizes.width, height: 250, aspectRatio: 1.5 }}
             />
           )}
           pagingEnabled={true}
@@ -129,7 +129,7 @@ const Home: React.FC = (): JSX.Element => {
 
     if (carousel.length > 0) {
       return (
-        <View style={{marginBottom: 30}}>
+        <View style={{ marginBottom: 30 }}>
           {renderCarouselImages()}
           {renderIndicator()}
         </View>
@@ -144,23 +144,23 @@ const Home: React.FC = (): JSX.Element => {
   const renderCategories = () => {
     if (categories.length > 0) {
       return (
-        <View style={{marginBottom: 30}}>
+        <View style={{ marginBottom: 30 }}>
           <components.BlockHeading
             title='We offer'
             onPress={() => {
               dispatch(setScreen('Menu'));
             }}
-            containerStyle={{marginHorizontal: 20, marginBottom: 14}}
+            containerStyle={{ marginHorizontal: 20, marginBottom: 14 }}
           />
           <FlatList
             data={categories}
             horizontal={true}
-            contentContainerStyle={{paddingLeft: 20}}
+            contentContainerStyle={{ paddingLeft: 20 }}
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id}
             pagingEnabled={true}
             decelerationRate={0}
-            renderItem={({item}) => {
+            renderItem={({ item }) => {
               const lastItem = categories[categories.length - 1];
               return (
                 <TouchableOpacity
@@ -171,7 +171,7 @@ const Home: React.FC = (): JSX.Element => {
                   }}
                 >
                   <components.ImageBackground
-                    source={{uri: item.image}}
+                    source={{ uri: item.image }}
                     style={{
                       width: 90,
                       height: 90,
@@ -181,7 +181,7 @@ const Home: React.FC = (): JSX.Element => {
                       justifyContent: 'flex-end',
                     }}
                     resizeMode='cover'
-                    imageStyle={{borderRadius: 10}}
+                    imageStyle={{ borderRadius: 10 }}
                   >
                     <Text
                       style={{
@@ -209,21 +209,21 @@ const Home: React.FC = (): JSX.Element => {
 
     if (recommended.length > 0) {
       return (
-        <View style={{marginBottom: 30}}>
+        <View style={{ marginBottom: 30 }}>
           <components.BlockHeading
             title='Recommended for you'
-            containerStyle={{marginHorizontal: 20, marginBottom: 14}}
+            containerStyle={{ marginHorizontal: 20, marginBottom: 14 }}
           />
           <FlatList
             data={slice}
             horizontal={true}
-            contentContainerStyle={{paddingLeft: 20}}
+            contentContainerStyle={{ paddingLeft: 20 }}
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id}
             pagingEnabled={true}
             snapToInterval={theme.sizes.width - responsiveWidth(44.2)}
             decelerationRate={0}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               const lastItem = index === slice.length - 1;
               return (
                 <components.RecommendedItem item={item} lastItem={lastItem} />
@@ -243,24 +243,24 @@ const Home: React.FC = (): JSX.Element => {
     const slice = reviews?.slice(0, 12);
 
     return (
-      <View style={{marginBottom: 20}}>
+      <View style={{ marginBottom: 20 }}>
         <components.BlockHeading
           title='Our Happy clients say'
           onPress={() => {
             navigation.navigate('Reviews');
           }}
-          containerStyle={{marginHorizontal: 20, marginBottom: 14}}
+          containerStyle={{ marginHorizontal: 20, marginBottom: 14 }}
         />
         <FlatList
           data={slice}
           horizontal={true}
-          contentContainerStyle={{paddingLeft: 20}}
+          contentContainerStyle={{ paddingLeft: 20 }}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id.toString()}
           pagingEnabled={true}
           snapToInterval={theme.sizes.width - 54}
           decelerationRate={0}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             const last = index === reviews.length - 1;
             return <components.ReviewItem item={item} last={last} />;
           }}
@@ -275,7 +275,7 @@ const Home: React.FC = (): JSX.Element => {
     }
     return (
       <ScrollView
-        contentContainerStyle={{flexGrow: 1, paddingTop: 6}}
+        contentContainerStyle={{ flexGrow: 1, paddingTop: 6 }}
         showsVerticalScrollIndicator={false}
       >
         {renderCarousel()}

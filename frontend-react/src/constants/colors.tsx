@@ -8,5 +8,6 @@ export const colors = {
   bodyTextColor: '#333333',
   imageBackground: '#F6F8FB',
   neonWhite: '#F6F9F9',
+  danger: '#dc3545',
   transparent: 'transparent',
 };

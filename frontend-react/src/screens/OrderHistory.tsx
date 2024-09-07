@@ -10,112 +10,136 @@ import { useGetOrdersQuery, useGetProductsQuery } from '../store/slices/apiSlice
 import { text } from '../text';
 import { OrderType } from '../types/OrderType';
 import { homeIndicatorHeight as getHomeIndicatorHeight } from '../utils';
+import { ProductType, RootStackParamList } from '../types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
-let history = [
-  {
-    id: 1,
-    orderId: 456654,
-    date: 'Aug 31, 2023',
-    time: 'at 8:32 pm',
-    total: 25.83,
-    status: 'Shipping',
-    delivery: 2,
-    discount: 2.65,
-    products: [
-      {
-        id: 1,
-        name: 'Beef Stroganoff',
-        quantity: 1,
-        price: 14.99,
-      },
-      {
-        id: 2,
-        name: 'Vegetable salad',
-        filling: 'vanilla',
-        quantity: 1,
-        price: 11.99,
-      },
-    ],
-  },
-  {
-    id: 2,
-    orderId: 456654,
-    date: 'Aug 31, 2023',
-    time: 'at 8:32 pm',
-    total: 281.85,
-    status: 'Delivered',
-    delivery: 2,
-    discount: 2.65,
-    products: [
-      {
-        id: 1,
-        name: 'Roasted Tomato Soup',
-        quantity: 1,
-        price: 6.99,
-      },
-      {
-        id: 2,
-        name: 'Pan-Seared Salmon',
-        filling: 'vanilla',
-        quantity: 2,
-        price: 15.99,
-      },
-    ],
-  },
-  {
-    id: 3,
-    orderId: 456654,
-    date: 'Aug 31, 2023',
-    time: 'at 8:32 pm',
-    total: 281.85,
-    status: 'Canceled',
-    delivery: 2,
-    discount: 2.65,
-    products: [
-      {
-        id: 1,
-        name: 'Beef Stroganoff',
-        quantity: 1,
-        price: 14.99,
-      },
-      {
-        id: 2,
-        name: 'Vegetable salad',
-        filling: 'vanilla',
-        quantity: 1,
-        price: 11.99,
-      },
-    ],
-  },
-];
-
-
-
+// let historyy = [
+//   {
+//     id: 1,
+//     orderId: 456654,
+//     date: 'Aug 31, 2023',
+//     time: 'at 8:32 pm',
+//     total: 25.83,
+//     status: 'Shipping',
+//     delivery: 2,
+//     discount: 2.65,
+//     products: [
+//       {
+//         id: 1,
+//         name: 'Beef Stroganoff',
+//         quantity: 1,
+//         price: 14.99,
+//       },
+//       {
+//         id: 2,
+//         name: 'Vegetable salad',
+//         filling: 'vanilla',
+//         quantity: 1,
+//         price: 11.99,
+//       },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     orderId: 456654,
+//     date: 'Aug 31, 2023',
+//     time: 'at 8:32 pm',
+//     total: 281.85,
+//     status: 'Delivered',
+//     delivery: 2,
+//     discount: 2.65,
+//     products: [
+//       {
+//         id: 1,
+//         name: 'Roasted Tomato Soup',
+//         quantity: 1,
+//         price: 6.99,
+//       },
+//       {
+//         id: 2,
+//         name: 'Pan-Seared Salmon',
+//         filling: 'vanilla',
+//         quantity: 2,
+//         price: 15.99,
+//       },
+//     ],
+//   },
+//   {
+//     id: 3,
+//     orderId: 456654,
+//     date: 'Aug 31, 2023',
+//     time: 'at 8:32 pm',
+//     total: 281.85,
+//     status: 'Canceled',
+//     delivery: 2,
+//     discount: 2.65,
+//     products: [
+//       {
+//         id: 1,
+//         name: 'Beef Stroganoff',
+//         quantity: 1,
+//         price: 14.99,
+//       },
+//       {
+//         id: 2,
+//         name: 'Vegetable salad',
+//         filling: 'vanilla',
+//         quantity: 1,
+//         price: 11.99,
+//       },
+//     ],
+//   },
+// ];
 
 const OrderHistory: React.FC = (): JSX.Element => {
   const { userInfor } = useContext(AuthContext)
-  const { data: orders, error, isLoading } = useGetOrdersQuery(7);
-
-  const [history, setHistory] = useState<OrderType[]>([]);
+  const { data: orders, error, isLoading } = useGetOrdersQuery(userInfor.id);
   const {
     data: productsData,
     error: productsError,
     isLoading: productsLoading,
   } = useGetProductsQuery();
   const dishes = productsData instanceof Array ? productsData : [];
-  console.log(dishes);
+  const [history, setHistory] = useState<any[]>([]);
+
+  const convertData = (apidata: OrderType[], productData: ProductType[]) => {
+    return apidata.map((order: OrderType, index) => {
+      // Tách ngày và giờ từ created_at
+      const dateObj = new Date(order.created_at);
+      const date = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const time = `at ${dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`;
+
+      const productIds = JSON.parse(order.product_id.toString());
+      const products = productIds.map((productId: number) => {
+        const product = productData.find((p: ProductType) => p.id === productId);
+        return product ? {
+          id: product.id,
+          name: product.name,
+          quantity: 1, // Có thể thêm thông tin số lượng nếu có từ API
+          price: product.price,
+        } : null;
+      }).filter((product: any): product is { id: number; name: string; quantity: number; price: number } => Boolean(product));  // Lọc bỏ những sản phẩm không tìm thấy (null)
+
+      return {
+        id: order.id, // Tăng giá trị id để bắt đầu từ 1 thay vì 0
+        address: order.address,
+        date: date,
+        time: time,
+        total: order.total_price,
+        status: order.order_status,
+        delivery: order.delivery_price,
+        discount: order.discount,
+        products: products,
+      };
+    });
+  };
 
   useEffect(() => {
-    if (orders) {
-      setHistory(orders);
+    if (orders && dishes) {
+      setHistory(convertData(orders, dishes));
     }
-  }, [orders]);
-
-  console.log(history);
-  // const history = dishes?.filter((dish) => {
-  //   return dish.category?.includes(selectedCategory);
-  //   return dish.category?.includes(selectedCategory);
-  // });
+  }, [orders, dishes]);
 
   const navigation = useAppNavigation();
   const [activeSections, setActiveSections] = useState<number[]>([]);
@@ -131,7 +155,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
   };
 
   const renderHeader = () => {
-    return <components.Header goBack={true} title='Order history' />;
+    return <components.Header goHome={true} title='Order history' />;
   };
 
   const accordionHeader = (section: any) => {
@@ -205,7 +229,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
               lineHeight: 12 * 1.5,
             }}
           >
-            Order ID: {section.orderId}
+            Address: {section.address}
           </Text>
 
           <View
@@ -214,11 +238,11 @@ const OrderHistory: React.FC = (): JSX.Element => {
               paddingVertical: 3,
               borderRadius: 5,
               backgroundColor:
-                section.status === 'Shipping'
-                  ? '#FFA462'
+                section.status === 'Canceled'
+                  ? '#FA5555'
                   : section.status === 'Delivered'
                     ? theme.colors.mainTurquoise
-                    : '#FA5555',
+                    : '#FFA462',
             }}
           >
             <Text
@@ -267,7 +291,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
                   marginBottom: 10,
                 }}
               >
-                <text.T14>{item.name}</text.T14>
+                <text.T14>{item.name} </text.T14>
                 <text.T14>
                   {item.quantity} x ${item.price}
                 </text.T14>
@@ -296,11 +320,14 @@ const OrderHistory: React.FC = (): JSX.Element => {
             <text.T14>${section.delivery}</text.T14>
           </View>
         </View>
-        {section.status === 'Shipping' && (
+        
+        {["Shipping", "Processing"].includes(section.status) && (        
           <components.Button
             title='track order'
             onPress={() => {
-              navigation.navigate('TrackYourOrder');
+              navigation.navigate('TrackYourOrder', {
+                orderId: section.id
+              });
             }}
           />
         )}

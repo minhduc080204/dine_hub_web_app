@@ -1,12 +1,27 @@
-import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import React, { PropsWithChildren, useContext } from 'react';
+import { View, Text, ScrollView } from 'react-native';
 
-import {text} from '../text';
-import {theme} from '../constants';
-import {components} from '../components';
-import {useAppNavigation} from '../hooks';
+import { text } from '../text';
+import { theme } from '../constants';
+import { components } from '../components';
+import { useAppNavigation } from '../hooks';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
+import { AuthContext } from '../context/AuthContext';
+import { useGetOrdersQuery } from '../store/slices/apiSlice';
+import { OrderType } from '../types/OrderType';
 
-const TrackYourOrder: React.FC = (): JSX.Element => {
+type Props = NativeStackScreenProps<RootStackParamList, 'TrackYourOrder'>;
+
+const TrackYourOrder: React.FC<Props> = ({ route }): JSX.Element => {
+  const { userInfor } = useContext(AuthContext)
+  const { data: orders, error, isLoading } = useGetOrdersQuery(userInfor.id);
+  const { orderId } = route.params;
+  const order = orders?.find((o: any) => o.id === orderId)
+
+  const date = order?.created_at;
+  const address = order?.address;
+  const status = order?.order_status;
   const navigation = useAppNavigation();
 
   const renderStatusBar = () => {
@@ -30,19 +45,19 @@ const TrackYourOrder: React.FC = (): JSX.Element => {
         }}
       >
         <View
-          style={{flexDirection: 'row', alignItems: 'center', marginBottom: 14}}
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 14 }}
         >
-          <text.T14 style={{marginRight: 14, textTransform: 'none'}}>
-            Your order:
-          </text.T14>
-          <text.H5 style={{color: theme.colors.mainTurquoise}}>456654</text.H5>
-        </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <text.T14 style={{marginRight: 14, textTransform: 'none'}}>
+          <text.T14 style={{ marginRight: 14, textTransform: 'none' }}>
             Date:
           </text.T14>
-          <text.H5 style={{color: theme.colors.mainTurquoise}}>
-            Aug 31 at 8:32 pm
+          <text.H5 style={{ color: theme.colors.mainTurquoise }}>{date}</text.H5>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <text.T14 style={{ marginRight: 14, textTransform: 'none' }}>
+            Address:
+          </text.T14>
+          <text.H5 style={{ color: theme.colors.mainTurquoise }}>
+            {address}
           </text.H5>
         </View>
       </View>
@@ -50,6 +65,30 @@ const TrackYourOrder: React.FC = (): JSX.Element => {
   };
 
   const renderOrderStatus = () => {
+    const order_status = [
+      {
+
+        id: "Delivered",
+        title: "Done",
+        description: 'Your order has been delivered',
+      },
+      {
+        id: "Shipping",
+        title: 'Order is being shipped',
+        description: 'Estimated for 9:12 pm',
+      },
+      {
+        id: "Confirm",
+        title: 'Order confirmed',
+        description: 'Estimated for 9:12 pm',
+      },
+      {
+        id: "Processing",
+        title: 'Processing',
+        description: 'Estimated for 9:32 pm',
+      },
+    ]
+    let checkStatus = false;
     return (
       <View
         style={{
@@ -59,29 +98,17 @@ const TrackYourOrder: React.FC = (): JSX.Element => {
           padding: 30,
         }}
       >
-        <components.OrderStatus
-          title='Order confirmed'
-          description='Your order has been confirmed'
-          status={true}
-          containerStyle={{marginBottom: 7}}
-        />
-        <components.OrderStatus
-          title='Order is being cooked'
-          description='Estimated for 9:12 pm'
-          status={true}
-          containerStyle={{marginBottom: 7}}
-        />
-        <components.OrderStatus
-          title='Courier delivering'
-          description='Estimated for 9:12 pm'
-          status={false}
-          containerStyle={{marginBottom: 7}}
-        />
-        <components.OrderStatus
-          title='Receiving'
-          description='Estimated for 9:32 pm'
-          status={false}
-        />
+        {order_status.map((os) => {
+          status==os.id? checkStatus=true:""
+          return (
+            <components.OrderStatus
+              title={os.title}
+              description={checkStatus? os.description:"Waiting"}
+              status={checkStatus}
+              containerStyle={{ marginBottom: 7 }}
+            />
+          )
+        })}
       </View>
     );
   };
@@ -89,7 +116,7 @@ const TrackYourOrder: React.FC = (): JSX.Element => {
   const renderContent = () => {
     return (
       <ScrollView
-        contentContainerStyle={{flexGrow: 1, paddingTop: 10}}
+        contentContainerStyle={{ flexGrow: 1, paddingTop: 10 }}
         showsVerticalScrollIndicator={false}
       >
         {renderDescription()}
@@ -98,10 +125,10 @@ const TrackYourOrder: React.FC = (): JSX.Element => {
     );
   };
 
-  const renderButton = () => {
+  const renderButton = (title: string = 'Chat support', danger: boolean = false) => {
     return (
-      <View style={{paddingHorizontal: 20, paddingBottom: 10, paddingTop: 20}}>
-        <components.Button title='Chat support' onPress={() => {}} />
+      <View style={{ paddingHorizontal: 20, paddingBottom: 10, paddingTop: 5 }}>
+        <components.Button title={title} danger={danger} onPress={() => { }} />
       </View>
     );
   };
@@ -116,6 +143,10 @@ const TrackYourOrder: React.FC = (): JSX.Element => {
       {renderHeader()}
       {renderContent()}
       {renderButton()}
+      {status == "Processing" && (
+        renderButton('UnOrder', true)
+      )}
+
       {renderHomeIndicator()}
     </components.SmartView>
   );

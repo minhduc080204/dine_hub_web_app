@@ -1,8 +1,7 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 
-import {Stack} from '../hooks';
-import {screens} from '../screens';
+import { Stack } from '../hooks';
+import { screens } from '../screens';
 import TabNavigator from './TabNavigator';
 
 const StackNavigator: React.FC = () => {
@@ -16,6 +15,11 @@ const StackNavigator: React.FC = () => {
       <Stack.Screen
         name='TabNavigator'
         component={TabNavigator}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name='Home'
+        component={screens.Home}
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -23,14 +23,14 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
   const navigation = useAppNavigation();
   const [loading, setLoading] = useState(false);
   const cart = useAppSelector((state) => state.cartSlice.list);
+  
   const [address, setAdress] = useState("");
   const [note, setNote] = useState("");
 
   const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
 
   const { userInfor } = useContext(AuthContext)
-
-
+  
   const handleOrder = async () => {
     if (address === "") {
       return showMessage({
@@ -43,6 +43,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
     try {
       setLoading(true);
 
+      const product_id = cart.map(cart=>cart.id)
       const fakeOrderData: OrderType = {
         user_id: userInfor.id,
         address: address,
@@ -53,10 +54,10 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
         payment_status: 'Paid',
         order_status: 'Processing',
         created_at: new Date().toISOString(),
-        product_id: ["1", "2"],
+        product_id: product_id,
         note: note,
       };
-      let res = await createOrder(fakeOrderData);
+      let res:any = await createOrder(fakeOrderData);
       if (!res || !res.data) {
         navigation.navigate('OrderFailed');
         setLoading(false)

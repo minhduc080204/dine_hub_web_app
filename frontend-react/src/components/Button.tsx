@@ -10,6 +10,7 @@ type Props = {
   onPress?: () => void;
   containerStyle?: object;
   transparent?: boolean;
+  danger?: boolean;
 };
 
 const Button: React.FC<Props> = ({
@@ -18,6 +19,7 @@ const Button: React.FC<Props> = ({
   loading = false,
   containerStyle,
   transparent = false,
+  danger = false,
 }): JSX.Element => {
   return (
     <View style={containerStyle}>
@@ -28,7 +30,7 @@ const Button: React.FC<Props> = ({
           borderRadius: 10,
           borderWidth: transparent ? 1 : 0,
           borderColor: theme.colors.mainTurquoise,
-          backgroundColor: transparent ? '#FAFCFE' : theme.colors.mainTurquoise,
+          backgroundColor: transparent ? '#FAFCFE' : danger ? theme.colors.danger : theme.colors.mainTurquoise,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',

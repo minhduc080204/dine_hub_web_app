@@ -1,4 +1,5 @@
 export type OrderType = {
+    id:number
     user_id: number;
     address: string;
     total_price: number;
@@ -8,7 +9,7 @@ export type OrderType = {
     payment_status: string;
     order_status: string;
     created_at: string;
-    product_id: string[];
+    product_id: Array<number>;
     note: string;
   };
   

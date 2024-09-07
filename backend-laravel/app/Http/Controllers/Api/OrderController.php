@@ -14,7 +14,7 @@ class OrderController extends Controller
     public function index()
     {
         $order = Order::with('user','products')->get();
-        dd($order);
+        // dd($order);
         return response()->json($order);
     }
     public function select($id)

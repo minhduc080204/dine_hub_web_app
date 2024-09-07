@@ -27,6 +27,7 @@ type Props = PropsWithChildren<{
   title?: string;
   basket?: boolean;
   goBack?: boolean;
+  goHome?: boolean;
   filter?: boolean;
   search?: boolean;
   style?: ViewStyle;
@@ -46,6 +47,7 @@ const Header: React.FC<Props> = ({
   basket,
   search,
   goBack,
+  goHome,
   filter,
   userImage,
   bottomLine,
@@ -288,6 +290,26 @@ const Header: React.FC<Props> = ({
     return null;
   };
 
+  const renderGoHome = (): JSX.Element | null => {
+    if (goHome && navigation.canGoBack()) {
+      return (
+        <View style={{position: 'absolute', left: 0}}>
+          <TouchableOpacity
+            style={{
+              paddingVertical: 12,
+              paddingHorizontal: 20,
+            }}
+            onPress={() => navigation.navigate("Home")}
+          >
+            <svg.GoBackSvg />
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    return null;
+  };
+
   const renderSkipText = (): JSX.Element | null => {
     if (skip) {
       return (
@@ -434,6 +456,7 @@ const Header: React.FC<Props> = ({
       {renderGoBack()}
       {renderTitle()}
       {renderSkipText()}
+      {renderGoHome()}
       {renderFilter()}
       {renderSearch()}
       {renderBasket()}

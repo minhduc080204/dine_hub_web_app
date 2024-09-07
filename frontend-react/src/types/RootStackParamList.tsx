@@ -26,7 +26,7 @@ export type RootStackParamList = {
   LeaveAReviews: undefined;
   PaymentMethod: undefined;
   ForgotPassword: undefined;
-  TrackYourOrder: undefined;
+  TrackYourOrder: {orderId:String};
   AddANewAddress: undefined;
   Product: {item: ProductType};
   OrderSuccessful: undefined;
@@ -36,6 +36,7 @@ export type RootStackParamList = {
   MyPromocodesEmpty: undefined;
   SignUpaccountCreated: undefined;
   VerifyYourPhoneNumber: undefined;
+  Home: undefined;
   Wallet: undefined;
   Reviews: undefined;
   ShippingDetails: undefined;
