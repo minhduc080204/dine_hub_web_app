@@ -69,7 +69,9 @@ const Home: React.FC = (): JSX.Element => {
       return (
         <FlatList
           data={carousel}
-          onMomentumScrollEnd={(e) => updateCurrentSlideIndex(e)}
+          // onMomentumScrollEnd={(e) => {updateCurrentSlideIndex(e);   console.log("zzzz");
+          // }}
+          onScroll={(e)=>{updateCurrentSlideIndex(e)}}
           renderItem={({ item }) => (
             <components.Image
               source={{ uri: item.image }}
@@ -80,7 +82,7 @@ const Home: React.FC = (): JSX.Element => {
           keyExtractor={(item) => item.id}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={16}
+          scrollEventThrottle={200}
           decelerationRate={0}
           bounces={false}
           alwaysBounceHorizontal={false}
