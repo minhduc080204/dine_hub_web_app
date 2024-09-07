@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {View, TextInput, TouchableOpacity} from 'react-native';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 
 import {svg} from '../assets/svg';
 import {theme} from '../constants';
@@ -11,20 +11,23 @@ import {validation} from '../utils/validation';
 import {setUser} from '../store/slices/userSlice';
 import {BASE_URL, ENDPOINTS, CONFIG} from '../config';
 import {useAppSelector, useAppDispatch} from '../hooks';
+import { AuthContext } from '../context/AuthContext';
 
 const EditProfile: React.FC = (): JSX.Element => {
+  const { userInfor} = useContext(AuthContext);
   const navigation = useAppNavigation();
   const user = useAppSelector((state) => state.userSlice.user);
+  
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [email, setEmail] = useState<string>('');
-  const [country, setCountry] = useState<string>('');
-  const [userName, setUserName] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
+  const [email, setEmail] = useState<string>(userInfor.email);
+  const [address, setAdress] = useState<string>('');
+  const [userName, setUserName] = useState<string>(userInfor.user_name);
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
 
-  const data = {email, userName, country};
+  const data = {email, userName, address};
 
   const inp1Ref = useRef<TextInput>({focus: () => {}} as TextInput);
   const inp2Ref = useRef<TextInput>({focus: () => {}} as TextInput);
@@ -93,7 +96,7 @@ const EditProfile: React.FC = (): JSX.Element => {
         <components.InputField
           value={userName}
           innerRef={inp1Ref}
-          placeholder='Jordan Hebert'
+          placeholder='Name'
           onChangeText={(text) => setUserName(text)}
           type='username'
           containerStyle={{marginBottom: 14}}
@@ -101,25 +104,25 @@ const EditProfile: React.FC = (): JSX.Element => {
         <components.InputField
           value={email}
           innerRef={inp2Ref}
-          placeholder='jordanhebert@mail.com'
+          placeholder='Email'
           onChangeText={(text) => setEmail(text)}
           type='email'
-          checkIcon={true}
+          // checkIcon={true}
           containerStyle={{marginBottom: 14}}
         />
         <components.InputField
-          value={phone}
+          value={phoneNumber}
           innerRef={inp3Ref}
-          placeholder='+17123456789'
-          onChangeText={(text) => setPhone(text)}
+          placeholder='Phone'
+          onChangeText={(text) => setPhoneNumber(text)}
           type='phone'
           containerStyle={{marginBottom: 14}}
         />
         <components.InputField
-          value={country}
+          value={address}
           innerRef={inp4Ref}
-          placeholder='Chicago, USA'
-          onChangeText={(text) => setCountry(text)}
+          placeholder='Adress'
+          onChangeText={(text) => setAdress(text)}
           type='location'
           containerStyle={{marginBottom: 20}}
         />
@@ -134,7 +137,18 @@ const EditProfile: React.FC = (): JSX.Element => {
           title='save changes'
           loading={loading}
           onPress={() => {
-            navigation.goBack();
+            setLoading(true)
+            if(validation({email, userName, phoneNumber, address})){
+              navigation.goBack();
+              showMessage({
+                message: 'New infor new 4`',
+                description: `Edit profile success`,
+                type: 'success',
+                icon: 'success',
+              })
+              
+            }
+            setLoading(false)
           }}
           containerStyle={{marginBottom: 14}}
         />

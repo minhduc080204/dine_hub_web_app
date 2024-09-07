@@ -45,6 +45,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
 
       const product_id = cart.map(cart=>cart.id)
       const fakeOrderData: OrderType = {
+        id: 1,
         user_id: userInfor.id,
         address: address,
         total_price: Number(total),

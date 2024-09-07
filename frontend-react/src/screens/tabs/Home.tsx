@@ -40,6 +40,8 @@ const Home: React.FC = (): JSX.Element => {
   const carousel = carouselData instanceof Array ? carouselData : [];
   const categories = categoriesData instanceof Array ? categoriesData : [];
   const recommended = dishes?.filter((e) => e.is_recommended) ?? [];
+  console.log(recommended);
+  
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
 

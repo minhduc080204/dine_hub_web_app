@@ -67,7 +67,6 @@ const TrackYourOrder: React.FC<Props> = ({ route }): JSX.Element => {
   const renderOrderStatus = () => {
     const order_status = [
       {
-
         id: "Delivered",
         title: "Done",
         description: 'Your order has been delivered',
@@ -99,11 +98,12 @@ const TrackYourOrder: React.FC<Props> = ({ route }): JSX.Element => {
         }}
       >
         {order_status.map((os) => {
-          status==os.id? checkStatus=true:""
+          status == os.id ? checkStatus = true : ""
           return (
             <components.OrderStatus
+              key={os.id}
               title={os.title}
-              description={checkStatus? os.description:"Waiting"}
+              description={checkStatus ? os.description : "Waiting"}
               status={checkStatus}
               containerStyle={{ marginBottom: 7 }}
             />

@@ -4,7 +4,7 @@ import {showMessage} from 'react-native-flash-message';
 export const validation = ({
   code,
   email,
-  country,
+  address,
   userName,
   password,
   phoneNumber,
@@ -113,21 +113,21 @@ export const validation = ({
       isValid = false;
       return isValid;
     } else {
-      // const regex = new RegExp('^[0-9]+$');
-      // if (!regex.test(phoneNumber)) {
-      //   showMessage({
-      //     message: 'Error',
-      //     description: 'Phone number is invalid',
-      //     type: 'warning',
-      //     icon: 'warning',
-      //   });
-      //   isValid = false;
-      //   return isValid;
-      // }
-      if (phoneNumber.length < 9) {
+      const regex = new RegExp('^[0-9]+$');
+      if (!regex.test(phoneNumber)) {
         showMessage({
           message: 'Error',
-          description: 'Phone number must be at least 9 characters',
+          description: 'Phone number is invalid',
+          type: 'warning',
+          icon: 'warning',
+        });
+        isValid = false;
+        return isValid;
+      }
+      if (phoneNumber.length < 9 || phoneNumber.length > 11) {
+        showMessage({
+          message: 'Error',
+          description: 'Phone number must be 9-11 characters',
           type: 'warning',
           icon: 'warning',
         });
@@ -170,20 +170,20 @@ export const validation = ({
     }
   }
 
-  if (country !== undefined) {
-    if (country === '') {
+  if (address !== undefined) {
+    if (address === '') {
       showMessage({
         message: 'Error',
-        description: 'Please fill country field',
+        description: 'Please fill address field',
         type: 'warning',
         icon: 'warning',
       });
       isValid = false;
       return isValid;
-    } else if (country.length < 3) {
+    } else if (address.length < 3) {
       showMessage({
         message: 'Error',
-        description: 'Country must be at least 3 characters',
+        description: 'address must be at least 3 characters',
         type: 'warning',
         icon: 'warning',
       });

@@ -16,11 +16,13 @@ const SignUp: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
 
   const inp1Ref = useRef<TextInput>({focus: () => {}} as TextInput);
   const inp2Ref = useRef<TextInput>({focus: () => {}} as TextInput);
   const inp3Ref = useRef<TextInput>({focus: () => {}} as TextInput);
   const inp4Ref = useRef<TextInput>({focus: () => {}} as TextInput);
+  const inp5Ref = useRef<TextInput>({focus: () => {}} as TextInput);
 
   const {register} = useContext(AuthContext);
   const renderStatusBar = () => {
@@ -49,11 +51,19 @@ const SignUp: React.FC = (): JSX.Element => {
         <components.InputField
           type='email'
           value={email}
-          checkIcon={true}
           innerRef={inp2Ref}
           placeholder='jordanhebert@mail.com'
           containerStyle={{marginBottom: 14}}
           onChangeText={(text) => setEmail(text)}
+        />
+        <components.InputField
+          type='phone'
+          value={phoneNumber}
+          innerRef={inp5Ref}
+          placeholder='0123456789'
+          keyboardType='numeric'
+          containerStyle={{marginBottom: 14}}
+          onChangeText={(text) => setPhoneNumber(text)}
         />
         <components.InputField
           type='password'
@@ -86,7 +96,7 @@ const SignUp: React.FC = (): JSX.Element => {
         containerStyle={{marginBottom: 20}}
         onPress={() => {
           // navigation.navigate('VerifyYourPhoneNumber');
-          if(validation({email, password})){
+          if(validation({email, password, phoneNumber, })){
             register(userName, email, password, confirmPassword);
           }
         }}
