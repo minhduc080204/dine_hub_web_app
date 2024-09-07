@@ -13,7 +13,7 @@ import {text} from '../text';
 import {svg} from '../assets/svg';
 import {theme} from '../constants';
 import {components} from '../components';
-import type {RootStackParamList} from '../types';
+import type {ProductType, RootStackParamList} from '../types';
 import {
   useGetProductsQuery,
   useGetCategoriesQuery,
@@ -40,6 +40,24 @@ const Menulist: React.FC<Props> = ({route}): JSX.Element => {
 
   const dishes = productsData instanceof Array ? productsData : [];
   const categories = categoriesData instanceof Array ? categoriesData : [];
+
+  const dishesByCategoryBase = dishes?.filter((dish) => {
+    return dish.category?.includes(selectedCategory);
+  });
+
+  const [dishesByCategory, SetDishesByCategory]=useState<ProductType[]>([...dishesByCategoryBase]);
+
+  const [search, setSearch] = useState('');
+
+  const handleSearch = () => {
+    if(search.trim()===""){
+      SetDishesByCategory([...dishesByCategoryBase])
+    }else{
+      SetDishesByCategory(dishesByCategoryBase.filter(category =>
+        category.name.toLowerCase().includes(search.toLowerCase())
+      ));
+    }
+  }
 
   if (loading) {
     return <components.Loader />;
@@ -89,10 +107,17 @@ const Menulist: React.FC<Props> = ({route}): JSX.Element => {
               marginRight: 14,
             }}
           >
-            <svg.SearchSvg />
+            <TouchableOpacity
+              key={'serchdis_ic'}
+              onPress={handleSearch}
+            >
+              <svg.SearchSvg />
+            </TouchableOpacity>
           </View>
           <TextInput
             placeholder='Search ...'
+            value={search}
+            onChangeText={(text) => { setSearch(text) }}
             style={{
               flex: 1,
               ...theme.fonts.DMSans_400Regular,
@@ -102,7 +127,7 @@ const Menulist: React.FC<Props> = ({route}): JSX.Element => {
             placeholderTextColor={theme.colors.textColor}
           />
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             backgroundColor: theme.colors.white,
             borderRadius: 10,
@@ -113,7 +138,7 @@ const Menulist: React.FC<Props> = ({route}): JSX.Element => {
           }}
         >
           <svg.FilterSvg />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   };
@@ -171,11 +196,6 @@ const Menulist: React.FC<Props> = ({route}): JSX.Element => {
   };
 
   const renderContent = () => {
-    const dishesByCategory = dishes?.filter((dish) => {
-      console.log(dish);
-      
-      return dish.category?.includes(selectedCategory);
-    });
     return (
       <ScrollView
         contentContainerStyle={{

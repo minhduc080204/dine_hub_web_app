@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   TextInput,
@@ -9,17 +9,18 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {text} from '../../text';
-import {svg} from '../../assets/svg';
-import {sizes} from '../../constants';
-import {theme} from '../../constants';
-import {components} from '../../components';
-import {useAppNavigation} from '../../hooks';
+import { text } from '../../text';
+import { svg } from '../../assets/svg';
+import { sizes } from '../../constants';
+import { theme } from '../../constants';
+import { components } from '../../components';
+import { useAppNavigation } from '../../hooks';
 import BottomTabBar from '../../navigation/BottomTabBar';
 import {
   useGetCategoriesQuery,
   useGetProductsQuery,
 } from '../../store/slices/apiSlice';
+import { CategoryType } from '../../types';
 
 const Menu: React.FC = (): JSX.Element => {
   const navigation = useAppNavigation();
@@ -36,8 +37,23 @@ const Menu: React.FC = (): JSX.Element => {
     isLoading: productsLoading,
   } = useGetProductsQuery();
 
-  const categories = categoryData instanceof Array ? categoryData : [];
+  const categoriesBase = categoryData instanceof Array ? categoryData : [];
+  const [categories, setCategories] = useState<CategoryType[]>([...categoriesBase]);
+
   const dishes = productsData instanceof Array ? productsData : [];
+
+
+  const [search, setSearch] = useState('');
+
+  const handleSearch = () => {
+    if(search.trim()===""){
+      setCategories([...categoriesBase])
+    }else{
+      setCategories(categoriesBase.filter(category =>
+        category.name.toLowerCase().includes(search.toLowerCase())
+      ));
+    }
+  }
 
   const renderStatusBar = () => {
     return <components.StatusBar />;
@@ -88,11 +104,19 @@ const Menu: React.FC = (): JSX.Element => {
               alignItems: 'center',
               marginRight: 14,
             }}
+
           >
-            <svg.SearchSvg />
+            <TouchableOpacity
+              key={'serch_ic'}
+              onPress={handleSearch}
+            >
+              <svg.SearchSvg />
+            </TouchableOpacity>
           </View>
           <TextInput
             placeholder='Search ...'
+            value={search}
+            onChangeText={(text) => { setSearch(text) }}
             style={{
               flex: 1,
               ...theme.fonts.DMSans_400Regular,
@@ -102,7 +126,7 @@ const Menu: React.FC = (): JSX.Element => {
             placeholderTextColor={theme.colors.textColor}
           />
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             backgroundColor: theme.colors.white,
             borderRadius: 10,
@@ -113,7 +137,7 @@ const Menu: React.FC = (): JSX.Element => {
           }}
         >
           <svg.FilterSvg />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   };
@@ -157,12 +181,12 @@ const Menu: React.FC = (): JSX.Element => {
     };
 
     return (
-      <ScrollView contentContainerStyle={{...scrollViewStyle}}>
+      <ScrollView contentContainerStyle={{ ...scrollViewStyle }}>
         {categories.map((item, index) => {
           return (
             <TouchableOpacity
               key={item.id}
-              style={{...touchableOpacityStyle}}
+              style={{ ...touchableOpacityStyle }}
               onPress={() => {
                 navigation.navigate('Menulist', {
                   category: item.name,
@@ -170,12 +194,12 @@ const Menu: React.FC = (): JSX.Element => {
               }}
             >
               <components.ImageBackground
-                source={{uri: item.image}}
-                imageStyle={{borderRadius: 10}}
-                style={{...imageBackgroundStyle}}
+                source={{ uri: item.image }}
+                imageStyle={{ borderRadius: 10 }}
+                style={{ ...imageBackgroundStyle }}
                 resizeMode='cover'
               >
-                <text.T16 numberOfLines={1} style={{...textStyle}}>
+                <text.T16 numberOfLines={1} style={{ ...textStyle }}>
                   {item.name}
                 </text.T16>
               </components.ImageBackground>
