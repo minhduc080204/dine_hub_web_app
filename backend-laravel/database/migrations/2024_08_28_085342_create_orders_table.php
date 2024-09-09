@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id()->constrained()->onDelete('cascade'); // Tạo trường id tự động tăng
-            // $table->string('address');
-            $table->string('note');
+            $table->string('address');
+            $table->string('note')->nullable();
             $table->decimal('total_price', 10, 2); // Tổng giá
             $table->decimal('subtotal_price', 10, 2); // Giá trước thuế
             $table->decimal('delivery_price', 10, 2); // Giá giao hàng

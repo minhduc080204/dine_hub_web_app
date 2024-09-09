@@ -19,6 +19,7 @@ class Order extends Model
         'order_status',
         'created_at',
         'note',
+        'user_id',
         'product_id',
     ];
     public function user()
