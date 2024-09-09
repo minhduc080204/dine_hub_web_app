@@ -100,46 +100,47 @@ const OrderHistory: React.FC = (): JSX.Element => {
     error: productsError,
     isLoading: productsLoading,
   } = useGetProductsQuery();
-  const dishes = productsData instanceof Array ? productsData : [];
-  const [history, setHistory] = useState<any[]>([]);
+  const history = orders instanceof Array ? orders : [];
 
-  const convertData = (apidata: OrderType[], productData: ProductType[]) => {
-    return apidata.map((order: OrderType, index) => {
-      // Tách ngày và giờ từ created_at
-      const dateObj = new Date(order.created_at);
-      const date = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const time = `at ${dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`;
+  console.log(history);
 
-      const productIds = JSON.parse(order.product_id.toString());
-      const products = productIds.map((productId: number) => {
-        const product = productData.find((p: ProductType) => p.id === productId);
-        return product ? {
-          id: product.id,
-          name: product.name,
-          quantity: 1, // Có thể thêm thông tin số lượng nếu có từ API
-          price: product.price,
-        } : null;
-      }).filter((product: any): product is { id: number; name: string; quantity: number; price: number } => Boolean(product));  // Lọc bỏ những sản phẩm không tìm thấy (null)
+  // const convertData = (apidata: OrderType[], productData: ProductType[]) => {
+  //   return apidata.map((order: OrderType, index) => {
+  //     // Tách ngày và giờ từ created_at
+  //     const dateObj = new Date(order.created_at);
+  //     const date = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  //     const time = `at ${dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`;
 
-      return {
-        id: order.id, // Tăng giá trị id để bắt đầu từ 1 thay vì 0
-        address: order.address,
-        date: date,
-        time: time,
-        total: order.total_price,
-        status: order.order_status,
-        delivery: order.delivery_price,
-        discount: order.discount,
-        products: products,
-      };
-    });
-  };
+  //     const productIds = JSON.parse(order.product_id.toString());
+  //     const products = productIds.map((productId: number) => {
+  //       const product = productData.find((p: ProductType) => p.id === productId);
+  //       return product ? {
+  //         id: product.id,
+  //         name: product.name,
+  //         quantity: 1, // Có thể thêm thông tin số lượng nếu có từ API
+  //         price: product.price,
+  //       } : null;
+  //     }).filter((product: any): product is { id: number; name: string; quantity: number; price: number } => Boolean(product));  // Lọc bỏ những sản phẩm không tìm thấy (null)
 
-  useEffect(() => {
-    if (orders && dishes) {
-      setHistory(convertData(orders, dishes));
-    }
-  }, [orders, dishes]);
+  //     return {
+  //       id: order.id, // Tăng giá trị id để bắt đầu từ 1 thay vì 0
+  //       address: order.address,
+  //       date: date,
+  //       time: time,
+  //       total: order.total_price,
+  //       status: order.order_status,
+  //       delivery: order.delivery_price,
+  //       discount: order.discount,
+  //       products: products,
+  //     };
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   if (orders && dishes) {
+  //     setHistory(convertData(orders, dishes));
+  //   }
+  // }, [orders, dishes]);
 
   const navigation = useAppNavigation();
   const [activeSections, setActiveSections] = useState<number[]>([]);
@@ -159,6 +160,9 @@ const OrderHistory: React.FC = (): JSX.Element => {
   };
 
   const accordionHeader = (section: any) => {
+    const dateObj = new Date(section.created_at);
+    const date = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const time = `at ${dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`;
     return (
       <View
         style={{
@@ -189,7 +193,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
                 marginRight: 4,
               }}
             >
-              {section.date}
+              {date}
             </Text>
             <Text
               style={{
@@ -200,7 +204,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
                 color: theme.colors.textColor,
               }}
             >
-              {section.time}
+              {time}
             </Text>
           </View>
           <Text
@@ -211,7 +215,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
               color: theme.colors.mainColor,
             }}
           >
-            ${section.total}
+            ${section.total_price}
           </Text>
         </View>
         <View
@@ -238,9 +242,9 @@ const OrderHistory: React.FC = (): JSX.Element => {
               paddingVertical: 3,
               borderRadius: 5,
               backgroundColor:
-                section.status === 'Canceled'
+                section.order_status === 'Canceled'
                   ? '#FA5555'
-                  : section.status === 'Delivered'
+                  : section.order_status === 'Delivered'
                     ? theme.colors.mainTurquoise
                     : '#FFA462',
             }}
@@ -253,7 +257,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
                 color: theme.colors.white,
               }}
             >
-              {section.status}
+              {section.order_status}
             </Text>
           </View>
         </View>
@@ -279,11 +283,11 @@ const OrderHistory: React.FC = (): JSX.Element => {
             marginBottom: 10,
           }}
         >
-          {section.products?.map((item: any, index: number, array: []) => {
+          {section.product?.map((item: any, index: number, array: []) => {
             const isLastItem = index === array.length - 1;
             return (
               <View
-                key={'orderhis'+index}
+                key={'orderhis' + index}
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -317,11 +321,11 @@ const OrderHistory: React.FC = (): JSX.Element => {
             }}
           >
             <text.T14>Delivery</text.T14>
-            <text.T14>${section.delivery}</text.T14>
+            <text.T14>${section.delivery_price}</text.T14>
           </View>
         </View>
-        
-        {["Shipping", "Processing"].includes(section.status) && (        
+
+        {["Shipping", "Processing"].includes(section.order_status) && (
           <components.Button
             title='track order'
             onPress={() => {
@@ -331,7 +335,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
             }}
           />
         )}
-        {section.status === 'Delivered' && (
+        {section.order_status === 'Delivered' && (
           <View
             style={{
               flexDirection: 'row',
