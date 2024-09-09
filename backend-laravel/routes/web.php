@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\OrderController;
+use App\Http\Controllers\admin\SlideController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,5 +18,6 @@ Route::prefix('admin')->group(function () {
 
      // PRODUCT ----------------------------------------------
      Route::get('/order', [OrderController::class, 'index'])->name('admin.order');
+     Route::get('/slide', [SlideController::class, 'index'])->name('admin.slide');
  
 });

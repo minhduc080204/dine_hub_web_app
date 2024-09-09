@@ -27,6 +27,41 @@
         </li><!-- End Components Nav -->
 
         <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('admin.order') }}">
+                <i class="bi bi-cart3"></i>
+                <span>Orders</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('admin.order') }}">
+                <i class="bi bi-percent"></i>
+                <span>Promocodes</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('admin.order') }}">
+                <i class="bi bi-grid"></i>
+                <span>Categories</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('admin.order') }}">
+                <i class="bi bi-tag"></i>
+                <span>Tags</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('admin.slide') }}">
+                <i class="bi bi-tv"></i>
+                <span>Carousel</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
+
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
@@ -117,25 +152,25 @@
                     </a>
                 </li>
             </ul>
-        </li><!-- End Icons Nav -->
+        </li><!-- End Icons Nav --> --}}
 
-        <li class="nav-heading">Pages</li>
+        <li class="nav-heading mt-3">Access Controls</li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('admin.order') }}">
-                <i class="bi bi-person"></i>
-                <span>Order</span>
+                <i class="bi bi-people"></i>
+                <span>User</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>F.A.Q</span>
+                <i class="bi bi-shield-lock"></i>       
+                <span>Roles</span>
             </a>
         </li><!-- End F.A.Q Page Nav -->
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" href="pages-contact.html">
                 <i class="bi bi-envelope"></i>
                 <span>Contact</span>
@@ -147,28 +182,28 @@
                 <i class="bi bi-card-list"></i>
                 <span>Register</span>
             </a>
-        </li><!-- End Register Page Nav -->
+        </li><!-- End Register Page Nav --> --}}
 
-        <li class="nav-item">
+        <li class="nav-item mt-5">
             <a class="nav-link collapsed" href="pages-login.html">
                 <i class="bi bi-box-arrow-in-right"></i>
-                <span>Login</span>
+                <span>Logout</span>
             </a>
         </li><!-- End Login Page Nav -->
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" href="pages-error-404.html">
                 <i class="bi bi-dash-circle"></i>
                 <span>Error 404</span>
             </a>
-        </li><!-- End Error 404 Page Nav -->
+        </li><!-- End Error 404 Page Nav --> --}}
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" href="pages-blank.html">
                 <i class="bi bi-file-earmark"></i>
                 <span>Blank</span>
             </a>
-        </li><!-- End Blank Page Nav -->
+        </li><!-- End Blank Page Nav --> --}}
 
     </ul>
 
