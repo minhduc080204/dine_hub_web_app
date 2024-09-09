@@ -26,7 +26,14 @@
                                         <td>{{ $order->total_price }}</td>
                                         <td> {{ $order->order_status }}</td>
                                         <td>
-                                            {{-- <a href=""></a> --}}
+                                            <div class="dropdown">
+                                                <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
+                                                    aria-expanded="false"></i>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#">Detail</a></li>
+                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -40,4 +47,10 @@
             </div>
         </div>
     </section>
+    <style>
+        td,
+        th {
+            text-align: center;
+        }
+    </style>
 @endsection

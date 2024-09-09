@@ -31,13 +31,16 @@ class OrderController extends Controller
         $orders = Order::with('user')->where('user_id', $id)->get();
         $productIds = json_decode($orders->first()->product_id, true);
         $Product = Product::whereIn('id', $productIds)->get();
+
         foreach ($orders as $order) {
-            $order['product_id'] = $Product->values()->all();
+            $order['product'] = $Product->values()->all();
             $showOrders[] = $order;
         }
+        unset($order['product_id']);
         return response()->json($showOrders);
     }
-    public function newOrder(Request $request){
+    public function newOrder(Request $request)
+    {
         Log::error($request->input('user_id'));
         try {
             // Tạo đơn hàng mới
