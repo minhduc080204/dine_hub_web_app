@@ -10,3 +10,6 @@
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
+    <script>
+        const BASE_URL = "{{ env('BASE_URL') }}";
+    </script>

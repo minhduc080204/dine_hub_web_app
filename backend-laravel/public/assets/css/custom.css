@@ -1,8 +1,10 @@
 .Action {
+    width: 100px;
     text-align: center !important;
 }
 td {
-    align-items: center;
+    align-items: left;
+    align-content: center;
 }
 .page-link {
     border: none !important;

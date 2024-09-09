@@ -6064,7 +6064,7 @@
                                     labels: {
                                         placeholder: "Search...",
                                         searchTitle: "Search within table",
-                                        perPage: "entries per page",
+                                        perPage: " entries per page",
                                         pageTitle: "Page {page}",
                                         noRows: "No entries found",
                                         noResults:
