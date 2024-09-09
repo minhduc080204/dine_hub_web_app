@@ -41,7 +41,7 @@
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('admin.order') }}">
+            <a class="nav-link collapsed" href="{{ route('admin.category') }}">
                 <i class="bi bi-grid"></i>
                 <span>Categories</span>
             </a>

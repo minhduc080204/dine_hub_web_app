@@ -22,7 +22,7 @@ class SlideController extends Controller
 
     public function edit($id){
         // Slide::where("id", $id)->delete(); 
-        return  redirect()->route("admin/silde");
+        return  redirect()->route("admin.slide");
     }
 
     public function remove($id){
@@ -32,7 +32,6 @@ class SlideController extends Controller
         }catch(Exception $e){
             toastr()->error('Removed failed!');
         }
-        toastr()->success('Data has been removed successfully!');
         return  redirect()->route("admin.slide");
     }
 }
