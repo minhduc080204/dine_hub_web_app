@@ -17,7 +17,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 @foreach ($orders as $key => $order)
                                     <tr>
                                         <td>#{{ $key + 1 }}</td>
@@ -47,10 +46,4 @@
             </div>
         </div>
     </section>
-    <style>
-        td,
-        th {
-            text-align: center;
-        }
-    </style>
 @endsection

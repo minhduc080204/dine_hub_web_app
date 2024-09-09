@@ -37,6 +37,7 @@ class OrderController extends Controller
             $showOrders[] = $order;
         }
         unset($order['product_id']);
+
         return response()->json($showOrders);
     }
     public function newOrder(Request $request)

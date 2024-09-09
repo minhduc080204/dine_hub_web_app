@@ -20,6 +20,7 @@ class OrderFactory extends Factory
         return [
             'note'=>'not thing',
             'user_id' => '1',
+            'address' => 'Việt Nam',
             'total_price' => $this->faker->randomFloat(2, 50, 1000),
             'subtotal_price' => $this->faker->randomFloat(2, 50, 1000),
             'delivery_price' => $this->faker->randomFloat(2, 5, 50),

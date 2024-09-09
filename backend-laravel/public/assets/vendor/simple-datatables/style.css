@@ -26,7 +26,7 @@
 }
 
 .datatable-selector {
-    padding: 6px;
+    padding: 2px 5px;
     border-radius: 5px;
 }
 
@@ -157,7 +157,8 @@
     border: 0;
     background-color: inherit;
     cursor: pointer;
-    text-align: inherit;
+    /* text-align: inherit; */
+    text-align: center;
     font-weight: inherit;
     font-size: inherit;
 }
