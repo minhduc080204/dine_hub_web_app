@@ -283,7 +283,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
             const isLastItem = index === array.length - 1;
             return (
               <View
-                key={item.id}
+                key={'orderhis'+index}
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',

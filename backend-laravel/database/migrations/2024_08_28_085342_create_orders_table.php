@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order', function (Blueprint $table) {
-            $table->id(); // Tạo trường id tự động tăng
-            $table->string('address');
-            $table->string('note')->nullable();
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id()->constrained()->onDelete('cascade'); // Tạo trường id tự động tăng
+            // $table->string('address');
+            $table->string('note');
             $table->decimal('total_price', 10, 2); // Tổng giá
             $table->decimal('subtotal_price', 10, 2); // Giá trước thuế
             $table->decimal('delivery_price', 10, 2); // Giá giao hàng
@@ -26,8 +26,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('user_id'); // Khóa ngoại tới bảng users
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->unsignedBigInteger('product_id'); // Khóa ngoại tới bảng products
-            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            // $table->foreignId('product_id')->constrained()->onDelete('cascade');
         });
     }
 

@@ -20,10 +20,10 @@ Route::prefix('')->group(function () {
     Route::get('/slides', [SlideController::class, 'index']);
     Route::get('/tags', [Tag::class, 'index']);
     Route::get('/users', [UserController::class, 'index']);
+    // ORDER
     Route::get('/orders/all', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'select']);
     Route::post('order/create', [OrderController::class, 'newOrder']);
-
 });
 
 Route::group(['prefix' => 'auth'], function() {

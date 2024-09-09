@@ -18,6 +18,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
+            'note'=>'not thing',
             'user_id' => '1',
             'total_price' => $this->faker->randomFloat(2, 50, 1000),
             'subtotal_price' => $this->faker->randomFloat(2, 50, 1000),

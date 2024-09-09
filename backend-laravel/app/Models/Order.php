@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $table = 'order';
+    // protected $table = 'order';
     protected $fillable = [
         'id',
         'address',
@@ -20,14 +20,13 @@ class Order extends Model
         'created_at',
         'note',
         'product_id',
-        'user_id',
     ];
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
     public function products()
-    {
-        return $this->hasMany(Product::class,  'id','product_id');
-    }
+{
+    return $this->belongsToMany(Product::class);
+}
 }
