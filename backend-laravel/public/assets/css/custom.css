@@ -1,8 +1,8 @@
-td {
-    text-align: left;
+.Action {
+    text-align: center !important;
 }
-.disable{
-    text-align: center;
+td {
+    align-items: center;
 }
 .page-link {
     border: none !important;

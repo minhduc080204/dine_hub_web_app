@@ -13,7 +13,7 @@
                                     <th>Phone</th>
                                     <th>Total</th>
                                     <th>Status</th>
-                                    <th class="disable">Action</th>
+                                    <th class="Action">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -24,7 +24,7 @@
                                         <td>{{ $order->user->phone_number }}</td>
                                         <td>{{ $order->total_price }}</td>
                                         <td> {{ $order->order_status }}</td>
-                                        <td>
+                                        <td class="Action">
                                             <div class="dropdown">
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
                                                     aria-expanded="false"></i>

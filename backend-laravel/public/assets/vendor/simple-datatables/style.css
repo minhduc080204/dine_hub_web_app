@@ -157,8 +157,8 @@
     border: 0;
     background-color: inherit;
     cursor: pointer;
-    /* text-align: inherit; */
-    text-align: center;
+    text-align: inherit;
+    /* text-align: center; */
     font-weight: inherit;
     font-size: inherit;
 }

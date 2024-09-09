@@ -5,7 +5,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table">
+                        <table class="table datatable">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -14,7 +14,7 @@
                                     <th>Price</th>
                                     <th>Weight</th>
                                     <th>Last edit</th>
-                                    <th class="disable">Action</th>
+                                    <th class="Action">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -26,7 +26,7 @@
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->weight }}</td>
                                         <td> {{ $product->updated_at->format('Y/d/m') }}</td>
-                                        <td>
+                                        <td class="Action">
                                             <div class="dropdown">
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
                                                     aria-expanded="false"></i>
@@ -40,7 +40,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $products->onEachSide(2)->links() }}
+                        {{-- {{ $products->onEachSide(2)->links() }} --}}
                         <!-- End Table with stripped rows -->
 
                     </div>
