@@ -7,6 +7,7 @@ import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 import Promocodes from './Promocodes';
 import Onboarding from './Onboarding';
+import QRcheckout from './QRcheckout';
 import AddANewCard from './AddANewCard';
 import OrderFailed from './OrderFailed';
 import EditProfile from './EditProfile';
@@ -42,6 +43,7 @@ export const screens = {
   Menulist,
   Promocodes,
   Onboarding,
+  QRcheckout,
   OrderFailed,
   NewPassword,
   AddANewCard,

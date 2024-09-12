@@ -1,50 +1,46 @@
-import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, {useContext, useState} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-import { text } from '../text';
-import { svg } from '../assets/svg';
-import { theme } from '../constants';
-import { components } from '../components';
-import type { AppStateType, RootStackParamList } from '../types';
-import { resetCart } from '../store/slices/cartSlice';
-import { useAppSelector, useAppNavigation, useAppDispatch } from '../hooks';
-import { useCreateOrderMutation } from '../store/slices/apiSlice';
-import { OrderType } from '../types/OrderType';
-import { useSelector } from 'react-redux';
-import { AuthContext } from '../context/AuthContext';
-import { showMessage } from 'react-native-flash-message';
+import {text} from '../text';
+import {svg} from '../assets/svg';
+import {theme} from '../constants';
+import {components} from '../components';
+import type {AppStateType, RootStackParamList} from '../types';
+import {resetCart} from '../store/slices/cartSlice';
+import {useAppSelector, useAppNavigation, useAppDispatch} from '../hooks';
+import {useCreateOrderMutation} from '../store/slices/apiSlice';
+import {OrderType} from '../types/OrderType';
+import {useSelector} from 'react-redux';
+import {AuthContext} from '../context/AuthContext';
+import {showMessage} from 'react-native-flash-message';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Checkout'>;
 
-const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
+const Checkout: React.FC<Props> = ({route}): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { total, subtotal, delivery, discount } = route.params;
+  const {total, subtotal, delivery, discount} = route.params;
   const navigation = useAppNavigation();
   const [loading, setLoading] = useState(false);
   const cart = useAppSelector((state) => state.cartSlice.list);
-  
-  const [address, setAdress] = useState("");
-  const [note, setNote] = useState("");
+  const [address, setAdress] = useState('');
+  const [note, setNote] = useState('');
+  const [createOrder, {data, error, isLoading}] = useCreateOrderMutation();
+  const {userInfor} = useContext(AuthContext);
 
-  const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
-
-  const { userInfor } = useContext(AuthContext)
-  
   const handleOrder = async () => {
-    if (address === "") {
+    if (address === '') {
       return showMessage({
         message: 'Order Failed :(',
         description: `Please enter ADDRESS!`,
         type: 'warning',
         icon: 'warning',
-      })
+      });
     }
     try {
       setLoading(true);
-
-      const product_id = cart.map(cart=>cart.id)
-      const fakeOrderData: OrderType = {
+      const product_id = cart.map((cart) => cart.id);
+      const OrderData: OrderType = {
         id: 1,
         user_id: userInfor.id,
         address: address,
@@ -57,11 +53,12 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
         created_at: new Date().toISOString(),
         product_id: product_id,
         note: note,
+        qrcode: 'aaaaa',
       };
-      let res:any = await createOrder(fakeOrderData);
+      let res: any = await createOrder(OrderData);
       if (!res || !res.data) {
         navigation.navigate('OrderFailed');
-        setLoading(false)
+        setLoading(false);
         return;
       }
     } catch (err) {
@@ -69,7 +66,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
       console.log(err);
     }
     dispatch(resetCart());
-    setLoading(false)
+    setLoading(false);
     navigation.navigate('OrderSuccessful');
   };
 
@@ -163,7 +160,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
-        onPress={() => { }}
+        onPress={() => {}}
       >
         <View>
           <Text
@@ -248,13 +245,10 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
           type='address'
           placeholder='Enter address'
           value={address}
-          onChangeText={
-            (text) => {
-              setAdress(text)
-            }
-          }
+          onChangeText={(text) => {
+            setAdress(text);
+          }}
         />
-
       </View>
     );
   };
@@ -270,13 +264,11 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
         }}
       >
         <components.InputFieldBig
-          containerStyle={{ marginBottom: 14 }}
+          containerStyle={{marginBottom: 14}}
           value={note}
-          onChangeText={
-            (text) => {
-              setNote(text)
-            }
-          }
+          onChangeText={(text) => {
+            setNote(text);
+          }}
         />
         <components.Button
           loading={loading}
@@ -299,7 +291,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
 
     return (
       <components.KAScrollView
-        contentContainerStyle={{ ...contentContainerStyle }}
+        contentContainerStyle={{...contentContainerStyle}}
       >
         {renderOrderSummary()}
         {/* {renderShippingDetails()} */}

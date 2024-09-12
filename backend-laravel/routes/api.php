@@ -23,10 +23,11 @@ Route::prefix('')->group(function () {
     // ORDER
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'select']);
+    Route::get('/QRcode', [OrderController::class, 'QRcode']);
     Route::post('/order/create', [OrderController::class, 'newOrder']);
 });
 
-Route::group(['prefix' => 'auth'], function() {
+Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
 });

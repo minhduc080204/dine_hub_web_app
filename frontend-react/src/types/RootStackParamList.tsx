@@ -1,6 +1,7 @@
 import type {UserType} from './UserType';
 import type {ReviewType} from './ReviewType';
 import type {ProductType} from './ProductType';
+import {OrderType} from './OrderType';
 
 export type RootStackParamList = {
   Search: undefined;
@@ -15,6 +16,7 @@ export type RootStackParamList = {
   Menulist: {category: string};
   MyAddress: undefined;
   Onboarding: undefined;
+  QRcheckout: undefined;
   EditProfile: undefined;
   OrderFailed: undefined;
   AddANewCard: undefined;
@@ -26,7 +28,7 @@ export type RootStackParamList = {
   LeaveAReviews: undefined;
   PaymentMethod: undefined;
   ForgotPassword: undefined;
-  TrackYourOrder: {orderId:String};
+  TrackYourOrder: {orderId: String};
   AddANewAddress: undefined;
   Product: {item: ProductType};
   OrderSuccessful: undefined;

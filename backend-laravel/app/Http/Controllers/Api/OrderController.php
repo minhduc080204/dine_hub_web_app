@@ -10,6 +10,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 class OrderController extends Controller
 {
     public function index()
@@ -42,13 +43,14 @@ class OrderController extends Controller
     }
     public function newOrder(Request $request)
     {
+        $qrCode = $this->QRcode();
         Log::error($request->input('user_id'));
         try {
-            // Tạo đơn hàng mới
             $order = Order::create([
                 'user_id' => $request->input('user_id'),
                 'address' => $request->input('address'),
                 'note' => $request->input('note'),
+                'qrcode' => $qrCode,
                 'total_price' => $request->input('total_price'),
                 'subtotal_price' => $request->input('subtotal_price'),
                 'delivery_price' => $request->input('delivery_price'),
@@ -59,9 +61,9 @@ class OrderController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-
             // Trả về phản hồi JSON với mã đơn hàng vừa tạo
-            return true;
+            // return true;
+            return $order;
         } catch (\Exception $e) {
             // Ghi lỗi vào log nếu có ngoại lệ
             Log::error('Order creation failed: ' . $e->getMessage());
@@ -69,4 +71,32 @@ class OrderController extends Controller
             return false;
         }
     }
+    public function QRcode()
+    {
+        $url = 'https://api.vietqr.io/v2/generate';
+        $infoQR = [
+            "accountNo" => 19071355460016,
+            "accountName" => "QUY VAC XIN PHONG CHONG COVID",
+            "acqId" => 970407,
+            "amount" => 79000,
+            "addInfo" => "Ung Ho Quy Vac Xin",
+            "format" => "text",
+            "template" => "compact"
+        ];
+        try {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
+            ])->post($url, $infoQR);
+            if ($response->successful()) {
+                $data = $response->json()['data']['qrCode'];
+                return $data;
+            } else {
+                return response()->json(['error' => 'Request failed', 'status' => $response->status()], $response->status());
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }

@@ -2,13 +2,13 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link " href="{{ route('admin.dashboard') }}">
+            <a class="nav-link @activeClass('admin.dashboard')" href="{{ route('admin.dashboard') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#Product-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
@@ -24,38 +24,43 @@
                     </a>
                 </li>
             </ul>
-        </li><!-- End Components Nav -->
-
+        </li><!-- End Components Nav --> --}}
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('admin.order') }}">
+            <a class="nav-link @activeClass('admin.product')" href="{{ route('admin.product') }}">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>Product</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @activeClass('admin.order')" href="{{ route('admin.order') }}">
                 <i class="bi bi-cart3"></i>
                 <span>Orders</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('admin.order') }}">
+            <a class="nav-link @activeClass('admin.order')" href="{{ route('admin.order') }}">
                 <i class="bi bi-percent"></i>
                 <span>Promocodes</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('admin.category') }}">
+            <a class="nav-link @activeClass('admin.category')" href="{{ route('admin.category') }}">
                 <i class="bi bi-grid"></i>
                 <span>Categories</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('admin.order') }}">
+            <a class="nav-link @activeClass('admin.slide')" href="{{ route('admin.order') }}">
                 <i class="bi bi-tag"></i>
                 <span>Tags</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('admin.slide') }}">
+            <a class="nav-link @activeClass('admin.slide')" href="{{ route('admin.slide') }}">
                 <i class="bi bi-tv"></i>
                 <span>Carousel</span>
             </a>
@@ -157,7 +162,7 @@
         <li class="nav-heading mt-3">Access Controls</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('admin.order') }}">
+            <a class="nav-link @activeClass('admin.user')" href="{{ route('admin.order') }}">
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
@@ -165,7 +170,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="pages-faq.html">
-                <i class="bi bi-shield-lock"></i>       
+                <i class="bi bi-shield-lock"></i>
                 <span>Roles</span>
             </a>
         </li><!-- End F.A.Q Page Nav -->

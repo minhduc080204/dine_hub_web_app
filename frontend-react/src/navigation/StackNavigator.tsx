@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Stack } from '../hooks';
-import { screens } from '../screens';
+import {Stack} from '../hooks';
+import {screens} from '../screens';
 import TabNavigator from './TabNavigator';
 
 const StackNavigator: React.FC = () => {
@@ -12,6 +12,16 @@ const StackNavigator: React.FC = () => {
         component={screens.Onboarding}
         options={{headerShown: false}}
       /> */}
+      <Stack.Screen
+        name='QRcheckout'
+        component={screens.QRcheckout}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name='Product'
+        component={screens.Product}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name='TabNavigator'
         component={TabNavigator}
@@ -78,11 +88,7 @@ const StackNavigator: React.FC = () => {
         component={screens.EditProfile}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name='Product'
-        component={screens.Product}
-        options={{headerShown: false}}
-      />
+      
       <Stack.Screen
         name='Checkout'
         component={screens.Checkout}
