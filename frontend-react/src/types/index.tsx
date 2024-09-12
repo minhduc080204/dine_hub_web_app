@@ -7,6 +7,8 @@ import type {ProductType} from './ProductType';
 import type {CategoryType} from './CategoryType';
 import type {AppStateType} from './AppStateType';
 import type {CarouselType} from './CarouselType';
+import type {OrderType} from './OrderType';
+import type {BankInforType} from './BankInforType';
 import type {PromocodeType} from './PromocodeType';
 import type {ValidationType} from './ValidationType';
 import type {NotificationType} from './NotificationType';
@@ -22,6 +24,8 @@ export {
   AppStateType,
   CategoryType,
   CarouselType,
+  OrderType,
+  BankInforType,
   PromocodeType,
   ValidationType,
   NotificationType,

@@ -38,15 +38,10 @@ class CategoryController extends Controller
         Product::whereJsonContains('category', $oldCategory)
             ->get()
             ->each(function ($product) use ($oldCategory, $newCategory) {
-                // Lấy danh sách category hiện tại từ JSON
                 $categories = json_decode($product->category, true);
-
-                // Thay thế giá trị cũ bằng giá trị mới
                 $categories = array_map(function ($item) use ($oldCategory, $newCategory) {
                     return $item == $oldCategory ? $newCategory : $item;
                 }, $categories);
-
-                // Cập nhật lại cột category
                 $product->category = json_encode($categories);
                 $product->save();
             });
