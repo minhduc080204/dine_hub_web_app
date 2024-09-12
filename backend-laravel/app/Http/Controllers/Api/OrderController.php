@@ -50,7 +50,7 @@ class OrderController extends Controller
                 'user_id' => $request->input('user_id'),
                 'address' => $request->input('address'),
                 'note' => $request->input('note'),
-                'qrcode' => $qrCode,
+                // 'qrcode' => $qrCode,
                 'total_price' => $request->input('total_price'),
                 'subtotal_price' => $request->input('subtotal_price'),
                 'delivery_price' => $request->input('delivery_price'),

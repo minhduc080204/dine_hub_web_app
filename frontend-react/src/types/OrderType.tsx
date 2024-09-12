@@ -3,7 +3,6 @@ export type OrderType = {
   user_id: number;
   address: string;
   note: string;
-  qrcode: string;
   total_price: number;
   subtotal_price: number;
   delivery_price: number;

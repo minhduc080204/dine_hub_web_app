@@ -8,8 +8,9 @@ import {
   TagType,
   CategoryType,
   PromocodeType,
+  OrderType,
+  BankInforType,
 } from '../../types';
-import { OrderType } from '../../types/OrderType';
 
 export const apiSlice = createApi({
   reducerPath: 'apiSlice',
@@ -48,6 +49,9 @@ export const apiSlice = createApi({
     getOrders: builder.query<OrderType[], number>({
       query: (orderId) => `${ENDPOINTS.get.orders}/${orderId}`,
     }),
+    getBankInfor: builder.query<BankInforType, void>({
+      query: () => ENDPOINTS.get.bankinfor,
+    }),    
 
     createOrder: builder.mutation<{ id: number }, OrderType>({
       query: (orderData) => ({
@@ -70,6 +74,7 @@ export const {
   useGetCategoriesQuery,
   useGetPromocodesQuery,
   useGetOrdersQuery,
+  useGetBankInforQuery,
   useCreateOrderMutation,
 } = apiSlice;
 

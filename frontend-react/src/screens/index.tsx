@@ -3,6 +3,7 @@ import Reviews from './Reviews';
 import Product from './Product';
 import Menulist from './Menulist';
 import Checkout from './Checkout';
+import CheckoutPay from './CheckoutPay';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 import Promocodes from './Promocodes';
@@ -39,6 +40,7 @@ export const screens = {
   Product,
   Reviews,
   Checkout,
+  CheckoutPay,
   Favorite,
   Menulist,
   Promocodes,

@@ -28,7 +28,7 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
   const [createOrder, {data, error, isLoading}] = useCreateOrderMutation();
   const {userInfor} = useContext(AuthContext);
 
-  const handleOrder = async () => {
+  const handleConfirmOrder = async () => {
     if (address === '') {
       return showMessage({
         message: 'Order Failed :(',
@@ -36,38 +36,15 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
         type: 'warning',
         icon: 'warning',
       });
-    }
-    try {
-      setLoading(true);
-      const product_id = cart.map((cart) => cart.id);
-      const OrderData: OrderType = {
-        id: 1,
-        user_id: userInfor.id,
-        address: address,
-        total_price: Number(total),
-        subtotal_price: Number(subtotal),
-        delivery_price: Number(delivery),
-        discount: Number(discount),
-        payment_status: 'Paid',
-        order_status: 'Processing',
-        created_at: new Date().toISOString(),
-        product_id: product_id,
-        note: note,
-        qrcode: 'aaaaa',
-      };
-      let res: any = await createOrder(OrderData);
-      if (!res || !res.data) {
-        navigation.navigate('OrderFailed');
-        setLoading(false);
-        return;
-      }
-    } catch (err) {
-      navigation.navigate('OrderFailed');
-      console.log(err);
-    }
-    dispatch(resetCart());
-    setLoading(false);
-    navigation.navigate('OrderSuccessful');
+    }    
+    navigation.navigate('CheckoutPay', {
+      total,
+      subtotal,
+      discount,
+      delivery,
+      address,
+      note,
+    });
   };
 
   const renderStatusBar = () => {
@@ -190,47 +167,6 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
     );
   };
 
-  const renderPaymentMethod = () => {
-    return (
-      <TouchableOpacity
-        style={{
-          padding: 20,
-          backgroundColor: theme.colors.white,
-          borderRadius: 10,
-          marginBottom: 14,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <View>
-          <Text
-            style={{
-              ...theme.fonts.DMSans_500Medium,
-              fontSize: 14,
-              textTransform: 'capitalize',
-              color: theme.colors.mainColor,
-              marginBottom: 10,
-            }}
-          >
-            Payment method
-          </Text>
-          <Text
-            style={{
-              ...theme.fonts.DMSans_400Regular,
-              color: theme.colors.textColor,
-              fontSize: 12,
-              lineHeight: 12 * 1.5,
-            }}
-          >
-            4947 **** **** 3157
-          </Text>
-        </View>
-        <svg.ArrowRightSvg />
-      </TouchableOpacity>
-    );
-  };
-
   const renderAddressField = () => {
     return (
       <View
@@ -274,7 +210,7 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
           loading={loading}
           title='Confirm order'
           onPress={() => {
-            handleOrder();
+            handleConfirmOrder()
           }}
         />
       </View>
@@ -294,8 +230,8 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
         contentContainerStyle={{...contentContainerStyle}}
       >
         {renderOrderSummary()}
-        {/* {renderShippingDetails()} */}
-        {/* {renderPaymentMethod()} */}
+        {/* {renderShippingDetails()}
+        {renderPaymentMethod()} */}
         {renderAddressField()}
         {renderNoteField()}
       </components.KAScrollView>

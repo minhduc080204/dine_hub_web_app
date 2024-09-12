@@ -13,6 +13,14 @@ export type RootStackParamList = {
     discount: number;
     delivery: number;
   };
+  CheckoutPay: {
+    total: string;
+    subtotal: string;
+    discount: number;
+    delivery: number;
+    address: string;
+    note: string;
+  };
   Menulist: {category: string};
   MyAddress: undefined;
   Onboarding: undefined;

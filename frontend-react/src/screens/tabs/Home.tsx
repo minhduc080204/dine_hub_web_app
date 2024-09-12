@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 
-import { useAppDispatch } from '../../hooks';
 import { components } from '../../components';
-import { useAppNavigation } from '../../hooks';
-import { theme, reviews } from '../../constants';
-import { setScreen } from '../../store/slices/tabSlice';
+import { reviews, theme } from '../../constants';
+import { useAppDispatch, useAppNavigation } from '../../hooks';
 import BottomTabBar from '../../navigation/BottomTabBar';
 import {
-  useGetProductsQuery,
   useGetCarouselQuery,
   useGetCategoriesQuery,
+  useGetProductsQuery
 } from '../../store/slices/apiSlice';
+import { setScreen } from '../../store/slices/tabSlice';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -23,7 +22,7 @@ const Home: React.FC = (): JSX.Element => {
     error: carouselError,
     isLoading: carouselLoading,
   } = useGetCarouselQuery();
-
+  
   const {
     data: categoriesData,
     error: categoriesError,

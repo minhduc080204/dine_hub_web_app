@@ -102,8 +102,6 @@ const OrderHistory: React.FC = (): JSX.Element => {
   } = useGetProductsQuery();
   const history = orders instanceof Array ? orders : [];
 
-  console.log(history);
-
   // const convertData = (apidata: OrderType[], productData: ProductType[]) => {
   //   return apidata.map((order: OrderType, index) => {
   //     // Tách ngày và giờ từ created_at
