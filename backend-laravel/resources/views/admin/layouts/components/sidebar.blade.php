@@ -162,7 +162,7 @@
         <li class="nav-heading mt-3">Access Controls</li>
 
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.user')" href="{{ route('admin.order') }}">
+            <a class="nav-link @activeClass('admin.user')" href="{{ route('admin.user') }}">
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
@@ -190,7 +190,7 @@
         </li><!-- End Register Page Nav --> --}}
 
         <li class="nav-item mt-5">
-            <a class="nav-link collapsed" href="pages-login.html">
+            <a class="nav-link collapsed" href="{{ route('account.doLogout') }}">
                 <i class="bi bi-box-arrow-in-right"></i>
                 <span>Logout</span>
             </a>

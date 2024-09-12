@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Flasher\Toastr\Laravel\Facade\Toastr;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
+
+class AuthMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        if (!Auth::check()) {
+            toastr()->warning('Please log in to use this feature!');
+            Auth::logout();
+            return redirect()->route('account.login');
+        }
+        else {
+            if (Auth::user()->code == 'admin') {
+                return $next($request);
+            } else {
+                Auth::logout();
+                return redirect()->route('account.login');
+            }
+        }
+
+    }
+}

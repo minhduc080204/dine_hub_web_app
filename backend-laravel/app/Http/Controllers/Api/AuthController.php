@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UserStoreRequest;
@@ -16,7 +16,6 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-
         return $this->respondWithToken(auth('api')->login($user));
     }
 
@@ -26,7 +25,6 @@ class AuthController extends Controller
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
         return $this->respondWithToken($token);
     }
 
