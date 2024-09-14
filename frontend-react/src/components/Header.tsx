@@ -1,5 +1,5 @@
-import {useRoute} from '@react-navigation/native';
-import React, {PropsWithChildren, useState, useContext} from 'react';
+import { useRoute } from '@react-navigation/native';
+import React, { PropsWithChildren, useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -10,21 +10,23 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {responsiveWidth} from 'react-native-responsive-dimensions';
+import { responsiveWidth } from 'react-native-responsive-dimensions';
 
-import {text} from '../text';
-import {svg} from '../assets/svg';
-import {theme} from '../constants';
+import { text } from '../text';
+import { svg } from '../assets/svg';
+import { theme } from '../constants';
 import Image from '../components/custom/Image';
-import {setScreen} from '../store/slices/tabSlice';
+import { setScreen } from '../store/slices/tabSlice';
 import BurgerProfileItem from './BurgerProfileItem';
-import {statusBarHeight, homeIndicatorHeight} from '../utils';
-import {useAppNavigation, useAppSelector, useAppDispatch} from '../hooks';
-import {AuthContext} from '../context/AuthContext';
+import { statusBarHeight, homeIndicatorHeight } from '../utils';
+import { useAppNavigation, useAppSelector, useAppDispatch } from '../hooks';
+import { AuthContext } from '../context/AuthContext';
+import { showMessage } from 'react-native-flash-message';
 
 type Props = PropsWithChildren<{
   skip?: boolean;
   title?: string;
+  phone?: boolean;
   basket?: boolean;
   goBack?: boolean;
   goHome?: boolean;
@@ -44,6 +46,7 @@ const Header: React.FC<Props> = ({
   userName,
   title,
   style,
+  phone,
   basket,
   search,
   goBack,
@@ -64,7 +67,7 @@ const Header: React.FC<Props> = ({
 
   const cart = useAppSelector((state) => state.cartSlice.list);
   const total = useAppSelector((state) => state.cartSlice.total);
-  const {logout, userInfor} = useContext(AuthContext);
+  const { logout, userInfor } = useContext(AuthContext);
   const email = userInfor?.email;
   const userAvatar = 'https://george-fx.github.io/dine-hub/10.jpg';
 
@@ -104,20 +107,20 @@ const Header: React.FC<Props> = ({
     if (userImage) {
       return (
         <TouchableOpacity
-          style={{...touchableStyle}}
+          style={{ ...touchableStyle }}
           onPress={() => {
             setShowModal(true);
           }}
         >
           <Image
-            source={{uri: userAvatar}}
+            source={{ uri: userAvatar }}
             style={{
               width: 22,
               height: 22,
               borderRadius: 20 / 2,
             }}
           />
-          {userName && <Text style={{...textStyle}}>{userInfor?.user_name}</Text>}
+          {userName && <Text style={{ ...textStyle }}>{userInfor?.user_name}</Text>}
         </TouchableOpacity>
       );
     }
@@ -138,14 +141,14 @@ const Header: React.FC<Props> = ({
         }}
       >
         <Image
-          source={{uri: userAvatar}}
+          source={{ uri: userAvatar }}
           style={{
             width: responsiveWidth(14),
             aspectRatio: 1,
             borderRadius: responsiveWidth(20) / 2,
           }}
         />
-        <View style={{marginLeft: 14}}>
+        <View style={{ marginLeft: 14 }}>
           <Text
             style={{
               ...theme.fonts.DMSans_500Medium,
@@ -157,7 +160,7 @@ const Header: React.FC<Props> = ({
             {userInfor?.user_name}
           </Text>
           <Text
-            style={{...theme.fonts.textStyle_14, color: theme.colors.textColor}}
+            style={{ ...theme.fonts.textStyle_14, color: theme.colors.textColor }}
           >
             {email}
           </Text>
@@ -183,7 +186,7 @@ const Header: React.FC<Props> = ({
 
   const renderBurgerContent = (): JSX.Element | null => {
     return (
-      <ScrollView style={{flex: 1, paddingHorizontal: 20}}>
+      <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
         <BurgerProfileItem
           text={'Personal information'}
           onPress={() => {
@@ -226,7 +229,13 @@ const Header: React.FC<Props> = ({
           }}
           disabled={faceID}
         />
-        <BurgerProfileItem text={'Support center'} onPress={() => {}} />
+        <BurgerProfileItem
+          text={'Chat Support'}
+          onPress={() => {
+            setShowModal(false);
+            navigation.navigate('Chat');
+          }}
+        />
         <BurgerProfileItem
           text={'Sign out'}
           onPress={() => {
@@ -245,7 +254,7 @@ const Header: React.FC<Props> = ({
         onBackdropPress={() => setShowModal(false)}
         hideModalContentWhileAnimating={true}
         backdropTransitionOutTiming={0}
-        style={{margin: 0}}
+        style={{ margin: 0 }}
         animationIn='slideInLeft'
         animationOut='slideOutLeft'
         animationInTiming={500}
@@ -273,7 +282,7 @@ const Header: React.FC<Props> = ({
   const renderGoBack = (): JSX.Element | null => {
     if (goBack && navigation.canGoBack()) {
       return (
-        <View style={{position: 'absolute', left: 0}}>
+        <View style={{ position: 'absolute', left: 0 }}>
           <TouchableOpacity
             style={{
               paddingVertical: 12,
@@ -293,7 +302,7 @@ const Header: React.FC<Props> = ({
   const renderGoHome = (): JSX.Element | null => {
     if (goHome && navigation.canGoBack()) {
       return (
-        <View style={{position: 'absolute', left: 0}}>
+        <View style={{ position: 'absolute', left: 0 }}>
           <TouchableOpacity
             style={{
               paddingVertical: 12,
@@ -348,7 +357,7 @@ const Header: React.FC<Props> = ({
 
     if (title) {
       return (
-        <Text style={{...titleStyle}} numberOfLines={1}>
+        <Text style={{ ...titleStyle }} numberOfLines={1}>
           {title}
         </Text>
       );
@@ -369,7 +378,7 @@ const Header: React.FC<Props> = ({
           }}
           onPress={() => navigation.navigate('Search')}
         >
-          <View style={{marginRight: 7}}>{/* <svg.SearchSvg /> */}</View>
+          <View style={{ marginRight: 7 }}>{/* <svg.SearchSvg /> */}</View>
           <text.T14>search</text.T14>
         </TouchableOpacity>
       );
@@ -381,7 +390,7 @@ const Header: React.FC<Props> = ({
   const renderFilter = (): JSX.Element | null => {
     if (filter) {
       return (
-        <View style={{position: 'absolute', right: 0}}>
+        <View style={{ position: 'absolute', right: 0 }}>
           <TouchableOpacity
             style={{
               paddingVertical: 12,
@@ -440,6 +449,33 @@ const Header: React.FC<Props> = ({
     return null;
   };
 
+  const renderPhone = (): JSX.Element | null => {
+    if (phone) {
+      return (
+        <TouchableOpacity
+          onPress={()=>{showMessage({
+            message: "0359100154",
+            description: `Call if you need`,
+            type: 'info',
+            icon: 'info',
+            autoHide: false,
+          })}}
+          style={{
+            right: 0,
+            position: 'absolute',
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: 20,
+          }}
+        >
+          <svg.PhoneCallSvg />
+        </TouchableOpacity>
+      );
+    }
+
+    return null;
+  };
+
   const containerStyle: ViewStyle = {
     flexDirection: 'row',
     alignItems: 'center',
@@ -451,7 +487,7 @@ const Header: React.FC<Props> = ({
   };
 
   return (
-    <View style={{...containerStyle}}>
+    <View style={{ ...containerStyle }}>
       {renderUser()}
       {renderGoBack()}
       {renderTitle()}
@@ -460,6 +496,7 @@ const Header: React.FC<Props> = ({
       {renderFilter()}
       {renderSearch()}
       {renderBasket()}
+      {renderPhone()}
       {renderBurgerProfile()}
     </View>
   );

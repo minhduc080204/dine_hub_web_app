@@ -1,9 +1,7 @@
-import type {UserType} from './UserType';
-import type {ReviewType} from './ReviewType';
-import type {ProductType} from './ProductType';
-import {OrderType} from './OrderType';
+import type { ProductType } from './ProductType';
 
 export type RootStackParamList = {
+  Chat: undefined;
   Search: undefined;
   Filter: undefined;
   Register: undefined;

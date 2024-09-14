@@ -95,50 +95,8 @@ import { useNavigation } from '@react-navigation/native';
 const OrderHistory: React.FC = (): JSX.Element => {
   const { userInfor } = useContext(AuthContext)
   const { data: orders, error, isLoading } = useGetOrdersQuery(userInfor.id);
-  const {
-    data: productsData,
-    error: productsError,
-    isLoading: productsLoading,
-  } = useGetProductsQuery();
+
   const history = orders instanceof Array ? orders : [];
-
-  // const convertData = (apidata: OrderType[], productData: ProductType[]) => {
-  //   return apidata.map((order: OrderType, index) => {
-  //     // Tách ngày và giờ từ created_at
-  //     const dateObj = new Date(order.created_at);
-  //     const date = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  //     const time = `at ${dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`;
-
-  //     const productIds = JSON.parse(order.product_id.toString());
-  //     const products = productIds.map((productId: number) => {
-  //       const product = productData.find((p: ProductType) => p.id === productId);
-  //       return product ? {
-  //         id: product.id,
-  //         name: product.name,
-  //         quantity: 1, // Có thể thêm thông tin số lượng nếu có từ API
-  //         price: product.price,
-  //       } : null;
-  //     }).filter((product: any): product is { id: number; name: string; quantity: number; price: number } => Boolean(product));  // Lọc bỏ những sản phẩm không tìm thấy (null)
-
-  //     return {
-  //       id: order.id, // Tăng giá trị id để bắt đầu từ 1 thay vì 0
-  //       address: order.address,
-  //       date: date,
-  //       time: time,
-  //       total: order.total_price,
-  //       status: order.order_status,
-  //       delivery: order.delivery_price,
-  //       discount: order.discount,
-  //       products: products,
-  //     };
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   if (orders && dishes) {
-  //     setHistory(convertData(orders, dishes));
-  //   }
-  // }, [orders, dishes]);
 
   const navigation = useAppNavigation();
   const [activeSections, setActiveSections] = useState<number[]>([]);
@@ -154,7 +112,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
   };
 
   const renderHeader = () => {
-    return <components.Header goHome={true} title='Order history' />;
+    return <components.Header goBack={true} title='Order history' />;
   };
 
   const accordionHeader = (section: any) => {
@@ -361,6 +319,18 @@ const OrderHistory: React.FC = (): JSX.Element => {
   };
 
   const renderContent = () => {
+    if (isLoading) {
+      return <components.Loader />;
+    }
+    return (<>
+      {renderHistory()},
+      {renderEmptyHistory()},
+      {renderButton()}
+    </>
+    )
+  };
+
+  const renderHistory = () => {
     if (history.length > 0) {
       return (
         <ScrollView contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}>
@@ -378,7 +348,8 @@ const OrderHistory: React.FC = (): JSX.Element => {
         </ScrollView>
       );
     }
-  };
+    return null;
+  }
 
   const renderEmptyHistory = () => {
     if (history.length === 0) {
@@ -458,8 +429,6 @@ const OrderHistory: React.FC = (): JSX.Element => {
       {renderStatusBar()}
       {renderHeader()}
       {renderContent()}
-      {renderEmptyHistory()}
-      {renderButton()}
       {renderHomeIndicator()}
     </components.SmartView>
   );

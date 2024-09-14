@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ScrollView, Text, TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 
 import { components } from '../../components';
 import { reviews, theme } from '../../constants';
 import { useAppDispatch, useAppNavigation } from '../../hooks';
+import { svg } from '../../assets/svg';
 import BottomTabBar from '../../navigation/BottomTabBar';
 import {
   useGetCarouselQuery,
@@ -12,6 +13,9 @@ import {
   useGetProductsQuery
 } from '../../store/slices/apiSlice';
 import { setScreen } from '../../store/slices/tabSlice';
+import { homeIndicatorHeight } from '../../utils';
+import HomeSvg from '../../assets/svg/HomeSvg';
+import { Path, Svg } from 'react-native-svg';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -22,7 +26,7 @@ const Home: React.FC = (): JSX.Element => {
     error: carouselError,
     isLoading: carouselLoading,
   } = useGetCarouselQuery();
-  
+
   const {
     data: categoriesData,
     error: categoriesError,
@@ -70,7 +74,7 @@ const Home: React.FC = (): JSX.Element => {
           data={carousel}
           // onMomentumScrollEnd={(e) => {updateCurrentSlideIndex(e);   console.log("zzzz");
           // }}
-          onScroll={(e)=>{updateCurrentSlideIndex(e)}}
+          onScroll={(e) => { updateCurrentSlideIndex(e) }}
           renderItem={({ item }) => (
             <components.Image
               source={{ uri: item.image }}
@@ -285,10 +289,10 @@ const Home: React.FC = (): JSX.Element => {
         {renderReviews()}
       </ScrollView>
     );
-  };
+  };  
 
   const renderBottomTabBar = () => {
-    return <BottomTabBar />;
+    return <BottomTabBar />;    
   };
 
   const renderHomeIndicator = () => {

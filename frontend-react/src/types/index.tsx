@@ -1,4 +1,5 @@
 import type {TagType} from './TagType';
+import type {MessageType} from './MessageType';
 import type {UserType} from './UserType';
 import type {BannerType} from './BannerType';
 import type {TabBarType} from './TabBarType';
@@ -15,6 +16,7 @@ import type {NotificationType} from './NotificationType';
 import type {RootStackParamList} from './RootStackParamList';
 
 export {
+  MessageType,
   TagType,
   UserType,
   TabBarType,

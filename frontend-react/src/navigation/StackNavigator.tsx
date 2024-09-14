@@ -3,6 +3,7 @@ import React from 'react';
 import { Stack } from '../hooks';
 import { screens } from '../screens';
 import TabNavigator from './TabNavigator';
+import Chat from '../screens/tabs/Chat';
 
 const StackNavigator: React.FC = () => {
   return (
@@ -11,10 +12,15 @@ const StackNavigator: React.FC = () => {
         name='Onboarding'
         component={screens.Onboarding}
         options={{headerShown: false}}
-      /> */}
+        /> */}
       <Stack.Screen
         name='TabNavigator'
         component={TabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Chat'
+        component={Chat}
         options={{ headerShown: false }}
       />
       {/* <Stack.Screen
@@ -27,6 +33,7 @@ const StackNavigator: React.FC = () => {
         component={screens.Home}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         name='Product'
         component={screens.Product}
