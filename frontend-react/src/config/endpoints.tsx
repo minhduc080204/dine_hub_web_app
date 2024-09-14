@@ -15,6 +15,7 @@ export const ENDPOINTS = {
   },
   post: {
     order: 'api/order/create',
+    discount: 'api/checkdiscount',
   },
   auth: {
     login: 'api/auth/login',

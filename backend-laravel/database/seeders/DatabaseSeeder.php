@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Discount;
 use App\Models\Slide;
 use App\Models\Tag;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,7 +21,8 @@ class DatabaseSeeder extends Seeder
         // Category::factory(5)->create();
         // Slide::factory(5)->create();
         // Tag::factory(5)->create();
-        Order::factory(5)->create();
+        // Order::factory(5)->create();
+        Discount::factory(5)->create();
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

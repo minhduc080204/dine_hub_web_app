@@ -1,27 +1,27 @@
-import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
+  ActivityIndicator,
   ScrollView,
+  Text,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator,
+  View,
 } from 'react-native';
 import {
-  responsiveWidth,
   responsiveHeight,
+  responsiveWidth,
 } from 'react-native-responsive-dimensions';
 
-import {text} from '../../text';
-import {svg} from '../../assets/svg';
-import {theme} from '../../constants';
-import {useAppDispatch} from '../../hooks';
-import {components} from '../../components';
-import {setScreen} from '../../store/slices/tabSlice';
+import { svg } from '../../assets/svg';
+import { components } from '../../components';
+import { theme } from '../../constants';
+import { useAppDispatch, useAppNavigation, useAppSelector } from '../../hooks';
 import BottomTabBar from '../../navigation/BottomTabBar';
-import {useAppSelector, useAppNavigation} from '../../hooks';
-import {BASE_URL, ENDPOINTS, AUTHORIZATION_TOKEN} from '../../config';
+import { useCheckDiscountMutation } from '../../store/slices/apiSlice';
+import { setScreen } from '../../store/slices/tabSlice';
+import { text } from '../../text';
+import { ENDPOINTS } from '../../config';
+import { showMessage } from 'react-native-flash-message';
 
 const Order: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ const Order: React.FC = (): JSX.Element => {
     useAppSelector((state) => state.cartSlice.delivery),
   );
 
-  const [promocode, setPromocode] = useState('');
+
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(
     (
@@ -50,34 +50,36 @@ const Order: React.FC = (): JSX.Element => {
   useEffect(() => {
     setTotal((totalFromCart + deliveryFromCart - discount).toFixed(2));
   }, [totalFromCart, deliveryFromCart, discount]);
+  const [promocode, setPromocode] = useState('');
+  const [checkDiscount, { data, error, isLoading }] = useCheckDiscountMutation();
 
   const applyPromoCode = async () => {
     setLoading(true);
-    const url = BASE_URL + ENDPOINTS.get.discount;
 
-    await axios
-      .get(url, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + AUTHORIZATION_TOKEN,
-        },
-        params: {
-          promocode: promocode,
-        },
-      })
-      .then((res) => {
-        setLoading(false);
-        if (res.data.promocode.discount) {
-          const discount = (Number(total) * res.data.promocode.discount) / 100;
-          const newTotal = (Number(total) - discount).toFixed(2);
-          setTotal(newTotal);
-          setDiscount(discount);
-        }
-      })
-      .catch((err) => {
-        console.log(err.response.data.message);
-        setLoading(false);
+    let res: any = await checkDiscount({ code: promocode });
+
+    if (res && res.data) {
+      const data = res.data
+      setLoading(false);
+      if (data.code == 200) {
+        setDiscount(Number(data.discount));
+
+        return showMessage({
+          message: 'Use promocode success !',
+          description: `ENJOYYY!`,
+          type: 'success',
+          icon: 'success',
+        });
+      }
+
+      return showMessage({
+        message: 'Use promocode Failed :(',
+        description: data.message,
+        type: 'danger',
+        icon: 'danger',
       });
+    }
+    setLoading(false);
   };
 
   const renderStatusBar = () => {
@@ -110,7 +112,7 @@ const Order: React.FC = (): JSX.Element => {
   const renderPromoCodeApplied = () => {
     if (discount > 0) {
       return (
-        <View style={{marginBottom: responsiveHeight(7)}}>
+        <View style={{ marginBottom: responsiveHeight(7) }}>
           <svg.CodeAppliedSvg />
         </View>
       );
@@ -133,7 +135,7 @@ const Order: React.FC = (): JSX.Element => {
             marginBottom: 30,
           }}
         >
-          <View style={{flex: 1, paddingLeft: 14}}>
+          <View style={{ flex: 1, paddingLeft: 14 }}>
             <TextInput
               placeholder='Enter your promocode'
               value={promocode}
@@ -212,7 +214,7 @@ const Order: React.FC = (): JSX.Element => {
           >
             Subtotal
           </Text>
-          <text.T14 style={{color: theme.colors.mainColor}}>
+          <text.T14 style={{ color: theme.colors.mainColor }}>
             ${subtotal}
           </text.T14>
         </View>
@@ -287,17 +289,17 @@ const Order: React.FC = (): JSX.Element => {
         }}
       >
         <components.Image
-          source={{uri: 'https://george-fx.github.io/dine-hub/14.jpg'}}
+          source={{ uri: 'https://george-fx.github.io/dine-hub/14.jpg' }}
           style={{
             width: responsiveWidth(70),
             aspectRatio: 1,
             alignSelf: 'center',
           }}
         />
-        <text.H2 style={{marginTop: 30, marginBottom: 14}}>
+        <text.H2 style={{ marginTop: 30, marginBottom: 14 }}>
           Your cart is empty!
         </text.H2>
-        <text.T16 style={{textAlign: 'center'}}>
+        <text.T16 style={{ textAlign: 'center' }}>
           Looks like you haven't made{'\n'}your order yet.
         </text.T16>
       </ScrollView>

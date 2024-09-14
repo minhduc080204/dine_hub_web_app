@@ -21,7 +21,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
   const dispatch = useAppDispatch();
   const { total, subtotal, delivery, discount, address, note } = route.params;
   const navigation = useAppNavigation();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const cart = useAppSelector((state) => state.cartSlice.list);
 
   const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
@@ -43,7 +43,6 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
     note: Date.now().toString(),
   }
   const qrcode_url = `https://img.vietqr.io/image/${bankInfor.bank_id}-${bankInfor.number}-compact.png?amount=${bankInfor.price}&addInfo=${bankInfor.note?.split("").join("%20")}&accountName=${bankInfor.name?.split(" ").join("%20")}`;
-  console.log();
 
   const handlePayed = async () => {    
     try {
@@ -265,21 +264,23 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
   const renderButton = () => {
     return (
       <View
-        style={{
-          flex: 1,
+        style={{          
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
           // position: 'absolute',  // Giữ vị trí cố định
           // bottom: 0,
+          // position: 'absolute', left: 0, right: 0, bottom: 0,
+          padding: 20,
         }}
 
       >
         <components.Button
           title='UnPay'
           danger={true}
+          loading={loading}
           containerStyle={{
-            width: '48%',
+            width: '48%',            
           }}
           onPress={()=>{
             navigation.goBack()
@@ -287,6 +288,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
         />
         <components.Button
           title='Payed'
+          loading={loading}
           containerStyle={{
             width: '48%',
           }}
@@ -312,7 +314,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
       >
         {renderQRInfor()}
         {renderOrderSummary()}
-        {/* {renderShippingDetails()} */}
+        {renderShippingDetails()}
         {renderButton()}
       </components.KAScrollView>
     );

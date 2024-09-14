@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankController;
+use App\Http\Controllers\Api\DiscountController;
 use App\Models\Tag;
 
 Route::get('/user', function (Request $request) {
@@ -26,6 +27,8 @@ Route::prefix('')->group(function () {
     Route::get('/orders/{id}', [OrderController::class, 'select']);
     Route::get('/QRcode', [OrderController::class, 'QRcode']);
     Route::get('/bank', [BankController::class, 'index']);
+    Route::post('/discount', [DiscountController::class, 'index']);
+    Route::post('/checkdiscount', [DiscountController::class, 'checkDiscount']);
     Route::post('/order/create', [OrderController::class, 'newOrder']);
 });
 

@@ -60,6 +60,13 @@ export const apiSlice = createApi({
         body: orderData,
       }),
     }),
+    checkDiscount: builder.mutation<any, {code: string}>({
+      query: (code) => ({
+        url: ENDPOINTS.post.discount,
+        method: 'POST',
+        body: code,
+      }),
+    }),
     
   }),
 });
@@ -76,6 +83,7 @@ export const {
   useGetOrdersQuery,
   useGetBankInforQuery,
   useCreateOrderMutation,
+  useCheckDiscountMutation,
 } = apiSlice;
 
 export default apiSlice.reducer;
