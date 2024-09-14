@@ -18,7 +18,8 @@
                             <tbody>
                                 @foreach ($categogies as $key => $category)
                                     <tr>
-                                        <td><img class="category_img" src="{{ $category->image }}" alt="img" width="150"></td>
+                                        <td><img class="category_img" src="{{ $category->image }}" alt="img"
+                                                width="150" style="max-height: 120px"></td>
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->updated_at->format('Y/d/m') }}</td>
                                         <td>{{ $category->id }}</td>
@@ -27,11 +28,16 @@
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
                                                     aria-expanded="false"></i>
                                                 <ul class="dropdown-menu">
-                                                    <form id="post-form" action="{{ route('admin.category.remove', ['id' => $category->id]) }}" method="POST">
+                                                    <form id="post-form"
+                                                        action="{{ route('admin.category.remove', ['id' => $category->id]) }}"
+                                                        method="POST">
                                                         @csrf
-                                                        <li><a class="dropdown-item" href="{{ route('admin.category.edit.view', ['id' => $category->id]) }}">Edit</a></li>
-    
-                                                        <li><button type="submit" class="dropdown-item">Delete</button></li>
+                                                        <li><a class="dropdown-item"
+                                                                href="{{ route('admin.category.edit.view', ['id' => $category->id]) }}">Edit</a>
+                                                        </li>
+
+                                                        <li><button type="submit" class="dropdown-item">Delete</button>
+                                                        </li>
                                                     </form>
                                                 </ul>
                                             </div>

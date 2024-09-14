@@ -1,18 +1,30 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\admin\CategoryController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\SlideController;
+use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\AuthController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+Route::prefix('account')->middleware('CheckLoginAdmin')->group(function () {
+    Route::get('/login', [AuthController::class, 'index'])->name('account.login');
+    Route::post('/doLogin', [AuthController::class, 'doLogin'])->name('account.doLogin');
+});
+Route::get('/doLogout', [AuthController::class, 'doLogout'])->name('account.doLogout');
+
 // ADMIN ==============================================
-Route::prefix('admin')->group(function () {
+// Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('Authentication')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    // USER ----------------------------------------------
+    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
+
     // PRODUCT ----------------------------------------------
     Route::get('/product', [ProductController::class, 'index'])->name('admin.product');
     Route::get('/product/create', [ProductController::class, 'index'])->name('admin.product.create');
