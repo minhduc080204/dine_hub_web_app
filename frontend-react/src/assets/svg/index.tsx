@@ -30,7 +30,7 @@ import PhoneCallSvg from './PhoneCallSvg';
 import PlusBtnSvg from './PlusBtnSvg';
 import PlusSvg from './PlusSvg';
 import SearchSvg from './SearchSvg';
-import PictureSvg from './SendSvg';
+import PictureSvg from './PictureSvg';
 import SmartphoneSvg from './SmartphoneSvg';
 import TagSvg from './TagSvg';
 import UserSvg from './UserSvg';

@@ -10,7 +10,9 @@ import {
   PromocodeType,
   OrderType,
   BankInforType,
+  MessageType,
 } from '../../types';
+import { getMessage } from '@reduxjs/toolkit/dist/actionCreatorInvariantMiddleware';
 
 export const apiSlice = createApi({
   reducerPath: 'apiSlice',
@@ -52,7 +54,25 @@ export const apiSlice = createApi({
     getBankInfor: builder.query<BankInforType, void>({
       query: () => ENDPOINTS.get.bankinfor,
     }),    
+    // getMessage: builder.query<{messages: MessageType[]}, void>({
+    //   query: () => ENDPOINTS.get.message,
+    // }),    
 
+    getMessage: builder.mutation<any, {userId: number}>({
+      query: (userId) => ({
+        url: ENDPOINTS.post.message,
+        method: 'POST',
+        body: userId,
+      }),
+    }),
+
+    sendMessage: builder.mutation<{ id: number }, MessageType>({
+      query: (message) => ({
+        url: ENDPOINTS.post.sendmessage,
+        method: 'POST',
+        body: message,
+      }),
+    }),
     createOrder: builder.mutation<{ id: number }, OrderType>({
       query: (orderData) => ({
         url: ENDPOINTS.post.order,
@@ -82,6 +102,8 @@ export const {
   useGetPromocodesQuery,
   useGetOrdersQuery,
   useGetBankInforQuery,
+  useGetMessageMutation,
+  useSendMessageMutation,
   useCreateOrderMutation,
   useCheckDiscountMutation,
 } = apiSlice;

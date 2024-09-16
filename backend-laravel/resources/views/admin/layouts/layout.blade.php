@@ -12,7 +12,7 @@
 
     @include('admin.layouts.components.footer')
     @include('admin.layouts.components.scripts')
-
+    @yield('scripts')
 </body>
 
 </html>

@@ -11,11 +11,14 @@ export const ENDPOINTS = {
     promocode: 'api/promocode',
     promocodes: 'api/promocodes',
     categories: 'api/categories',//
-    bankinfor: 'api/bank'
+    bankinfor: 'api/bank',    
   },
+  chat: 'admin/chat',
   post: {
     order: 'api/order/create',
     discount: 'api/checkdiscount',
+    message: 'api/message',
+    sendmessage: 'api/sendmessage',
   },
   auth: {
     login: 'api/auth/login',

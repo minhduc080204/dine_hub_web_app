@@ -160,6 +160,13 @@
         </li><!-- End Icons Nav --> --}}
 
         <li class="nav-heading mt-3">Access Controls</li>
+        
+        <li class="nav-item">
+            <a class="nav-link @activeClass('admin.messages')" href="{{ route('admin.messages') }}">
+                <i class="bi bi-people"></i>
+                <span>Message</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.user')" href="{{ route('admin.user') }}">

@@ -43,8 +43,6 @@ class OrderController extends Controller
     }
     public function newOrder(Request $request)
     {
-        $qrCode = $this->QRcode();
-        Log::error($request->input('user_id'));
         try {
             $order = Order::create([
                 'user_id' => $request->input('user_id'),

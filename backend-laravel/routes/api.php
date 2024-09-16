@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
@@ -11,6 +12,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankController;
 use App\Http\Controllers\Api\DiscountController;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Mime\MessageConverter;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -30,6 +33,9 @@ Route::prefix('')->group(function () {
     Route::post('/discount', [DiscountController::class, 'index']);
     Route::post('/checkdiscount', [DiscountController::class, 'checkDiscount']);
     Route::post('/order/create', [OrderController::class, 'newOrder']);
+    
+    Route::post('/message', [MessageController::class, 'getMessage']);
+    Route::get('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
 });
 
 Route::group(['prefix' => 'auth'], function () {
@@ -41,4 +47,17 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/me', [AuthController::class, 'me'])->name('auth.me');
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('/refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
+
+    
+    
+    Route::post('/messages', function() {
+       $user = Auth::user();
+    
+      $message = new App\Models\Message();
+      $message->message = request()->get('message', '');
+      $message->user_id = $user->id;
+      $message->save();
+    
+      return ['message' => $message->load('user')];
+    });
 });

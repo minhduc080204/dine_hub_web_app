@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     ScrollView,
     Text,
@@ -12,23 +12,50 @@ import {
 import { Path, Svg } from 'react-native-svg';
 import { svg } from '../../assets/svg';
 import { components } from '../../components';
-import { theme } from '../../constants';
-import { useAppNavigation } from '../../hooks';
-import { homeIndicatorHeight } from '../../utils';
-import BottomTabBar from '../../navigation/BottomTabBar';
-import { MessageType } from '../../types';
 import Image from '../../components/custom/Image';
+import { theme } from '../../constants';
+import { AuthContext } from '../../context/AuthContext';
+import { useAppNavigation } from '../../hooks';
+import { useGetMessageMutation, useSendMessageMutation } from '../../store/slices/apiSlice';
+import { MessageType } from '../../types';
+import { homeIndicatorHeight } from '../../utils';
+
 
 const Chat: React.FC = (): JSX.Element => {
     const navigation = useAppNavigation();
+    const { userInfor } = useContext(AuthContext);
+    const [getMessage, { data, error, isLoading }] = useGetMessageMutation();
 
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState<MessageType[]>([{ name: "Duc", content: "nguuuuuu", role: "BISBOSES" }]);
+    const [messages, setMessages] = useState<MessageType[]>([]);
 
-    const handleSendMessage = () => {
+    const [sendMessage] = useSendMessageMutation();
+
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                const response: any = await getMessage({ userId: userInfor.id });
+                if (response?.data) {
+                    setMessages(response.data);
+                }
+            } catch (err) {
+                console.error("Error fetching messages:", err);
+            }
+        };
+
+        fetchMessages();
+    }, [getMessage]);
+
+    const handleSendMessage = async () => {
         if (message.trim()) {
-            setMessages([...messages, { name: "Client", content: message }, { name: "Duc", content: "test clll", role: "BISBOSES" }])
             setMessage("");
+            const mess: MessageType = { message: message, name: "minhduc", userId: userInfor.id }
+            try {
+                setMessages([...messages, mess]);
+                await sendMessage(mess);
+            } catch (error) {
+                console.error("Error sending message:", error);
+            }
         }
     }
 
@@ -48,9 +75,9 @@ const Chat: React.FC = (): JSX.Element => {
     };
 
     const renderContent = () => {
-        // if (carouselLoading || categoriesLoading || productsLoading) {
-        //   return <components.Loader />;
-        // }
+        if (isLoading) {
+            return <components.Loader />;
+        }
         return (
             <ScrollView
                 contentContainerStyle={{
@@ -73,32 +100,44 @@ const Chat: React.FC = (): JSX.Element => {
                     flexDirection: 'row',
                     gap: 10,
                     alignItems: 'flex-start',
-                    alignSelf: message.role == 'BISBOSES' ? 'flex-start' : 'flex-end',
+                    alignSelf: message.role == 'admin' ? 'flex-start' : 'flex-end',
                     margin: 5,
                 };
+                // const clientTextStyle: TextStyle = {
+                //     backgroundColor: theme.colors.mainTurquoise,
+                //     borderTopEndRadius: 0,
+                //     borderTopStartRadius: 25,
+                //     color: theme.colors.white,
+                // }
+                // const bossTextStyle:TextStyle = {
+                //     backgroundColor: '#E9F3F6',
+                //     borderTopEndRadius: 25,
+                //     borderTopStartRadius: 0,
+                //     color: 'black',
+                // }
                 const textStyle: TextStyle = {
-                    backgroundColor: message.role == 'BISBOSES' ? '#E9F3F6' : theme.colors.mainTurquoise,
+                    backgroundColor: message.role == 'admin' ? '#E9F3F6' : theme.colors.mainTurquoise,
                     borderRadius: 25,
-                    borderTopEndRadius: message.role == 'BISBOSES' ? 25 : 0,
-                    borderTopStartRadius: message.role == 'BISBOSES' ? 0 : 25,
+                    borderTopEndRadius: message.role == 'admin' ? 25 : 0,
+                    borderTopStartRadius: message.role == 'admin' ? 0 : 25,
                     paddingHorizontal: 15,
                     paddingVertical: 8,
                     maxWidth: 250,
                     fontSize: 19,
+                    color: message.role == 'admin' ? 'black' : theme.colors.white,
                     ...theme.fonts.DMSans_500Medium,
-                    color: message.role == 'BISBOSES' ? 'black' : theme.colors.white,
                 };
                 return (
                     <View key={'message' + index} style={boxStyle}>
                         <Image
-                            source={{ uri: message.role == 'BISBOSES' ? 'https://george-fx.github.io/dine-hub/10.jpg' : '' }}
+                            source={{ uri: message.role == 'admin' ? 'https://george-fx.github.io/dine-hub/10.jpg' : '' }}
                             style={{
-                                width: message.role == 'BISBOSES' ? 40 : 0,
-                                height: message.role == 'BISBOSES' ? 40 : 0,
+                                width: message.role == 'admin' ? 40 : 0,
+                                height: message.role == 'admin' ? 40 : 0,
                                 borderRadius: 50,
                             }}
                         />
-                        <Text style={textStyle}>{message.content}</Text>
+                        <Text style={textStyle}>{message.message}</Text>
                     </View>
 
                 );
@@ -111,17 +150,17 @@ const Chat: React.FC = (): JSX.Element => {
     const SendSvg: React.FC = () => {
         return (
             <Svg
-                width={35}
-                height={35}
+                width={50}
+                height={50}
                 fill="none"
                 viewBox="0 0 24 24"
             >
                 <Path
-                    d="m10.3 13.695 9.802-9.798m-9.523 10.239 2.223 4.444c.537 1.075.806 1.612 1.144 1.756a1 1 0 0 0 .903-.061c.316-.188.51-.757.898-1.893l4.2-12.298c.338-.99.506-1.485.39-1.813a1 1 0 0 0-.609-.61c-.328-.115-.823.054-1.813.392l-12.297 4.2c-1.137.387-1.705.581-1.893.897a1 1 0 0 0-.061.904c.144.338.681.607 1.755 1.143l4.445 2.223c.177.088.265.133.342.192a1 1 0 0 1 .182.181c.059.077.103.166.191.343Z"
-                    stroke={message.trim() ? "#00B0B9" : "#000"}
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    d="m6.998 10.247.435.76c.277.485.415.727.415.993s-.138.508-.415.992l-.435.761c-1.238 2.167-1.857 3.25-1.375 3.788.483.537 1.627.037 3.913-.963l6.276-2.746c1.795-.785 2.693-1.178 2.693-1.832 0-.654-.898-1.047-2.693-1.832L9.536 7.422c-2.286-1-3.43-1.5-3.913-.963-.482.537.137 1.62 1.375 3.788Z"
+                    fill={message.trim() ? "#00B0B9" : "#000"}
+                    // strokeWidth={2}
+                    // strokeLinecap="round"
+                    // strokeLinejoin="round"
                 />
             </Svg>
         )
@@ -157,7 +196,7 @@ const Chat: React.FC = (): JSX.Element => {
                 <TextInput
                     style={{
                         flexGrow: 1,
-                        height: '100%',
+                        height: '80%',
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         fontSize: 16,
@@ -187,10 +226,7 @@ const Chat: React.FC = (): JSX.Element => {
             </View >
         );
     };
-
-    // const renderBottomTabBar = () => {
-    //     return <BottomTabBar />;
-    // };
+    
     const renderHomeIndicator = () => {
         return <components.HomeIndicator />;
     };

@@ -13,11 +13,11 @@ const StackNavigator: React.FC = () => {
         component={screens.Onboarding}
         options={{headerShown: false}}
         /> */}
-      <Stack.Screen
+      {/* <Stack.Screen
         name='TabNavigator'
         component={TabNavigator}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name='Chat'
         component={Chat}

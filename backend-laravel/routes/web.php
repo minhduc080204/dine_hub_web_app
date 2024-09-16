@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\admin\MessageController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\admin\CategoryController;
@@ -8,6 +9,8 @@ use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\SlideController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\AuthController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,4 +46,6 @@ Route::prefix('admin')->middleware('Authentication')->group(function () {
     Route::get('/category/edit/{id}', [CategoryController::class, 'editView'])->name('admin.category.edit.view');
     Route::put('/category/edit/{id}', [CategoryController::class, 'edit'])->name('admin.category.edit');
     Route::delete('/category/remove/{id}', [CategoryController::class, 'remove'])->name('admin.category.remove');
+
+    Route::get('/messages', [MessageController::class, 'index'])->name('admin.messages');
 });
