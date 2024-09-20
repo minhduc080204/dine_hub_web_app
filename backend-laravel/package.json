@@ -12,6 +12,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@yaireo/tagify": "^4.31.3",
         "axios": "^1.7.7"
     }
 }

@@ -4,7 +4,7 @@
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.dashboard')" href="{{ route('admin.dashboard') }}">
                 <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
+                <span>Trang điều khiển</span>
             </a>
         </li>
 
@@ -14,7 +14,7 @@
             </a>
             <ul id="Product-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="{{ route('admin.product') }}">
+                    <a href="{{ route('admin.product.index') }}">
                         <i class="bi bi-circle"></i><span>List product</span>
                     </a>
                 </li>
@@ -26,43 +26,43 @@
             </ul>
         </li><!-- End Components Nav --> --}}
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.product')" href="{{ route('admin.product') }}">
+            <a class="nav-link @activeClass('admin.product.index')" href="{{ route('admin.product.index') }}">
                 <i class="bi bi-menu-button-wide"></i>
-                <span>Product</span>
+                <span>Sản phẩm</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.order')" href="{{ route('admin.order') }}">
                 <i class="bi bi-cart3"></i>
-                <span>Orders</span>
-            </a>
-        </li><!-- End Profile Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link @activeClass('admin.order')" href="{{ route('admin.order') }}">
-                <i class="bi bi-percent"></i>
-                <span>Promocodes</span>
+                <span>Đơn hàng</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.category')" href="{{ route('admin.category') }}">
                 <i class="bi bi-grid"></i>
-                <span>Categories</span>
+                <span>Danh mục</span>
             </a>
         </li><!-- End Profile Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link @activeClass('admin.order')" href="{{ route('admin.order') }}">
+                <i class="bi bi-percent"></i>
+                <span>Mã giảm giá</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
+
 
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.slide')" href="{{ route('admin.order') }}">
                 <i class="bi bi-tag"></i>
-                <span>Tags</span>
+                <span>Thẻ</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.slide')" href="{{ route('admin.slide') }}">
                 <i class="bi bi-tv"></i>
-                <span>Carousel</span>
+                <span>Trượt</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
@@ -159,26 +159,26 @@
             </ul>
         </li><!-- End Icons Nav --> --}}
 
-        <li class="nav-heading mt-3">Access Controls</li>
-        
+        <li class="nav-heading mt-3">Kiểm soát truy cập</li>
+
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.messages')" href="{{ route('admin.messages') }}">
                 <i class="bi bi-people"></i>
-                <span>Message</span>
+                <span>Hội thoại</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.user')" href="{{ route('admin.user') }}">
                 <i class="bi bi-people"></i>
-                <span>User</span>
+                <span>Người dùng</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="pages-faq.html">
                 <i class="bi bi-shield-lock"></i>
-                <span>Roles</span>
+                <span>Vai trò</span>
             </a>
         </li><!-- End F.A.Q Page Nav -->
 
@@ -199,7 +199,7 @@
         <li class="nav-item mt-5">
             <a class="nav-link collapsed" href="{{ route('account.doLogout') }}">
                 <i class="bi bi-box-arrow-in-right"></i>
-                <span>Logout</span>
+                <span>Đăng xuất</span>
             </a>
         </li><!-- End Login Page Nav -->
 

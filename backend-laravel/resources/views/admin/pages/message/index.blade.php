@@ -14,20 +14,19 @@
                     @endforeach
                 </ul>
                 <input type="text" placeholder="Reply">
-                <button>send</button>
+                <button>Gửi</button>
             </div>
-        @endforeach        
+        @endforeach
     </div>
 @endsection
 @section('scripts')
-@vite('resources/js/app.js')
-<script type="module">
-    Echo.channel('chatroom')
-    .listen('MessageEvent', (e)=>{
-        console.log(e.message);
+    @vite('resources/js/app.js')
+    <script type="module">
+        Echo.channel('chatroom')
+            .listen('MessageEvent', (e) => {
+                console.log(e.message);
+                console.log("hi");
+            });
         console.log("hi");
-    });
-    console.log("hi");
-    
-</script>
+    </script>
 @endsection

@@ -20,21 +20,21 @@ class AuthController extends Controller
         ];
         if (Auth::attempt($credentials)) {
             if (Auth::user()->code == 'admin') {
-                toastr()->success('Login success!');
+                toastr()->success('Đăng nhập thành công!');
                 return redirect()->route('admin.dashboard');
             } else {
-                toastr()->warning('You are not an admin!');
+                toastr()->warning('Bạn không phải là admin!');
                 return redirect()->back();
             }
         }
-        toastr()->error('Login failed!');
+        toastr()->error('Đăng nhập thất bại!');
         return redirect()->back();
     }
 
     public function doLogout()
     { //GET [/admin/doLogout]
         Auth::logout(); //đăng xuất
-        toastr()->success('Logout success'); //Thông báo
+        toastr()->success('Đăng xuất thành công!'); //Thông báo
         return redirect()->route('account.login'); //CHuyển hướng ra trang login
     }
 }

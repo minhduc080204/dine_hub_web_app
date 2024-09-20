@@ -2,6 +2,10 @@
     width: 100px;
     text-align: center !important;
 }
+th {
+    align-items: left;
+    align-content: center;
+}
 td {
     align-items: left;
     align-content: center;
@@ -20,4 +24,17 @@ td {
 .active > .page-link,
 .page-link.active {
     background-color: rgb(202, 202, 202) !important;
+}
+label {
+    font-size: 13px;
+}
+.form-control {
+    font-size: 13px;
+}
+input:checked {
+    background-color: #777777 !important;
+    border: #777777 !important;
+}
+input:focus {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;
 }

@@ -14,9 +14,9 @@ class MessageController extends Controller
     public function index()
     {
         $messages = Message::all()->groupBy('user_id');
-        $title = 'Message';
+        $title = 'Hội thoại';
         return view('admin.pages.message.index', compact('title', 'messages'));
-        
+
     }
     public function sendMessage(Request $request)
     {
@@ -27,12 +27,12 @@ class MessageController extends Controller
         // ]);
 
         MessageEvent::dispatch($message);
-        
+
         return response()->json(['status' => 'Message Sent!']);
     }
     public function getMessage(Request $request)
     {
-        $message = Message::where('user_id', $request->input('userId'))->get();        
+        $message = Message::where('user_id', $request->input('userId'))->get();
         return response()->json($message);
     }
 }

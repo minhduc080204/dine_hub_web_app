@@ -9,9 +9,10 @@ use App\Models\User;
 
 class OrderController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $orders = Order::with('user')->get();
-        $title = 'Order';
-        return view('admin.pages.order.index', compact('title','orders'));
+        $title = 'Đơn hàng';
+        return view('admin.pages.order.index', compact('title', 'orders'));
     }
 }

@@ -9,10 +9,10 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Last edit</th>
-                                    <th class="Action">Action</th>
+                                    <th>Ảnh</th>
+                                    <th>Tên</th>
+                                    <th>Cập nhật cuối</th>
+                                    <th class="Action">Thao tác</th>
                                 </tr>
                             </thead>
 
@@ -26,15 +26,15 @@
                                             {{ $user->user_name }}
                                             {!! Auth::user()->email == $user->email ? '<span class="text-danger fw-bold"> (me)</span>' : '' !!}
                                         </td>
-                                        <td> {{ $user->updated_at->format('Y/d/m') }}</td>
+                                        <td> {{ $user->updated_at }}</td>
                                         <td class="Action">
                                             <div class="dropdown">
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
                                                     aria-expanded="false"
                                                     style="{{ Auth::user()->email == $user->email ? 'display:none ' : '' }}"></i>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                    <li><a class="dropdown-item" href="#">Sửa</a></li>
+                                                    <li><a class="dropdown-item" href="#">Xoá</a></li>
                                                 </ul>
                                             </div>
                                         </td>

@@ -8,30 +8,34 @@ use Exception;
 
 class SlideController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $slides = Slide::get();
-        $title = 'Carousel';
+        $title = 'Trượt';
         return view('admin.pages.slide.index', compact('title', 'slides'));
     }
 
-    public function editView($id){
-        $slide = Slide::where("id", $id)->get();    
-        $title = 'Edit Carousel';    
+    public function editView($id)
+    {
+        $slide = Slide::where("id", $id)->get();
+        $title = 'Chỉnh sửa trượt';
         return view('admin.pages.slide.editSlide', compact('title', 'slide'));
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         // Slide::where("id", $id)->delete(); 
         return redirect()->route("admin.slide");
     }
 
-    public function remove($id){
-        try{
+    public function remove($id)
+    {
+        try {
             // Slide::where("id", $id)->delete(); 
             toastr()->success('Data has been removed successfully!');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             toastr()->error('Removed failed!');
         }
-        return  redirect()->route("admin.slide");
+        return redirect()->route("admin.slide");
     }
 }

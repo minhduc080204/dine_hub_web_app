@@ -23,29 +23,34 @@ Route::get('/doLogout', [AuthController::class, 'doLogout'])->name('account.doLo
 
 // ADMIN ==============================================
 // Route::prefix('admin')->group(function () {
-Route::prefix('admin')->middleware('Authentication')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // USER ----------------------------------------------
-    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
+    Route::get('/user', [UserController::class, 'index'])->name('user');
 
     // PRODUCT ----------------------------------------------
-    Route::get('/product', [ProductController::class, 'index'])->name('admin.product');
-    Route::get('/product/create', [ProductController::class, 'index'])->name('admin.product.create');
-
-    // PRODUCT ----------------------------------------------
-    Route::get('/order', [OrderController::class, 'index'])->name('admin.order');
+    Route::prefix('product')->name('product.')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::get('/create', [ProductController::class, 'create'])->name('create');
+        Route::post('/store', [ProductController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [ProductController::class, 'update'])->name('update');
+    });
+    // ORDER ----------------------------------------------
+    Route::get('/order', [OrderController::class, 'index'])->name('order');
 
     // SLIDE ----------------------------------------------
-    Route::get('/slide', [SlideController::class, 'index'])->name('admin.slide');
-    Route::get('/slide/edit/{id}', [SlideController::class, 'editView'])->name('admin.silde.edit.view');
-    Route::put('/slide/edit/{id}', [SlideController::class, 'edit'])->name('admin.silde.edit');
-    Route::delete('/slide/remove/{id}', [SlideController::class, 'remove'])->name('admin.silde.remove');
+    Route::get('/slide', [SlideController::class, 'index'])->name('slide');
+    Route::get('/slide/edit/{id}', [SlideController::class, 'editView'])->name('silde.edit.view');
+    Route::put('/slide/edit/{id}', [SlideController::class, 'edit'])->name('silde.edit');
+    Route::delete('/slide/remove/{id}', [SlideController::class, 'remove'])->name('silde.remove');
 
     // CATEGORY ----------------------------------------------
-    Route::get('/category', [CategoryController::class, 'index'])->name('admin.category');
-    Route::get('/category/edit/{id}', [CategoryController::class, 'editView'])->name('admin.category.edit.view');
-    Route::put('/category/edit/{id}', [CategoryController::class, 'edit'])->name('admin.category.edit');
-    Route::delete('/category/remove/{id}', [CategoryController::class, 'remove'])->name('admin.category.remove');
+    Route::get('/category', [CategoryController::class, 'index'])->name('category');
+    Route::get('/category/edit/{id}', [CategoryController::class, 'editView'])->name('category.edit.view');
+    Route::put('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::delete('/category/remove/{id}', [CategoryController::class, 'remove'])->name('category.remove');
 
-    Route::get('/messages', [MessageController::class, 'index'])->name('admin.messages');
+    // MESSAGES ----------------------------------------------
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 });

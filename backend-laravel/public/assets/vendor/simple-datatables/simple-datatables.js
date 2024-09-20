@@ -6062,14 +6062,14 @@
                                     tableRender: !1,
                                     diffDomOptions: { valueDiffing: !1 },
                                     labels: {
-                                        placeholder: "Search...",
+                                        placeholder: "Tìm kiếm...",
                                         searchTitle: "Search within table",
-                                        perPage: " entries per page",
+                                        perPage: " Bản ghi trên trang",
                                         pageTitle: "Page {page}",
-                                        noRows: "No entries found",
+                                        noRows: "Không có dữ liệu",
                                         noResults:
-                                            "No results match your search query",
-                                        info: "Showing {start} to {end} of {rows} entries",
+                                            "Không có kết quả nào phù hợp với truy vấn tìm kiếm của bạn",
+                                        info: "Hiển thị {start} đến {end} của {rows} bản ghi",
                                     },
                                     template: (t, e) =>
                                         `<div class='${t.classes.top}'>\n    ${

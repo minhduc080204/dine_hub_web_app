@@ -26,5 +26,14 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('activeClass', function ($route) {
             return "<?php echo request()->routeIs($route) ? '' : 'collapsed'; ?>";
         });
+        Blade::directive('errorDirective', function ($title) {
+            return
+                "<?php echo \$errors->first($title) ? '<label class=\"text-danger\">' .'<i class=\"bi bi-exclamation-circle mx-1\"></i>' . \$errors->first($title) . '</label>' : ''; ?>";
+        });
+
+
+
+
+
     }
 }

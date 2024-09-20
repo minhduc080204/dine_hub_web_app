@@ -9,11 +9,11 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                    <th class="Action">Action</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Trạng thái</th>
+                                    <th class="Action">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,8 +29,8 @@
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
                                                     aria-expanded="false"></i>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="#">Detail</a></li>
-                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                    <li><a class="dropdown-item" href="#">Chi tiết</a></li>
+                                                    <li><a class="dropdown-item" href="#">Xoá</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -39,23 +39,6 @@
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
-                        <div class="test container">
-                            <table class="table datatable">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
-                                        <th class="Action">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tr">
-
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
 

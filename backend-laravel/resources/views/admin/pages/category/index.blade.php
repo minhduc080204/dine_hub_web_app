@@ -8,21 +8,21 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Last edit</th>
                                     <th>Id</th>
-                                    <th class="disable Action">Action</th>
+                                    <th>Ảnh</th>
+                                    <th>Tên danh mục</th>
+                                    <th>Cập nhật cuối</th>
+                                    <th class="disable Action">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($categogies as $key => $category)
                                     <tr>
+                                        <td>#{{ $key + 1 }}</td>
                                         <td><img class="category_img" src="{{ $category->image }}" alt="img"
                                                 width="150" style="max-height: 120px"></td>
                                         <td>{{ $category->name }}</td>
-                                        <td>{{ $category->updated_at->format('Y/d/m') }}</td>
-                                        <td>{{ $category->id }}</td>
+                                        <td>{{ $category->updated_at }}</td>
                                         <td class="Action">
                                             <div class="dropdown">
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
@@ -33,10 +33,10 @@
                                                         method="POST">
                                                         @csrf
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.category.edit.view', ['id' => $category->id]) }}">Edit</a>
+                                                                href="{{ route('admin.category.edit.view', ['id' => $category->id]) }}">Sửa</a>
                                                         </li>
 
-                                                        <li><button type="submit" class="dropdown-item">Delete</button>
+                                                        <li><button type="submit" class="dropdown-item">Xoá</button>
                                                         </li>
                                                     </form>
                                                 </ul>

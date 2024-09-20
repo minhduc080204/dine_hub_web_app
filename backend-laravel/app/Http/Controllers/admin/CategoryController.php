@@ -13,14 +13,14 @@ class CategoryController extends Controller
     public function index()
     {
         $categogies = Category::get();
-        $title = 'Category';
+        $title = 'Danh mục';
         return view('admin.pages.category.index', compact('title', 'categogies'));
     }
 
     public function editView($id)
     {
         $category = Category::where("id", $id)->get();
-        $title = 'Edit Category';
+        $title = 'Chỉnh sửa danh mục';
         return view('admin.pages.category.editCategory', compact('title', 'category'));
     }
 
@@ -45,8 +45,8 @@ class CategoryController extends Controller
                 $product->category = json_encode($categories);
                 $product->save();
             });
-        
-        toastr()->success('Data has been update successfully!');
+
+        toastr()->success('Cập nhật dữ liệu thành công!');
         return redirect()->route("admin.category");
     }
 
@@ -54,10 +54,10 @@ class CategoryController extends Controller
     {
         try {
             // Slide::where("id", $id)->delete(); 
-            toastr()->success('Data has been removed successfully!');
+            toastr()->success('Xoá dữ liệu thành công!');
         } catch (Exception $e) {
-            toastr()->error('Removed failed!');
+            toastr()->error('Xoá dữ liệu thất bại!');
         }
-        return  redirect()->route("admin.category");
+        return redirect()->route("admin.category");
     }
 }
