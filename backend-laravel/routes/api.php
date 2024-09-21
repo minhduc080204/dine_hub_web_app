@@ -33,9 +33,9 @@ Route::prefix('')->group(function () {
     Route::post('/discount', [DiscountController::class, 'index']);
     Route::post('/checkdiscount', [DiscountController::class, 'checkDiscount']);
     Route::post('/order/create', [OrderController::class, 'newOrder']);
-    
     Route::post('/message', [MessageController::class, 'getMessage']);
     Route::get('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
+    
 });
 
 Route::group(['prefix' => 'auth'], function () {

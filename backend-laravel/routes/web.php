@@ -1,4 +1,7 @@
 <?php
+
+use App\Events\MessageEvent;
+use App\Events\MessageSent;
 use App\Http\Controllers\admin\MessageController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +14,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\AuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,4 +57,5 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
 
     // MESSAGES ----------------------------------------------
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');    
 });
