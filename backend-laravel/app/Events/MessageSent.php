@@ -13,14 +13,18 @@ use Illuminate\Queue\SerializesModels;
 class MessageSent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $userId;
     public $message;
-    public function __construct($message)
+    public $role;
+    public function __construct($userId, $message, $role)
     {
+        $this->userId = $userId;
         $this->message = $message;
+        $this->role = $role;
     }
-    public function broadcastOn()
+    public function broadcastOn(): Channel
     {
-        return new Channel('chatroom');
+        return new Channel('chatroom'.$this->userId);
     }
     public function broadcastAs()
     {

@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {                        
             $table->id();
-            $table->text('message');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Liên kết với người gửi
             $table->text('role')->nullable();
-            $table->integer('user_id')->unsigned();
-            $table->timestamps();
+            $table->text('content');
+            $table->text('status');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

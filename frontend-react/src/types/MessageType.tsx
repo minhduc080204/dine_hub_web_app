@@ -1,8 +1,7 @@
 export type MessageType = {
-    name: string;
-    message: string;
-    time?: string;
+    userId: number;
     role?: string;
-    userId?: number;
+    content: string;
+    time?: string;
   };
   

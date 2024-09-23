@@ -38,3 +38,31 @@ input:checked {
 input:focus {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;
 }
+
+#box-messages, #box-status{
+    overflow: hidden auto;
+}
+
+#box-chating{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.boxinput-chating{
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.boxinput-chating button{
+    border: none;
+    background-color: transparent;
+    height: 100%;
+}
+
+.box-status-item:hover{
+    background-color: rgba(80, 80, 255, 0.079);
+}
