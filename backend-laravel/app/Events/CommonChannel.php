@@ -11,9 +11,13 @@ class CommonChannel implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $userId;    
-    public function __construct($userId)
+    public $message;
+    public $role;
+    public function __construct($userId, $message, $role)
     {
         $this->userId = $userId;        
+        $this->message = $message;
+        $this->role = $role;
     }
     public function broadcastOn(): Channel
     {

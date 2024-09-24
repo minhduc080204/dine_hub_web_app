@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { FlatList, ScrollView, Text, TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 
 import { components } from '../../components';
 import { reviews, theme } from '../../constants';
 import { useAppDispatch, useAppNavigation } from '../../hooks';
-import { svg } from '../../assets/svg';
 import BottomTabBar from '../../navigation/BottomTabBar';
 import {
   useGetCarouselQuery,
@@ -13,9 +12,6 @@ import {
   useGetProductsQuery
 } from '../../store/slices/apiSlice';
 import { setScreen } from '../../store/slices/tabSlice';
-import { homeIndicatorHeight } from '../../utils';
-import HomeSvg from '../../assets/svg/HomeSvg';
-import { Path, Svg } from 'react-native-svg';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
