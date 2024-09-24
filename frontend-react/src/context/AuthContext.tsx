@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userToken, setUserToken] = useState<string | null>(null);
   const [userInfor, setUserInfor] = useState<string | null>(null);
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const login = async (email: string, password: string) => {
     try {
@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }: any) => {
       const user = res.data.user;
 
       setUserToken(token);
+      setUserInfor(user);
       await AsyncStorage.setItem('userInfor', JSON.stringify(user));
       await AsyncStorage.setItem('userToken', token);
 
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }: any) => {
           type: 'danger',
           icon: 'danger',
         })
-      }  
+      }
 
       return showMessage({
         message: 'Login Failed :(',
@@ -80,7 +81,7 @@ export const AuthProvider = ({ children }: any) => {
     } catch (error: any) {
       console.log(error);
       let codeErr = error.status;
-      if(codeErr==422){
+      if (codeErr == 422) {
         return showMessage({
           message: 'Use other Email',
           description: `Email has been registered!`,
@@ -88,7 +89,7 @@ export const AuthProvider = ({ children }: any) => {
           icon: 'danger',
         });
       }
-      
+
       if (error.response) {
         console.log(`Registration failed: ${error.response.data.message}`);
       } else {
@@ -101,12 +102,30 @@ export const AuthProvider = ({ children }: any) => {
 
 
 
-  const logout = () => {
+  const logout = async () => {
     setIsLoading(true);
-    setUserToken(null);
-    AsyncStorage.removeItem('userInfor');
-    AsyncStorage.removeItem('userToken');
-    setIsLoading(false);
+    try {
+      // Xóa thông tin trong AsyncStorage
+      await AsyncStorage.removeItem('userInfor');
+      await AsyncStorage.removeItem('userToken');
+
+      // Reset thông tin người dùng trong Redux
+      dispatch(setUser(null));
+
+      // Reset trạng thái context
+      setUserToken(null);
+      setUserInfor(null);
+
+      showMessage({
+        message: 'Logged out successfully',
+        type: 'success',
+        icon: 'success',
+      });
+    } catch (error) {
+      console.error('Logout error: ', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isLoggedIn = async () => {

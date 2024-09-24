@@ -75,7 +75,7 @@ class CategoryController extends Controller
             });
 
         toastr()->success('Cập nhật dữ liệu thành công!');
-        return redirect()->route("admin.category");
+        return redirect()->route("admin.category.index");
     }
 
     public function remove($id)
@@ -86,6 +86,6 @@ class CategoryController extends Controller
         } catch (Exception $e) {
             toastr()->error('Xoá dữ liệu thất bại!');
         }
-        return redirect()->route("admin.category");
+        return redirect()->route("admin.category.index");
     }
 }
