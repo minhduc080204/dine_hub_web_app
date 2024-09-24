@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\SlideController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\DiscountController;
 use App\Http\Controllers\admin\AuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
@@ -50,8 +51,6 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
     Route::delete('/slide/remove/{id}', [SlideController::class, 'remove'])->name('silde.remove');
 
     // CATEGORY ----------------------------------------------
-
-
     Route::prefix('category')->name('category.')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
@@ -63,5 +62,14 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
     // MESSAGES ----------------------------------------------
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
     // Route::get('/message/{id}', [MessageController::class, 'index'])->name('messages');
-    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');    
+    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
+
+    // DISCOUNT ----------------------------------------------
+    Route::prefix('discount')->name('discount.')->group(function () {
+        Route::get('/', [DiscountController::class, 'index'])->name('index');
+        Route::get('/create', [DiscountController::class, 'create'])->name('create');
+        Route::post('/store', [DiscountController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [DiscountController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [DiscountController::class, 'update'])->name('update');
+    });
 });

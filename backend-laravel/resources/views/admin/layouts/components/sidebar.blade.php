@@ -45,7 +45,7 @@
             </a>
         </li><!-- End Profile Page Nav -->
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.order')" href="{{ route('admin.order') }}">
+            <a class="nav-link @activeClass('admin.discount.index')" href="{{ route('admin.discount.index') }}">
                 <i class="bi bi-percent"></i>
                 <span>Mã giảm giá</span>
             </a>
