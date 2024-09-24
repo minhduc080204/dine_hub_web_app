@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Facades\Storage;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -12,11 +14,31 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categogies = Category::get();
+        $categories = Category::get();
         $title = 'Danh mục';
-        return view('admin.pages.category.index', compact('title', 'categogies'));
+        return view('admin.pages.category.index', compact('title', 'categories'));
     }
-
+    public function create()
+    {
+        $title = 'Tạo danh mục mới';
+        return view('admin.pages.category.createCategory', compact('title'));
+    }
+    public function store(CategoryRequest $request)
+    {
+        $category = new Category();
+        $category->name = $request->name;
+        if ($request->hasFile('image')) {
+            $filename = $request->file('image')->getClientOriginalName();
+            $filePath = 'images/products/' . $filename;
+            $category->image = $filename;
+            if (!Storage::disk('public')->exists($filePath)) {
+                $request->file('image')->storeAs('images/products', $filename, 'public');
+            }
+        }
+        $category->save();
+        toastr()->success('Thêm sản phẩm thành công');
+        return to_route('admin.category.index');
+    }
     public function editView($id)
     {
         $category = Category::where("id", $id)->get();
@@ -29,11 +51,17 @@ class CategoryController extends Controller
 
         $oldCategory = $request->input('oldCategory'); // Giá trị cũ cần thay thế
         $newCategory = $request->input('newCategory'); // Giá trị mới
-
         $category = Category::find($id);
         $category->name = $newCategory;
+        if ($request->hasFile('image')) {
+            $filename = $request->file('image')->getClientOriginalName();
+            $filePath = 'images/products/' . $filename;
+            $category->image = $filename;
+            if (!Storage::disk('public')->exists($filePath)) {
+                $request->file('image')->storeAs('images/products', $filename, 'public');
+            }
+        }
         $category->save();
-
         // Cập nhật các bản ghi có chứa oldCategory
         Product::whereJsonContains('category', $oldCategory)
             ->get()
@@ -53,7 +81,7 @@ class CategoryController extends Controller
     public function remove($id)
     {
         try {
-            // Slide::where("id", $id)->delete(); 
+            Category::where("id", $id)->delete();
             toastr()->success('Xoá dữ liệu thành công!');
         } catch (Exception $e) {
             toastr()->error('Xoá dữ liệu thất bại!');

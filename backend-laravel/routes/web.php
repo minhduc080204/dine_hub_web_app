@@ -50,11 +50,16 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
     Route::delete('/slide/remove/{id}', [SlideController::class, 'remove'])->name('silde.remove');
 
     // CATEGORY ----------------------------------------------
-    Route::get('/category', [CategoryController::class, 'index'])->name('category');
-    Route::get('/category/edit/{id}', [CategoryController::class, 'editView'])->name('category.edit.view');
-    Route::put('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::delete('/category/remove/{id}', [CategoryController::class, 'remove'])->name('category.remove');
 
+
+    Route::prefix('category')->name('category.')->group(function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CategoryController::class, 'editView'])->name('edit.view');
+        Route::put('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
+        Route::delete('/remove/{id}', [CategoryController::class, 'remove'])->name('remove');
+    });
     // MESSAGES ----------------------------------------------
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
     Route::get('/message/{id}', [MessageController::class, 'usermessage'])->name('usermessage');

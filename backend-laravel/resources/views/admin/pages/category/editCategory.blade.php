@@ -16,19 +16,20 @@
                     </form>
                 </div>
                 <form id="editCategoryForm" action="{{ route('admin.category.edit', ['id' => $category->id]) }}"
-                    method="POST">
+                    method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="text" value="{{ $category->name }}" style="display: none" id="oldCategory" name="oldCategory">
+                    <input type="text" value="{{ $category->name }}" style="display: none" id="oldCategory"
+                        name="oldCategory">
                     <div class="card pt-3">
                         <div class="card-body">
-                            <label for="formFile" class="form-label">Name</label>
+                            <label for="newCategory" class="form-label">Tên danh mục</label>
                             <input class="form-control" type="text" id="newCategory" name="newCategory"
                                 placeholder="Name of Category" value="{{ $category->name }}">
                         </div>
                         <div class="card-body">
-                            <label for="formFile" class="form-label">Image</label>
-                            <input class="form-control" type="file" id="formFile">
+                            <label for="formFile" class="form-label">Hình ảnh</label>
+                            <input class="form-control" type="file" id="formFile" name="image">
                         </div>
                     </div>
                 </form>
