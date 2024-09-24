@@ -35,8 +35,10 @@ import SmartphoneSvg from './SmartphoneSvg';
 import TagSvg from './TagSvg';
 import UserSvg from './UserSvg';
 import ViewAllSvg from './ViewAllSvg';
+import MessageSvg from './MessageSvg';
 
 export const svg = {
+  MessageSvg,
   PictureSvg,
   PhoneCallSvg,
   HomeSvg,

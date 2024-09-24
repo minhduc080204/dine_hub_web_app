@@ -61,9 +61,6 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
     });
     // MESSAGES ----------------------------------------------
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
-    // Route::get('/message/{id}', [MessageController::class, 'index'])->name('messages');
-    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
-
     // DISCOUNT ----------------------------------------------
     Route::prefix('discount')->name('discount.')->group(function () {
         Route::get('/', [DiscountController::class, 'index'])->name('index');
@@ -72,4 +69,8 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
         Route::get('/edit/{id}', [DiscountController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [DiscountController::class, 'update'])->name('update');
     });
+
+    Route::get('/message/{id}', [MessageController::class, 'usermessage'])->name('usermessage');
+    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');    
+
 });
