@@ -25,17 +25,17 @@ Route::prefix('')->group(function () {
     Route::get('/slides', [SlideController::class, 'index']);
     Route::get('/tags', [Tag::class, 'index']);
     Route::get('/users', [UserController::class, 'index']);
-    // ORDER
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'select']);
     Route::get('/QRcode', [OrderController::class, 'QRcode']);
     Route::get('/bank', [BankController::class, 'index']);
+    
     Route::post('/discount', [DiscountController::class, 'index']);
     Route::post('/checkdiscount', [DiscountController::class, 'checkDiscount']);
     Route::post('/order/create', [OrderController::class, 'newOrder']);
-    
     Route::post('/message', [MessageController::class, 'getMessage']);
-    Route::get('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
+    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');    
+    
 });
 
 Route::group(['prefix' => 'auth'], function () {

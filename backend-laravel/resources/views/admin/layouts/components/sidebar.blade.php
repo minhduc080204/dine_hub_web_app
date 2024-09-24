@@ -163,7 +163,7 @@
 
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.messages')" href="{{ route('admin.messages') }}">
-                <i class="bi bi-people"></i>
+                <i class="bi bi-chat-dots"></i>
                 <span>Hội thoại</span>
             </a>
         </li><!-- End Profile Page Nav -->

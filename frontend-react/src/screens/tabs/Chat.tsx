@@ -19,6 +19,7 @@ import { useAppNavigation } from '../../hooks';
 import { useGetMessageMutation, useSendMessageMutation } from '../../store/slices/apiSlice';
 import { MessageType } from '../../types';
 import { homeIndicatorHeight } from '../../utils';
+import Pusher from 'pusher-js';
 
 
 const Chat: React.FC = (): JSX.Element => {
@@ -31,13 +32,14 @@ const Chat: React.FC = (): JSX.Element => {
 
     const [sendMessage] = useSendMessageMutation();
 
-    useEffect(() => {
+    useEffect(() => {        
         const fetchMessages = async () => {
             try {
                 const response: any = await getMessage({ userId: userInfor.id });
                 if (response?.data) {
                     setMessages(response.data);
                 }
+
             } catch (err) {
                 console.error("Error fetching messages:", err);
             }
@@ -46,16 +48,37 @@ const Chat: React.FC = (): JSX.Element => {
         fetchMessages();
     }, [getMessage]);
 
+    useEffect(() => {
+        const pusher = new Pusher('905ea1087d251dc4a082', {
+          cluster: 'ap1',
+        });
+        console.log(userInfor.id);
+        
+        const channel = pusher.subscribe('chatroom'+userInfor.id);
+        channel.bind('MessageSent', (data:any) => {            
+            if(data && data.message){
+                const mess: MessageType = { content: data.message, role: data.role, userId: userInfor.id }
+                setMessages((prevMessages) => [...prevMessages, mess]);
+            }
+        });
+    
+        return () => {
+          channel.unbind_all();
+          channel.unsubscribe();
+        };
+      }, []);
+
+
+
     const handleSendMessage = async () => {
         if (message.trim()) {
+            const mess: MessageType = { userId: userInfor.id, content: message}
             setMessage("");
-            const mess: MessageType = { message: message, name: "minhduc", userId: userInfor.id }
             try {
-                setMessages([...messages, mess]);
                 await sendMessage(mess);
             } catch (error) {
                 console.error("Error sending message:", error);
-            }
+            }            
         }
     }
 
@@ -137,7 +160,7 @@ const Chat: React.FC = (): JSX.Element => {
                                 borderRadius: 50,
                             }}
                         />
-                        <Text style={textStyle}>{message.message}</Text>
+                        <Text style={textStyle}>{message.content}</Text>
                     </View>
 
                 );
@@ -158,9 +181,9 @@ const Chat: React.FC = (): JSX.Element => {
                 <Path
                     d="m6.998 10.247.435.76c.277.485.415.727.415.993s-.138.508-.415.992l-.435.761c-1.238 2.167-1.857 3.25-1.375 3.788.483.537 1.627.037 3.913-.963l6.276-2.746c1.795-.785 2.693-1.178 2.693-1.832 0-.654-.898-1.047-2.693-1.832L9.536 7.422c-2.286-1-3.43-1.5-3.913-.963-.482.537.137 1.62 1.375 3.788Z"
                     fill={message.trim() ? "#00B0B9" : "#000"}
-                    // strokeWidth={2}
-                    // strokeLinecap="round"
-                    // strokeLinejoin="round"
+                // strokeWidth={2}
+                // strokeLinecap="round"
+                // strokeLinejoin="round"
                 />
             </Svg>
         )
@@ -226,7 +249,7 @@ const Chat: React.FC = (): JSX.Element => {
             </View >
         );
     };
-    
+
     const renderHomeIndicator = () => {
         return <components.HomeIndicator />;
     };

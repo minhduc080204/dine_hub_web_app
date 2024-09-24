@@ -8,13 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     protected $fillable = [
         'id',
-        'message',
-        'role',
         'user_id',
+        'role',
+        'content',
+        'status',
         'created_at',
-        'updated_at',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
