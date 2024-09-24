@@ -35,7 +35,7 @@
                                                 alt="" width="70" class="rounded">
                                         </td>
                                         <td>{{ $product->name }}</td>
-                                        <td>{{ $product->price }} VNĐ</td>
+                                        <td>{{ $product->price }} <span class="text-decoration-underline">đ</span></td>
                                         <td>{{ $product->weight }}g</td>
                                         <td> {{ $product->updated_at }}</td>
                                         <td>#{{ $key + 1 }}</td>

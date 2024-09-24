@@ -5,6 +5,14 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="py-3 d-flex justify-content-end">
+                            <a href="{{ route('admin.category.create') }}">
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="bi bi-plus-circle"></i>
+                                    Tạo danh mục mới
+                                </button>
+                            </a>
+                        </div>
                         <table class="table datatable">
                             <thead>
                                 <tr>
@@ -16,11 +24,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categogies as $key => $category)
+                                @foreach ($categories as $key => $category)
                                     <tr>
                                         <td>#{{ $key + 1 }}</td>
-                                        <td><img class="category_img" src="{{ $category->image }}" alt="img"
-                                                width="150" style="max-height: 120px"></td>
+                                        <td><img class="category_img"
+                                                src="{{ asset('storage/images/products/' . $category->image) }}"
+                                                alt="img" width="150" style="max-height: 120px"></td>
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->updated_at }}</td>
                                         <td class="Action">

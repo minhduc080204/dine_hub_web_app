@@ -33,31 +33,37 @@
                                         <textarea class="form-control no-resize" name="description" rows="5" placeholder="Nhập mô tả ngắn" id="">{{ old('description') }}</textarea>
                                         @errorDirective('description')
                                     </div>
-                                    <div class="input mb-3">
+                                    <div class="input mb-3 position-relative">
                                         <label for="price" class="fw-bolder mb-1">
                                             Giá: <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" name="price" id="price"
                                             class="form-control input_number" placeholder="Nhập giá tiền"
                                             value="{{ old('price') }}">
+                                        <label for="" class="text-muted position-absolute"
+                                            style="top:55%; right:10px">VNĐ</label>
                                         @errorDirective('price')
                                     </div>
-                                    <div class="input mb-3">
+                                    <div class="input mb-3 position-relative">
                                         <label for="weight" class="fw-bolder mb-1">
                                             Khối lượng: <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" name="weight" id="weight"
                                             class="form-control input_number" placeholder="Nhập khối lượng"
                                             value="{{ old('weight') }}">
+                                        <label for="" class="text-muted position-absolute"
+                                            style="top:55%; right:10px">g</label>
                                         @errorDirective('weight')
                                     </div>
-                                    <div class="input mb-3">
+                                    <div class="input mb-3 position-relative">
                                         <label for="calories" class="fw-bolder mb-1">
                                             Năng lượng: <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" name="calories" id="calories"
                                             class="form-control input_number" placeholder="Nhập năng lượng"
                                             value="{{ old('calories') }}">
+                                        <label for="" class="text-muted position-absolute"
+                                            style="top:55%; right:10px">calories</label>
                                         @errorDirective('calories')
                                     </div>
                                     <div class="input mb-3">
@@ -94,21 +100,22 @@
                     <div class="card-body mt-3">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="1" name="is_new"
-                                id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
+                                id="is_new" checked>
+                            <label class="form-check-label" for="is_new">
                                 Mới
                             </label>
                         </div>
                         <div class="form-check my-1">
-                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="1" name="is_"
+                                id="is_">
+                            <label class="form-check-label" for="is_">
                                 Nổi bật
                             </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="1" name="is_bestseller"
-                                id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                                id="is_bestseller">
+                            <label class="form-check-label" for="is_bestseller">
                                 Đề xuất
                             </label>
                         </div>

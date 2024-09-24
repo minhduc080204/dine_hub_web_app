@@ -18,11 +18,10 @@ class AuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            toastr()->warning('Please log in to use this feature!');
+            toastr()->warning('Vui lòng đăng nhập!');
             Auth::logout();
             return redirect()->route('account.login');
-        }
-        else {
+        } else {
             if (Auth::user()->code == 'admin') {
                 return $next($request);
             } else {

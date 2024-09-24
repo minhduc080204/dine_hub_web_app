@@ -34,31 +34,37 @@
                                         <textarea class="form-control no-resize" name="description" rows="5" placeholder="Nhập mô tả ngắn" id="">{{ $product->description }}</textarea>
                                         @errorDirective('description')
                                     </div>
-                                    <div class="input mb-3">
+                                    <div class="input mb-3 position-relative">
                                         <label for="price" class="fw-bolder mb-1">
-                                            Giá: <span class="text-danger">*</span>
+                                            Giá: <span class="text-danger">*</span> (VNĐ)
                                         </label>
                                         <input type="text" name="price" id="price"
                                             class="form-control input_number" placeholder="Nhập giá tiền"
                                             value="{{ $product->price }}">
+                                        <label for="" class="text-muted position-absolute"
+                                            style="top:55%; right:10px">VNĐ</label>
                                         @errorDirective('price')
                                     </div>
-                                    <div class="input mb-3">
+                                    <div class="input mb-3 position-relative">
                                         <label for="weight" class="fw-bolder mb-1">
                                             Khối lượng: <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" name="weight" id="weight"
                                             class="form-control input_number" placeholder="Nhập khối lượng"
                                             value="{{ $product->weight }}">
+                                        <label for="" class="text-muted position-absolute"
+                                            style="top:55%; right:10px">g</label>
                                         @errorDirective('weight')
                                     </div>
-                                    <div class="input mb-3">
+                                    <div class="input mb-3 position-relative">
                                         <label for="calories" class="fw-bolder mb-1">
                                             Năng lượng: <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" name="calories" id="calories"
                                             class="form-control input_number" placeholder="Nhập năng lượng"
                                             value="{{ $product->calories }}">
+                                        <label for="" class="text-muted position-absolute"
+                                            style="top:55%; right:10px">calories</label>
                                         @errorDirective('calories')
                                     </div>
                                     <div class="input mb-3">
@@ -86,10 +92,11 @@
                                             class="form-control" value="{{ $product->image }}"> --}}
                                         <input type="hidden" name="image1" id="image" class="form-control"
                                             value="{{ $product->image }}">
-                                        <label type="text" for='image' id="show-image" class="form-control w-25">
+                                        {{-- <label type="text" for='image' id="show-image" class="form-control w-25">
                                             <img src="{{ asset('storage/images/products/' . $product->image) ?? '' }}"
                                                 alt="" width="100%">
-                                        </label>
+                                        </label> --}}
+
                                         @errorDirective('image')
                                     </div>
                                 </div>

@@ -39,7 +39,7 @@
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.category')" href="{{ route('admin.category') }}">
+            <a class="nav-link @activeClass('admin.category.index')" href="{{ route('admin.category.index') }}">
                 <i class="bi bi-grid"></i>
                 <span>Danh mục</span>
             </a>
