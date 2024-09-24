@@ -55,6 +55,21 @@
             $(this).val(filteredValue);
         });
     });
+    $(document).ready(function() {
+        $('.input_discount').on('input', function() {
+            var value = $(this).val();
+            var numericValue = value.replace(/[^0-9]/g, '');
+            var intValue = parseInt(numericValue);
+            if (isNaN(intValue)) {
+                intValue = '';
+            } else if (intValue > 100) {
+                intValue = 100;
+            } else if (intValue < 1) {
+                intValue = '';
+            }
+            $(this).val(intValue);
+        });
+    });
 </script>
 <script>
     const test = document.querySelector('.img-test');
