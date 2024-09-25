@@ -104,13 +104,6 @@
                             </div>
                     </div>
                 </div>
-                @php
-                    if ($errors->any()) {
-                        foreach ($errors->all() as $error) {
-                            toastr()->warning($error);
-                        }
-                    }
-                @endphp
                 <div class="card">
                     <div class="card-body mt-3">
                         <div class="form-check">

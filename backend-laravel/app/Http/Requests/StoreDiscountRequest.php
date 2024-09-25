@@ -24,7 +24,7 @@ class StoreDiscountRequest extends FormRequest
         return [
             'code' => 'required|string|max:255',
             'discount' => 'required|numeric|min:0|max:100',
-            'expires_at' => '|after_or_equal:today',
+            'expires_at' => 'nullable|after_or_equal:today',
         ];
     }
     public function messages()

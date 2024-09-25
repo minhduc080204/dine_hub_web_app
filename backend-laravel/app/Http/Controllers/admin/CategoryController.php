@@ -20,7 +20,7 @@ class CategoryController extends Controller
     }
     public function create()
     {
-        $title = 'Tạo danh mục mới';
+        $title = 'Thêm danh mục mới';
         return view('admin.pages.category.createCategory', compact('title'));
     }
     public function store(CategoryRequest $request)
@@ -36,7 +36,7 @@ class CategoryController extends Controller
             }
         }
         $category->save();
-        toastr()->success('Thêm sản phẩm thành công');
+        toastr()->success('Thêm danh mục thành công');
         return to_route('admin.category.index');
     }
     public function editView($id)
@@ -74,18 +74,18 @@ class CategoryController extends Controller
                 $product->save();
             });
 
-        toastr()->success('Cập nhật dữ liệu thành công!');
-        return redirect()->route("admin.category");
+        toastr()->success('Cập nhật danh mục thành công!');
+        return redirect()->route("admin.category.index");
     }
 
     public function remove($id)
     {
         try {
             Category::where("id", $id)->delete();
-            toastr()->success('Xoá dữ liệu thành công!');
+            toastr()->success('Xoá danh mục thành công!');
         } catch (Exception $e) {
-            toastr()->error('Xoá dữ liệu thất bại!');
+            toastr()->error('Xoá danh mục thất bại!');
         }
-        return redirect()->route("admin.category");
+        return redirect()->route("admin.category.index");
     }
 }

@@ -3,6 +3,7 @@
 use App\Events\MessageEvent;
 use App\Events\MessageSent;
 use App\Http\Controllers\admin\MessageController;
+use App\Http\Controllers\admin\TagController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\admin\CategoryController;
@@ -29,10 +30,14 @@ Route::get('/doLogout', [AuthController::class, 'doLogout'])->name('account.doLo
 // ADMIN ==============================================
 // Route::prefix('admin')->group(function () {
 Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // DASHBOARD ----------------------------------------------
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
+    });
     // USER ----------------------------------------------
-    Route::get('/user', [UserController::class, 'index'])->name('user');
-
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/user', [UserController::class, 'index'])->name('index');
+    });
     // PRODUCT ----------------------------------------------
     Route::prefix('product')->name('product.')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('index');
@@ -40,15 +45,22 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
         Route::post('/store', [ProductController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('update');
+        Route::delete('/remove/{id}', [ProductController::class, 'remove'])->name('remove');
     });
     // ORDER ----------------------------------------------
-    Route::get('/order', [OrderController::class, 'index'])->name('order');
-
+    Route::prefix('order')->name('order.')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('/detail/{id}', [OrderController::class, 'detail'])->name('detail');
+        Route::delete('/remove/{id}', [ProductController::class, 'remove'])->name('remove');
+    });
     // SLIDE ----------------------------------------------
-    Route::get('/slide', [SlideController::class, 'index'])->name('slide');
-    Route::get('/slide/edit/{id}', [SlideController::class, 'editView'])->name('silde.edit.view');
-    Route::put('/slide/edit/{id}', [SlideController::class, 'edit'])->name('silde.edit');
-    Route::delete('/slide/remove/{id}', [SlideController::class, 'remove'])->name('silde.remove');
+    Route::prefix('slide')->name('slide.')->group(function () {
+        Route::get('/slide', [SlideController::class, 'index'])->name('index');
+        Route::get('/slide/edit/{id}', [SlideController::class, 'editView'])->name('edit.view');
+        Route::put('/slide/edit/{id}', [SlideController::class, 'edit'])->name('edit');
+        Route::delete('/slide/remove/{id}', [SlideController::class, 'remove'])->name('remove');
+    });
+
 
     // CATEGORY ----------------------------------------------
     Route::prefix('category')->name('category.')->group(function () {
@@ -60,16 +72,29 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
         Route::delete('/remove/{id}', [CategoryController::class, 'remove'])->name('remove');
     });
     // MESSAGES ----------------------------------------------
-    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
-    // Route::get('/message/{id}', [MessageController::class, 'index'])->name('messages');
-    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
+    Route::prefix('messages')->name('messages.')->group(function () {
+        Route::get('/messages', [MessageController::class, 'index'])->name('index');
+        // Route::get('/message/{id}', [MessageController::class, 'index'])->name('messages');
+        Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
+    });
+    // TAG ----------------------------------------------
+    Route::prefix('tag')->name('tag.')->group(function () {
+        Route::get('/', [TagController::class, 'index'])->name('index');
+        Route::get('/create', [TagController::class, 'create'])->name('create');
+        Route::post('/store', [TagController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [TagController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [TagController::class, 'update'])->name('update');
+        Route::delete('/remove/{id}', [TagController::class, 'remove'])->name('remove');
+    });
 
     // DISCOUNT ----------------------------------------------
     Route::prefix('discount')->name('discount.')->group(function () {
         Route::get('/', [DiscountController::class, 'index'])->name('index');
+        Route::get('/reload', [DiscountController::class, 'reload'])->name('reload');
         Route::get('/create', [DiscountController::class, 'create'])->name('create');
         Route::post('/store', [DiscountController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [DiscountController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [DiscountController::class, 'update'])->name('update');
+        Route::delete('/remove/{id}', [DiscountController::class, 'remove'])->name('remove');
     });
 });

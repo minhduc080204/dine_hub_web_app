@@ -3,7 +3,6 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="card">
                     <div class="card-body">
                         <div class="py-3 d-flex justify-content-end">
@@ -35,7 +34,8 @@
                                                 alt="" width="70" class="rounded">
                                         </td>
                                         <td>{{ $product->name }}</td>
-                                        <td>{{ $product->price }} <span class="text-decoration-underline">đ</span></td>
+                                        <td>{{ number_format($product->price, 0, ',') }} <span
+                                                class="text-decoration-underline text-muted">đ</span></td>
                                         <td>{{ $product->weight }}g</td>
                                         <td> {{ $product->updated_at }}</td>
                                         <td>#{{ $key + 1 }}</td>
@@ -47,8 +47,7 @@
                                                     <li><a class="dropdown-item"
                                                             href="{{ route('admin.product.edit', $product->id) }}">
                                                             <i class="bi bi-pen"></i>Sửa</a></li>
-                                                    <li><a class="dropdown-item" href="#"> <i
-                                                                class="bi bi-trash"></i>Xoá</a></li>
+                                                    <li> @deleteItem('admin.product.remove', $product->id)</li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -56,9 +55,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{-- {{ $products->onEachSide(2)->links() }} --}}
-                        <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
 

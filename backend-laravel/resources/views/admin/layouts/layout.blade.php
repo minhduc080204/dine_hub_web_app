@@ -11,6 +11,7 @@
     </main>
 
     @include('admin.layouts.components.footer')
+    @include('admin.layouts.components.php')
     @include('admin.layouts.components.scripts')
     @yield('scripts')
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>

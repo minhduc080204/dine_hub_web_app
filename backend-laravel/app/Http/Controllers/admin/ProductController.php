@@ -8,15 +8,17 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Tag;
 
 class ProductController extends Controller
 {
     public function index()
     {
         $products = Product::all();
-        // $products = Product::all();
+        $tag = Tag::all();
         $title = 'Sản phẩm';
-        return view('admin.pages.product.index', compact('title', 'products'));
+        // dd(abc($products));
+        return view('admin.pages.product.index', compact('title', 'products', 'tag'));
     }
     public function create()
     {
@@ -41,17 +43,13 @@ class ProductController extends Controller
         // $product->reviews = $request->reviews;
         // dd($request->file('image'));
         $product = new Product();
+        $tag = new Tag();
         $product->name = $request->name;
         $product->weight = $request->weight;
         $product->calories = $request->calories;
         $product->price = $request->price;
         if ($request->hasFile('image')) {
-            $filename = $request->file('image')->getClientOriginalName();
-            $filePath = 'images/products/' . $filename;
-            $product->image = $filename;
-            if (!Storage::disk('public')->exists($filePath)) {
-                $request->file('image')->storeAs('images/products', $filename, 'public');
-            }
+            uploadImage($request->file('image'), $product);
         }
         $product->description = $request->description;
         $product->is_bestseller = $request->is_bestseller;
@@ -60,8 +58,22 @@ class ProductController extends Controller
         $values = array_map(function ($item) {
             return $item['value'];
         }, $category);
+
         $product->category = json_encode($values);
         $product->save();
+        $tags = json_decode($request->tag, true);
+        $values_tags = array_map(function ($item) {
+            return $item['value'];
+        }, $tags);
+        foreach ($values_tags as $item) {
+            $tag_id = Tag::where('name', $item)->pluck('id')->first();
+            if ($tag_id) {
+                $product->tags()->attach($tag_id);
+            } else {
+                dd('Tag not found: ' . $item);
+            }
+        }
+
         toastr()->success('Thêm sản phẩm thành công');
         return to_route('admin.product.index');
     }
@@ -81,7 +93,8 @@ class ProductController extends Controller
     {
         $title = 'Chỉnh sửa sản phẩm';
         $product = Product::find($id);
-        return view('admin.pages.product.edit', compact('title', 'product'));
+        $tag = Tag::all();
+        return view('admin.pages.product.edit', compact('title', 'product', 'tag'));
     }
 
     /**
@@ -96,22 +109,33 @@ class ProductController extends Controller
             $product->calories = $request->calories;
             $product->price = $request->price;
             if ($request->hasFile('image')) {
-                $filename = $request->file('image')->getClientOriginalName();
-                $filePath = 'images/products/' . $filename;
-                $product->image = $filename;
-                if (!Storage::disk('public')->exists($filePath)) {
-                    $request->file('image')->storeAs('images/products', $filename, 'public');
-                }
+                uploadImage($request->file('image'), $product);
             }
             $product->description = $request->description;
             $product->is_bestseller = $request->is_bestseller;
             $product->is_new = $request->is_new;
-            $category = json_decode($request->category, true);
-            $values = array_map(function ($item) {
+            $categories = json_decode($request->category, true);
+            $values_categories = array_map(function ($item) {
                 return $item['value'];
-            }, $category);
-            $product->category = json_encode($values);
+            }, $categories);
+            $product->category = json_encode($values_categories);
             $product->save();
+
+            $tags = json_decode($request->tag, true);
+            $values_tags = array_map(function ($item) {
+                return $item['value'];
+            }, $tags);
+            $tag_ids = [];
+            foreach ($values_tags as $item) {
+                $tag_id = Tag::where('name', $item)->pluck('id')->first();
+                if ($tag_id) {
+                    $tag_ids[] = $tag_id;
+                } else {
+                    dd('Tag not found: ' . $item);
+                }
+            }
+            $product->tags()->sync($tag_ids);
+
             toastr()->success('Cập nhật sản phẩm thành công');
             return to_route('admin.product.index');
         } catch (\Exception $e) {
@@ -122,8 +146,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function remove(string $id)
     {
-        //
+        $product = Product::where("id", $id)->delete();
+        toastr()->success('Xoá sản phẩm thành công!');
+        return to_route('admin.product.index');
     }
 }

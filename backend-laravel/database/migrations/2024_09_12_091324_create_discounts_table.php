@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name')->nullable(); // Tạo cột name với kiểu string
             $table->integer('discount', 8); // Tạo cột discount với kiểu decimal, ví dụ: 100.00
             $table->string('code'); // Tạo cột code với kiểu string
-            $table->timestamp('expires_at')->nullable(); // Tạo cột expires_at với kiểu timestamp, có thể null
+            $table->date('expires_at')->nullable(); // Tạo cột expires_at với kiểu timestamp, có thể null
             $table->timestamps(); // Tạo các cột created_at và updated_at
         });
     }

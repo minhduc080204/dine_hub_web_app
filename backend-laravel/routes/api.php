@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankController;
 use App\Http\Controllers\Api\DiscountController;
-use App\Models\Tag;
+use App\Http\Controllers\Api\TagController;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Mime\MessageConverter;
 
@@ -23,19 +23,19 @@ Route::prefix('')->group(function () {
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/categories', [CategotyController::class, 'index']);
     Route::get('/slides', [SlideController::class, 'index']);
-    Route::get('/tags', [Tag::class, 'index']);
+    Route::get('/tags', [TagController::class, 'index']);
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'select']);
     Route::get('/QRcode', [OrderController::class, 'QRcode']);
     Route::get('/bank', [BankController::class, 'index']);
-    
+
     Route::post('/discount', [DiscountController::class, 'index']);
     Route::post('/checkdiscount', [DiscountController::class, 'checkDiscount']);
     Route::post('/order/create', [OrderController::class, 'newOrder']);
     Route::post('/message', [MessageController::class, 'getMessage']);
-    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');    
-    
+    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
+
 });
 
 Route::group(['prefix' => 'auth'], function () {
@@ -48,16 +48,16 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('/refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
 
-    
-    
-    Route::post('/messages', function() {
-       $user = Auth::user();
-    
-      $message = new App\Models\Message();
-      $message->message = request()->get('message', '');
-      $message->user_id = $user->id;
-      $message->save();
-    
-      return ['message' => $message->load('user')];
+
+
+    Route::post('/messages', function () {
+        $user = Auth::user();
+
+        $message = new App\Models\Message();
+        $message->message = request()->get('message', '');
+        $message->user_id = $user->id;
+        $message->save();
+
+        return ['message' => $message->load('user')];
     });
 });

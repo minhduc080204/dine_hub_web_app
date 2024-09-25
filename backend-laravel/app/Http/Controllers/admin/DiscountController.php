@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Discount;
 use App\Http\Requests\StoreDiscountRequest;
 use App\Http\Requests\UpdateDiscountRequest;
-
+use Exception;
 class DiscountController extends Controller
 {
     /**
@@ -42,7 +42,12 @@ class DiscountController extends Controller
         toastr()->success('Thêm mã giảm giá thành công!');
         return to_route('admin.discount.index');
     }
-
+    public function reload()
+    {
+        Discount::where('expires_at', '<=', now())->delete();
+        toastr()->success('Cập nhật trạng thái mã giảm giá thành công');
+        return redirect()->back();
+    }
     /**
      * Display the specified resource.
      */
@@ -70,8 +75,14 @@ class DiscountController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Discount $discount)
+    public function remove(Discount $discount, $id)
     {
-        //
+        try {
+            Discount::where("id", $id)->delete();
+            toastr()->success('Xoá mã giảm giá thành công!');
+        } catch (Exception $e) {
+            toastr()->error('Xoá mã giảm giá thất bại!');
+        }
+        return redirect()->route("admin.discount.index");
     }
 }

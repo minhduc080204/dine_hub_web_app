@@ -4,14 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('slide', function (Blueprint $table) {
+        Schema::create('slides', function (Blueprint $table) {
             $table->id(); // Tạo cột 'id' kiểu auto-increment
             $table->string('title_line_1'); // Cột 'title_line_1' kiểu string
             $table->string('title_line_2'); // Cột 'title_line_2' kiểu string
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('slide');
+        Schema::dropIfExists('slides');
     }
 };
