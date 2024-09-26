@@ -32,11 +32,16 @@ Route::get('/doLogout', [AuthController::class, 'doLogout'])->name('account.doLo
 Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(function () {
     // DASHBOARD ----------------------------------------------
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
     });
     // USER ----------------------------------------------
     Route::prefix('user')->name('user.')->group(function () {
-        Route::get('/user', [UserController::class, 'index'])->name('index');
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
+        Route::delete('/remove/{id}', [UserController::class, 'remove'])->name('remove');
     });
     // PRODUCT ----------------------------------------------
     Route::prefix('product')->name('product.')->group(function () {

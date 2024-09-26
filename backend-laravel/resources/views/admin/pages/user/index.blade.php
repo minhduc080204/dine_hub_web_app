@@ -5,6 +5,14 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="py-3 d-flex justify-content-end">
+                            <a href="{{ route('admin.user.create') }}">
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="bi bi-plus-circle"></i>
+                                    Thêm người dùng
+                                </button>
+                            </a>
+                        </div>
                         <table class="table datatable">
                             <thead>
                                 <tr>
@@ -33,8 +41,10 @@
                                                     aria-expanded="false"
                                                     style="{{ Auth::user()->email == $user->email ? 'display:none ' : '' }}"></i>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="#">Sửa</a></li>
-                                                    <li><a class="dropdown-item" href="#">Xoá</a></li>
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ route('admin.user.edit', $user->id) }}">
+                                                            <i class="bi bi-pen"></i>Sửa</a></li>
+                                                    <li>@deleteItem('admin.user.remove', $user->id)</li>
                                                 </ul>
                                             </div>
                                         </td>

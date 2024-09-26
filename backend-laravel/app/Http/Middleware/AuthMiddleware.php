@@ -22,7 +22,7 @@ class AuthMiddleware
             Auth::logout();
             return redirect()->route('account.login');
         } else {
-            if (Auth::user()->code == 'admin') {
+            if (Auth::user()->role == 'admin') {
                 return $next($request);
             } else {
                 Auth::logout();
