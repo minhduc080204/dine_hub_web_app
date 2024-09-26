@@ -14,7 +14,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with('user')->get();
-        $title = 'Đơn hàng';
+        $title = 'Quản lý đơn hàng';
         return view('admin.pages.order.index', compact('title', 'orders'));
     }
     public function detail($id)

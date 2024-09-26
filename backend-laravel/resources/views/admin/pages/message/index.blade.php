@@ -25,9 +25,9 @@
     </div> --}}
     {{-- @dd($messages) --}}
     @php
-       $currrentMessages = $messages->first();
-       $currentUserId = $currrentMessages->first()->user_id;
-    @endphp    
+        $currrentMessages = $messages->first();
+        $currentUserId = $currrentMessages->first()->user_id;
+    @endphp
 
     <div id="message_container">
         <div class="row">
@@ -47,7 +47,8 @@
                                     style="position: relative; height: 450px">
                                     <ul class="list-unstyled mb-0" id="box-status-list">
                                         @foreach ($messages as $key => $contents)
-                                            <li class="p-2 border-bottom rounded-2 box-status-item" id="box-status-item{{ $contents[0]->user->user_id }}">
+                                            <li class="p-2 border-bottom rounded-2 box-status-item"
+                                                id="box-status-item{{ $contents[0]->user->user_id }}">
                                                 <a href="" class="d-flex justify-content-between">
                                                     <div class="d-flex flex-row">
                                                         <div>
@@ -137,7 +138,7 @@
             var message = $('#send_message_input').val();
             $('#send_message_input').val('')
             $.ajax({
-                url: 'http://127.0.0.1:8000/admin/sendmessage',
+                url: 'http://127.0.0.1:8000/admin/messages/sendmessage',
                 type: 'POST',
                 data: {
                     userId: {{ $currentUserId }},

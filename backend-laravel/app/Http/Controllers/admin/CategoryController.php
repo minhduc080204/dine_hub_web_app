@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-        $title = 'Danh mục';
+        $title = 'Quản lý danh mục';
         return view('admin.pages.category.index', compact('title', 'categories'));
     }
     public function create()

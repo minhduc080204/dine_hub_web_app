@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $tag = Tag::all();
-        $title = 'Sản phẩm';
+        $title = 'Quản lý sản phẩm';
         // dd(abc($products));
         return view('admin.pages.product.index', compact('title', 'products', 'tag'));
     }

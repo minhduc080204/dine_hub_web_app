@@ -19,7 +19,7 @@ class MessageController extends Controller
             ->get()
             ->reverse()
             ->groupBy('user_id');
-        $title = 'Hội thoại';
+        $title = 'Quản lý hội thoại';
         return view('admin.pages.message.index', compact('title', 'messages'));
     }
     public function sendMessage(Request $request)
@@ -27,9 +27,7 @@ class MessageController extends Controller
         $userId = $request->input('userId');
         $message = $request->input('content');
         $role = $request->input('role');
-
         event(new MessageSent($userId, $message, $role));
-
         Message::create([
             'user_id' => $request->input('userId'),
             'content' => $message,

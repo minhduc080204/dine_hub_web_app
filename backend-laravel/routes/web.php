@@ -78,7 +78,7 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
     });
     // MESSAGES ----------------------------------------------
     Route::prefix('messages')->name('messages.')->group(function () {
-        Route::get('/messages', [MessageController::class, 'index'])->name('index');
+        Route::get('/', [MessageController::class, 'index'])->name('index');
         // Route::get('/message/{id}', [MessageController::class, 'index'])->name('messages');
         Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
     });

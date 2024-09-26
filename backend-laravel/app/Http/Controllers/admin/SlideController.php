@@ -12,7 +12,7 @@ class SlideController extends Controller
     public function index()
     {
         $slides = Slide::all();
-        $title = 'Trượt';
+        $title = 'Quản lý trượt';
         return view('admin.pages.slide.index', compact('title', 'slides'));
     }
 

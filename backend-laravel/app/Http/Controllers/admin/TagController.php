@@ -15,7 +15,7 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        $title = 'Thẻ';
+        $title = 'Quản lý thẻ';
         return view('admin.pages.tag.index', compact('tags', 'title'));
     }
 

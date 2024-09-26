@@ -15,7 +15,7 @@ class DiscountController extends Controller
     public function index()
     {
         $discounts = Discount::all();
-        $title = 'Mã giảm giá';
+        $title = 'Quản lý mã giảm giá';
         return view('admin.pages.discount.index', compact('title', 'discounts'));
     }
 
