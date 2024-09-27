@@ -12,7 +12,7 @@ use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\SlideController;
 use App\Http\Controllers\admin\UserController;
-use App\Http\Controllers\admin\DiscountController;
+use App\Http\Controllers\admin\CouponController;
 use App\Http\Controllers\admin\AuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
@@ -92,14 +92,14 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
         Route::delete('/remove/{id}', [TagController::class, 'remove'])->name('remove');
     });
 
-    // DISCOUNT ----------------------------------------------
-    Route::prefix('discount')->name('discount.')->group(function () {
-        Route::get('/', [DiscountController::class, 'index'])->name('index');
-        Route::get('/reload', [DiscountController::class, 'reload'])->name('reload');
-        Route::get('/create', [DiscountController::class, 'create'])->name('create');
-        Route::post('/store', [DiscountController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [DiscountController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [DiscountController::class, 'update'])->name('update');
-        Route::delete('/remove/{id}', [DiscountController::class, 'remove'])->name('remove');
+    // COUPON ----------------------------------------------
+    Route::prefix('coupon')->name('coupon.')->group(function () {
+        Route::get('/', [CouponController::class, 'index'])->name('index');
+        Route::get('/reload', [CouponController::class, 'reload'])->name('reload');
+        Route::get('/create', [CouponController::class, 'create'])->name('create');
+        Route::post('/store', [CouponController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CouponController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [CouponController::class, 'update'])->name('update');
+        Route::delete('/remove/{id}', [CouponController::class, 'remove'])->name('remove');
     });
 });

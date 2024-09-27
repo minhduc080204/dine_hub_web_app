@@ -7,13 +7,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="py-3 d-flex justify-content-end gap-2">
-                            <a href="{{ route('admin.discount.reload') }}">
+                            <a href="{{ route('admin.coupon.reload') }}">
                                 <button type="button" class="btn btn-outline-secondary">
                                     <i class="bi bi-arrow-clockwise"></i>
                                     Cài lại
                                 </button>
                             </a>
-                            <a href="{{ route('admin.discount.create') }}">
+                            <a href="{{ route('admin.coupon.create') }}">
                                 <button type="button" class="btn btn-outline-secondary">
                                     <i class="bi bi-plus-circle"></i>
                                     Thêm mã giảm giá
@@ -33,13 +33,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @dd($discounts) --}}
-                                @foreach ($discounts as $key => $discount)
+                                {{-- @dd($coupons) --}}
+                                @foreach ($coupons as $key => $coupon)
                                     <tr>
-                                        <td>{{ $discount->code }}</td>
-                                        <td>{{ $discount->expires_at == null ? 'Vĩnh viễn' : $discount->expires_at }}</td>
-                                        <td>{{ $discount->updated_at }}</td>
-                                        <td> {{ $discount->discount }}%</td>
+                                        <td>{{ $coupon->code }}</td>
+                                        <td>{{ $coupon->expires_at == null ? 'Vĩnh viễn' : $coupon->expires_at }}</td>
+                                        <td>{{ $coupon->updated_at }}</td>
+                                        <td> {{ $coupon->discount }}%</td>
                                         <td>#{{ $key + 1 }}</td>
                                         <td class="Action">
                                             <div class="dropdown">
@@ -47,9 +47,9 @@
                                                     aria-expanded="false"></i>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item"
-                                                            href="{{ route('admin.product.edit', $discount->id) }}">
+                                                            href="{{ route('admin.coupon.edit', $coupon->id) }}">
                                                             <i class="bi bi-pen"></i>Sửa</a></li>
-                                                    <li> @deleteItem('admin.discount.remove', $discount->id)</li>
+                                                    <li> @deleteItem('admin.coupon.remove', $coupon->id)</li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -57,7 +57,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{-- {{ $discounts->onEachSide(2)->links() }} --}}
+                        {{-- {{ $coupons->onEachSide(2)->links() }} --}}
                         <!-- End Table with stripped rows -->
 
                     </div>
