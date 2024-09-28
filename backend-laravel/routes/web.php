@@ -82,6 +82,7 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
         // Route::get('/message/{id}', [MessageController::class, 'index'])->name('messages');
         Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
     });
+  Route::get('/messages', [MessageController::class, 'index'])->name('messages');
     // TAG ----------------------------------------------
     Route::prefix('tag')->name('tag.')->group(function () {
         Route::get('/', [TagController::class, 'index'])->name('index');
@@ -102,4 +103,8 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
         Route::put('/update/{id}', [CouponController::class, 'update'])->name('update');
         Route::delete('/remove/{id}', [CouponController::class, 'remove'])->name('remove');
     });
+
+    Route::get('/message/{id}', [MessageController::class, 'usermessage'])->name('usermessage');
+    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');    
+
 });

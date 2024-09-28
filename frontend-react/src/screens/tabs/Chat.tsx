@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
     ScrollView,
     Text,
@@ -24,6 +24,7 @@ import Pusher from 'pusher-js';
 
 const Chat: React.FC = (): JSX.Element => {
     const navigation = useAppNavigation();
+    const scrollViewRef = useRef<ScrollView>(null);
     const { userInfor } = useContext(AuthContext);
     const [getMessage, { data, error, isLoading }] = useGetMessageMutation();
 
@@ -32,12 +33,18 @@ const Chat: React.FC = (): JSX.Element => {
 
     const [sendMessage] = useSendMessageMutation();
 
+    useEffect(() => {
+        setTimeout(() => {
+          scrollViewRef.current?.scrollToEnd({ animated: true });
+        }, 1000);
+      }, []);
+
     useEffect(() => {        
         const fetchMessages = async () => {
             try {
                 const response: any = await getMessage({ userId: userInfor.id });
                 if (response?.data) {
-                    setMessages(response.data);
+                    setMessages(response.data);                    
                 }
 
             } catch (err) {
@@ -50,35 +57,36 @@ const Chat: React.FC = (): JSX.Element => {
 
     useEffect(() => {
         const pusher = new Pusher('905ea1087d251dc4a082', {
-          cluster: 'ap1',
+            cluster: 'ap1',
         });
-        console.log(userInfor.id);
-        
-        const channel = pusher.subscribe('chatroom'+userInfor.id);
-        channel.bind('MessageSent', (data:any) => {            
-            if(data && data.message){
+
+        const channel = pusher.subscribe('chatroom' + userInfor.id);
+        channel.bind('MessageSent', (data: any) => {
+            if (data && data.message) {
                 const mess: MessageType = { content: data.message, role: data.role, userId: userInfor.id }
                 setMessages((prevMessages) => [...prevMessages, mess]);
+                setTimeout(() => {
+                    scrollViewRef.current?.scrollToEnd({ animated: true });
+                  }, 1000);
             }
         });
-    
+
         return () => {
-          channel.unbind_all();
-          channel.unsubscribe();
+            channel.unbind_all();
+            channel.unsubscribe();
         };
-      }, []);
+    }, []);
 
-
-
-    const handleSendMessage = async () => {
+    const handleSendMessage = async () => {        
         if (message.trim()) {
-            const mess: MessageType = { userId: userInfor.id, content: message}
+            const mess: MessageType = { userId: userInfor.id, content: message }
             setMessage("");
             try {
-                await sendMessage(mess);
+                await sendMessage(mess);                
+                scrollViewRef.current?.scrollToEnd({ animated: true });
             } catch (error) {
                 console.error("Error sending message:", error);
-            }            
+            }
         }
     }
 
@@ -103,6 +111,7 @@ const Chat: React.FC = (): JSX.Element => {
         }
         return (
             <ScrollView
+                ref={scrollViewRef}
                 contentContainerStyle={{
                     flexGrow: 1,
                     justifyContent: 'flex-end',
