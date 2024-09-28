@@ -45,8 +45,7 @@
                                                                 href="{{ route('admin.category.edit.view', ['id' => $category->id]) }}">Sửa</a>
                                                         </li>
 
-                                                        <li><button type="submit" class="dropdown-item">Xoá</button>
-                                                        </li>
+                                                        <li> @deleteItem('admin.category.remove', $category->id)</li>
                                                     </form>
                                                 </ul>
                                             </div>

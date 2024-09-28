@@ -34,8 +34,8 @@
                                                                 href="{{ route('admin.silde.edit.view', ['id' => $slide->id]) }}">Sửa</a>
                                                         </li>
 
-                                                        <li><button type="submit" class="dropdown-item">Xoá</button>
-                                                        </li>
+                                                        <li> @deleteItem('admin.slide.remove', $slide->id)</li>
+
                                                     </form>
                                                 </ul>
                                             </div>

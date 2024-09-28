@@ -21,9 +21,9 @@ class CheckLoginAdminMiddleware
             // Nếu chưa đăng nhập
             return $next($request);
         } else {
-            if (Auth::user()->code == 'admin') {
+            if (Auth::user()->role == 'admin') {
                 toastr()->success('You have already logged in');
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.dashboard.index');
             } else {
                 return $next($request);
             }

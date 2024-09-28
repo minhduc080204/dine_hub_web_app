@@ -26,8 +26,8 @@ class UserFactory extends Factory
         return [
             'user_name' => $this->faker->userName, // Tạo tên người dùng ngẫu nhiên
             'email' => $this->faker->unique()->safeEmail, // Tạo email duy nhất
-            'password' => bcrypt('password'), // Mã hóa mật khẩu mặc định
-            'confirm_password' => bcrypt('password'), // Mã hóa confirm_password
+            'password' => Hash::make('password'), // Mã hóa mật khẩu mặc định
+            // 'confirm_password' => bcrypt('password'), // Mã hóa confirm_password
             'phone_number' => $this->faker->optional()->phoneNumber, // Tạo số điện thoại ngẫu nhiên, có thể để trống
             'otp' => $this->faker->optional()->numerify('######'), // Tạo OTP ngẫu nhiên, có thể để trống
             'code' => $this->faker->optional()->word, // Tạo code ngẫu nhiên, có thể để trống

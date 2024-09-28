@@ -121,7 +121,7 @@
             var message = $('#send_message_input').val();
             $('#send_message_input').val('')
             $.ajax({
-                url: 'http://127.0.0.1:8000/admin/sendmessage',
+                url: 'http://127.0.0.1:8000/admin/messages/sendmessage',
                 type: 'POST',
                 data: {
                     userId: {{ $currentUserId }},

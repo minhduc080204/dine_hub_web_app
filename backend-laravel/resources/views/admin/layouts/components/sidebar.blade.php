@@ -1,8 +1,7 @@
 <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.dashboard')" href="{{ route('admin.dashboard') }}">
+            <a class="nav-link @activeClass('admin.dashboard.index')" href="{{ route('admin.dashboard.index') }}">
                 <i class="bi bi-grid"></i>
                 <span>Trang điều khiển</span>
             </a>
@@ -32,7 +31,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.order')" href="{{ route('admin.order') }}">
+            <a class="nav-link @activeClass('admin.order.index')" href="{{ route('admin.order.index') }}">
                 <i class="bi bi-cart3"></i>
                 <span>Đơn hàng</span>
             </a>
@@ -45,7 +44,7 @@
             </a>
         </li><!-- End Profile Page Nav -->
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.discount.index')" href="{{ route('admin.discount.index') }}">
+            <a class="nav-link @activeClass('admin.coupon.index')" href="{{ route('admin.coupon.index') }}">
                 <i class="bi bi-percent"></i>
                 <span>Mã giảm giá</span>
             </a>
@@ -53,14 +52,14 @@
 
 
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.slide')" href="{{ route('admin.order') }}">
+            <a class="nav-link @activeClass('admin.tag.index')" href="{{ route('admin.tag.index') }}">
                 <i class="bi bi-tag"></i>
                 <span>Thẻ</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.slide')" href="{{ route('admin.slide') }}">
+            <a class="nav-link @activeClass('admin.slide.index')" href="{{ route('admin.slide.index') }}">
                 <i class="bi bi-tv"></i>
                 <span>Trượt</span>
             </a>
@@ -162,14 +161,14 @@
         <li class="nav-heading mt-3">Kiểm soát truy cập</li>
 
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.messages')" href="{{ route('admin.messages') }}">
+            <a class="nav-link @activeClass('admin.messages.index')" href="{{ route('admin.messages.index') }}">
                 <i class="bi bi-chat-dots"></i>
                 <span>Hội thoại</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link @activeClass('admin.user')" href="{{ route('admin.user') }}">
+            <a class="nav-link @activeClass('admin.user.index')" href="{{ route('admin.user.index') }}">
                 <i class="bi bi-people"></i>
                 <span>Người dùng</span>
             </a>

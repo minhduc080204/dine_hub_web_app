@@ -29,8 +29,11 @@
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
                                                     aria-expanded="false"></i>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="#">Chi tiết</a></li>
-                                                    <li><a class="dropdown-item" href="#">Xoá</a></li>
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ route('admin.order.detail', $order->id) }}"> <i
+                                                                class="bi bi-pen"></i>Chi tiết</a></li>
+                                                    <li> @deleteItem('admin.order.remove', $order->id)</li>
+
                                                 </ul>
                                             </div>
                                         </td>

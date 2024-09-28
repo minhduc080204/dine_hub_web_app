@@ -12,6 +12,7 @@
     </main>
 
     @include('admin.layouts.components.footer')
+    @include('admin.layouts.components.php')
     @include('admin.layouts.components.scripts')
     @yield('scripts') 
     <div class="position-fixed top-0 end-0 p-3 mt-5" style="z-index: 110" id="toastcontainer"></div>   

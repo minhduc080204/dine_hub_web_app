@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,7 +15,7 @@ return new class extends Migration
             $table->string('user_name')->nullable(); // Trường user_name có thể để trống
             $table->string('email')->unique()->nullable(); // Trường email là duy nhất và có thể để trống
             $table->string('password')->nullable(); // Trường password có thể để trống
-            $table->string('confirm_password')->nullable(); // Trường confirm_password có thể để trống
+            // $table->string('confirm_password')->nullable(); // Trường confirm_password có thể để trống
             $table->string('phone_number')->nullable(); // Trường phone_number có thể để trống
             $table->string('otp')->nullable(); // Trường otp có thể để trống
             $table->string('code')->nullable(); // Trường code có thể để trống

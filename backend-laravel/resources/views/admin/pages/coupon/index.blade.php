@@ -3,48 +3,53 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
+
                 <div class="card">
                     <div class="card-body">
-                        <div class="py-3 d-flex justify-content-end">
-                            <a href="{{ route('admin.user.create') }}">
+                        <div class="py-3 d-flex justify-content-end gap-2">
+                            <a href="{{ route('admin.coupon.reload') }}">
                                 <button type="button" class="btn btn-outline-secondary">
-                                    <i class="bi bi-plus-circle"></i>
-                                    Thêm người dùng
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                    Cài lại
                                 </button>
                             </a>
+                            <a href="{{ route('admin.coupon.create') }}">
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="bi bi-plus-circle"></i>
+                                    Thêm mã giảm giá
+                                </button>
+                            </a>
+
                         </div>
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Ảnh</th>
-                                    <th>Tên</th>
+                                    <th>Mã</th>
+                                    <th>Hết hạn</th>
                                     <th>Cập nhật cuối</th>
+                                    <th>Giảm giá</th>
+                                    <th>ID</th>
                                     <th class="Action">Thao tác</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-                                @foreach ($users as $key => $user)
-                                    <tr class="{{ Auth::user()->email == $user->email ? 'table-primary' : '' }}">
+                                {{-- @dd($coupons) --}}
+                                @foreach ($coupons as $key => $coupon)
+                                    <tr>
+                                        <td>{{ $coupon->code }}</td>
+                                        <td>{{ $coupon->expires_at == null ? 'Vĩnh viễn' : $coupon->expires_at }}</td>
+                                        <td>{{ $coupon->updated_at }}</td>
+                                        <td> {{ $coupon->discount }}%</td>
                                         <td>#{{ $key + 1 }}</td>
-                                        <td><img src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/01/meme-la-gi-18.jpg"
-                                                alt="image" width="70"></td>
-                                        <td>
-                                            {{ $user->user_name }}
-                                            {!! Auth::user()->email == $user->email ? '<span class="text-danger fw-bold"> (me)</span>' : '' !!}
-                                        </td>
-                                        <td> {{ $user->updated_at }}</td>
                                         <td class="Action">
                                             <div class="dropdown">
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                    style="{{ Auth::user()->email == $user->email ? 'display:none ' : '' }}"></i>
+                                                    aria-expanded="false"></i>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item"
-                                                            href="{{ route('admin.user.edit', $user->id) }}">
+                                                            href="{{ route('admin.coupon.edit', $coupon->id) }}">
                                                             <i class="bi bi-pen"></i>Sửa</a></li>
-                                                    <li>@deleteItem('admin.user.remove', $user->id)</li>
+                                                    <li> @deleteItem('admin.coupon.remove', $coupon->id)</li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -52,7 +57,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{-- {{ $products->onEachSide(2)->links() }} --}}
+                        {{-- {{ $coupons->onEachSide(2)->links() }} --}}
                         <!-- End Table with stripped rows -->
 
                     </div>

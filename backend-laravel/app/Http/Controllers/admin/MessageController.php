@@ -29,7 +29,6 @@ class MessageController extends Controller
         $role = $request->input('role');
 
         event(new CommonChannel($userId, $message, $role));        
-
         event(new MessageSent($userId, $message, $role));
         
         Message::create([
@@ -59,5 +58,5 @@ class MessageController extends Controller
         event(new CommonChannel($userId, "", ""));
         return response()->json($message);
     }
-
 }
+

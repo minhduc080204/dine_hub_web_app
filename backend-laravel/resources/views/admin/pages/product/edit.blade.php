@@ -80,23 +80,19 @@
                                         <label for="tag" class="fw-bolder mb-1">
                                             Thẻ:
                                         </label>
+
                                         <input type="text" name="tag" id="tags-input" class="form-control"
-                                            placeholder="Gắn thẻ" value="{{ $product->tag }}">
+                                            placeholder="Gắn thẻ"
+                                            value="{{ $product->tags->pluck('name')->implode(', ') }}">
+
                                     </div>
                                     <div class="input mb-3">
                                         <label for="image" class="fw-bolder mb-1">
                                             Ảnh: <span class="text-danger">*</span>
                                         </label>
                                         <input type="file" name="image" id="image" class="form-control img-test">
-                                        {{-- <input type="file" style="display: none" name="image" id="image"
-                                            class="form-control" value="{{ $product->image }}"> --}}
                                         <input type="hidden" name="image1" id="image" class="form-control"
                                             value="{{ $product->image }}">
-                                        {{-- <label type="text" for='image' id="show-image" class="form-control w-25">
-                                            <img src="{{ asset('storage/images/products/' . $product->image) ?? '' }}"
-                                                alt="" width="100%">
-                                        </label> --}}
-
                                         @errorDirective('image')
                                     </div>
                                 </div>
@@ -104,13 +100,6 @@
                             </div>
                     </div>
                 </div>
-                @php
-                    if ($errors->any()) {
-                        foreach ($errors->all() as $error) {
-                            toastr()->warning($error);
-                        }
-                    }
-                @endphp
                 <div class="card">
                     <div class="card-body mt-3">
                         <div class="form-check">
