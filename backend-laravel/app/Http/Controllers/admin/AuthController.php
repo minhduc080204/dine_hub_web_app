@@ -21,7 +21,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             if (Auth::user()->code == 'admin') {
                 toastr()->success('Đăng nhập thành công!');
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.dashboard.index');
             } else {
                 toastr()->warning('Bạn không phải là admin!');
                 return redirect()->back();

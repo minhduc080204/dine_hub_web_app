@@ -67,9 +67,7 @@ const Home: React.FC = (): JSX.Element => {
     const renderCarouselImages = () => {
       return (
         <FlatList
-          data={carousel}
-          // onMomentumScrollEnd={(e) => {updateCurrentSlideIndex(e);   console.log("zzzz");
-          // }}
+          data={carousel}          
           onScroll={(e) => { updateCurrentSlideIndex(e) }}
           renderItem={({ item }) => (
             <components.Image
@@ -85,6 +83,7 @@ const Home: React.FC = (): JSX.Element => {
           decelerationRate={0}
           bounces={false}
           alwaysBounceHorizontal={false}
+          automaticallyAdjustsScrollIndicatorInsets={true}
         />
       );
     };

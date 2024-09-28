@@ -1,9 +1,10 @@
 import React from 'react';
 import {ImageSourcePropType} from 'react-native';
 import {ImageBackground as RNImageBackground} from 'react-native';
+import { ENDPOINTS } from '../../config';
 
 type Props = {
-  source?: object;
+  source?: {uri: string};
   style?: object;
   imageStyle?: object;
   resizeMode?: 'cover' | 'contain' | 'stretch';
@@ -19,7 +20,7 @@ const ImageBackground: React.FC<Props> = ({
 }): JSX.Element => {
   return (
     <RNImageBackground
-      source={source as ImageSourcePropType}
+      source={(ENDPOINTS.image+source?.uri) as ImageSourcePropType}
       style={style}
       imageStyle={imageStyle}
       // resizeMode={

@@ -40,8 +40,24 @@
         var common_channel = pusher.subscribe('commonroom');
 
         common_channel.bind('CommonChannel', function(commondata) {
+            if (commondata.role == 'order') {
+
+                $("#toastcontainer").append(`                    
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <div>
+                            <a href="http://127.0.0.1:8000/admin/order">
+                                <strong>Có đơn hàng mới!</strong>
+                                <h6 class="text-end">${getCurrentTime()}</h6>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `);
+            }
+
             if (commondata.userId && !storedUserIds.includes(commondata.userId)) {
-                storedUserIds.push(commondata.userId+"");
+                storedUserIds.push(commondata.userId + "");
                 localStorage.setItem('userIds', JSON.stringify(storedUserIds));
 
                 subscribeToChatroom(commondata.userId);

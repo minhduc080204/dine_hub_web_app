@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SlideRequest;
 use App\Models\Slide;
 use Exception;
-use Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class SlideController extends Controller
 {
@@ -14,6 +17,27 @@ class SlideController extends Controller
         $slides = Slide::all();
         $title = 'Quản lý trượt';
         return view('admin.pages.slide.index', compact('title', 'slides'));
+    }
+
+    public function create()
+    {
+        $title = 'Thêm Slide mới';
+        return view('admin.pages.slide.createSlide', compact('title'));
+    }
+    public function store(SlideRequest $request)
+    {
+        $slide = new Slide();
+        if ($request->hasFile('image')) {
+            $filename = $request->file('image')->getClientOriginalName();
+            $filePath = 'images/slides/' . $filename;
+            $slide->image = 'slides/'.$filename;
+            if (!Storage::disk('public')->exists($filePath)) {
+                $request->file('image')->storeAs('images/slides', $filename, 'public');
+            }
+        }
+        $slide->save();
+        toastr()->success('Thêm slide thành công');
+        return to_route('admin.slide.index');
     }
 
     public function editView($id)
@@ -26,7 +50,15 @@ class SlideController extends Controller
     public function edit(Request $request, $id)
     {
         $slide = Slide::find($id);
-        $slide->image = $request->image;
+        if ($request->hasFile('image')) {
+            $filename = $request->file('image')->getClientOriginalName();
+            $filePath = 'images/slides/' . $filename;
+            $slide->image ='slides/'.$filename;
+            if (!Storage::disk('public')->exists($filePath)) {
+                $request->file('image')->storeAs('images/slides', $filename, 'public');
+            }
+        }
+        $slide->save();
         return to_route('admin.slide.index');
     }
 
@@ -38,6 +70,6 @@ class SlideController extends Controller
         } catch (Exception $e) {
             toastr()->error('Removed failed!');
         }
-        return redirect()->route("admin.slide");
+        return redirect()->route("admin.slide.index");
     }
 }

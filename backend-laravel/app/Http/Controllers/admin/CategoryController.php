@@ -30,7 +30,7 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $filename = $request->file('image')->getClientOriginalName();
             $filePath = 'images/products/' . $filename;
-            $category->image = $filename;
+            $category->image = 'products/'.$filename;
             if (!Storage::disk('public')->exists($filePath)) {
                 $request->file('image')->storeAs('images/products', $filename, 'public');
             }
@@ -56,7 +56,7 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $filename = $request->file('image')->getClientOriginalName();
             $filePath = 'images/products/' . $filename;
-            $category->image = $filename;
+            $category->image ='products/'.$filename;
             if (!Storage::disk('public')->exists($filePath)) {
                 $request->file('image')->storeAs('images/products', $filename, 'public');
             }

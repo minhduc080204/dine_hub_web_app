@@ -5,6 +5,14 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="py-3 d-flex justify-content-end">
+                            <a href="{{ route('admin.slide.create') }}">
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="bi bi-plus-circle"></i>
+                                    Thêm Slide
+                                </button>
+                            </a>
+                        </div> 
                         <table class="table datatable">
                             <thead>
                                 <tr>
@@ -18,7 +26,7 @@
                                 @foreach ($slides as $key => $slide)
                                     <tr>
                                         <td>#{{ $key + 1 }}</td>
-                                        <td><img class="slide_img" src="{{ $slide->image }}" alt="img" width="150">
+                                        <td><img class="slide_img" src="{{ asset('storage/images/' . $slide->image) }}" alt="img" width="150">
                                         </td>
                                         <td>{{ $slide->updated_at }}</td>
                                         <td class="Action">
@@ -27,11 +35,11 @@
                                                     aria-expanded="false"></i>
                                                 <ul class="dropdown-menu">
                                                     <form id="post-form"
-                                                        action="{{ route('admin.silde.remove', ['id' => $slide->id]) }}"
+                                                        action="{{ route('admin.slide.remove', ['id' => $slide->id]) }}"
                                                         method="POST">
                                                         @csrf
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.silde.edit.view', ['id' => $slide->id]) }}">Sửa</a>
+                                                                href="{{ route('admin.slide.edit.view', ['id' => $slide->id]) }}">Sửa</a>
                                                         </li>
 
                                                         <li> @deleteItem('admin.slide.remove', $slide->id)</li>

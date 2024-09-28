@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Storage;
+
 function uploadImage($request, $product)
 {
     $filename = $request->getClientOriginalName();
