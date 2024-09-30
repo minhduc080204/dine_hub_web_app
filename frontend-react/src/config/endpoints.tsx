@@ -1,5 +1,7 @@
+import { BASE_URL } from ".";
+
 export const ENDPOINTS = {
-  image: 'http://127.0.0.1:8000/storage/images/',
+  image: BASE_URL+'storage/images/',
   get: {
     tags: 'api/tags',
     users: 'api/users',//

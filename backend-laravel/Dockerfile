@@ -1,46 +1,51 @@
-FROM php:8.2.4-apache
+# Use an official PHP image with Apache as the base image.
+FROM php:8.2-apache
 
+# Set environment variables.
+ENV ACCEPT_EULA=Y
+
+# Install system dependencies.
 RUN apt-get update && apt-get install -y \
-    curl \
-    libzip-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    zip \
     unzip \
     git \
-    && docker-php-ext-install zip
+    && rm -rf /var/lib/apt/lists/*
 
-# Cài đặt Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
-    && apt-get install -y nodejs
+# Enable Apache modules required for Laravel.
+RUN a2enmod rewrite
 
-# Cài đặt Composer
+# Set the Apache document root
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+# Update the default Apache site configuration
+COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
+
+# Install PHP extensions.
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql
+
+# Install Composer globally.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-WORKDIR /server
+# Create a directory for your Laravel application.
+WORKDIR /var/www/html
 
-COPY package*.json ./
-COPY ./app ./app
-COPY ./bootstrap ./bootstrap
-COPY ./config ./config
-COPY ./database ./database
-COPY ./public ./public
-COPY ./resources ./resources
-COPY ./routes ./routes
-COPY ./storage ./storage
-COPY ./tests ./tests
-COPY .editorconfig .editorconfig
-COPY .env .env
-COPY artisan artisan
-COPY composer.json composer.json
-COPY composer.lock composer.lock
-COPY phpunit.xml phpunit.xml
-COPY vite.config.js vite.config.js
+# Copy the Laravel application files into the container.
+COPY . .
 
+# Install Laravel dependencies using Composer.
+RUN composer install --no-interaction --optimize-autoloader
 
-# Cài đặt Composer dependencies
-RUN composer install
+# Set permissions for Laravel.
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Cài đặt npm packages
-RUN npm install
-EXPOSE 8000
-    
+# Expose port 80 for Apache.
+EXPOSE 80
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# Start Apache web server.
+CMD ["apache2-foreground"]
+
+# You can add any additional configurations or commands required for Laravel 10 here.
