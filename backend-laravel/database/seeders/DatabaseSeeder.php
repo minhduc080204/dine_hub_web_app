@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('Duc08022004'), // Hoặc Hash::make('password1')
             'phone_number' => '1234567890',
             'otp' => '123456',
-            'code' => '',
+            'role' => '',
         ]);
 
         User::create([
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('Duc08022004'),
             'phone_number' => '0987654321',
             'otp' => '654321',
-            'code' => 'admin',
+            'role' => 'admin',
         ]);
         Product::factory(5)->create();
         Category::factory(5)->create();
