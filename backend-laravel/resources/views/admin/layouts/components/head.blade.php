@@ -11,6 +11,7 @@
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
     <script>
+        const BASE_URL = 'http://38.54.30.126:8000/';
         window.addEventListener('beforeunload', function() {
             localStorage.clear();
         });
@@ -45,7 +46,7 @@
                 $("#toastcontainer").append(`                    
                     <div class="alert alert-primary alert-dismissible fade show" role="alert">
                         <div>
-                            <a href="http://127.0.0.1:8000/admin/order">
+                            <a href="${BASE_URL}}admin/order">
                                 <strong>Có đơn hàng mới!</strong>
                                 <h6 class="text-end">${getCurrentTime()}</h6>
                             </a>

@@ -44,7 +44,6 @@
                         <!-- End Table with stripped rows -->
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -52,27 +51,27 @@
         let abcc = '';
         $.ajax({
             type: "GET",
-            url: "http://127.0.0.1:8000/api/orders",
+            url: BASE_URL+"api/orders",
             success: function(data) {
                 data.forEach(element => {
                     abcc += `
-                      <tr>
-                                        <td>1</td>
-                                        <td>${element.user.user_name}</td>
-                                        <td>${element.user.phone_number}</td>
-                                        <td>${element.total_price }</td>
-                                        <td>${element.order_status }</td>
-                                        <td class="Action">
-                                            <div class="dropdown">
-                                                <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
-                                                    aria-expanded="false"></i>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="#">Detail</a></li>
-                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>${element.user.user_name}</td>
+                            <td>${element.user.phone_number}</td>
+                            <td>${element.total_price }</td>
+                            <td>${element.order_status }</td>
+                            <td class="Action">
+                                <div class="dropdown">
+                                    <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
+                                        aria-expanded="false"></i>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Detail</a></li>
+                                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
                     `;
                 });
                 $('#tr').html(abcc);
