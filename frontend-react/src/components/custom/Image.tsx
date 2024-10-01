@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image as RNImage} from 'react-native';
 import type {ImageSourcePropType} from 'react-native';
-import { ENDPOINTS } from '../../config';
+import { BASE_URL, ENDPOINTS } from '../../config';
 
 type Props = {
   source: {uri: string};
@@ -21,7 +21,7 @@ const Image: React.FC<Props> = ({
   return (
     <RNImage
       style={style}
-      source={(ENDPOINTS.image + source.uri) as ImageSourcePropType}
+      source={(BASE_URL+ENDPOINTS.image + source.uri) as ImageSourcePropType}
       tintColor={tintColor}
     />
   );
