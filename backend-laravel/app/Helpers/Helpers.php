@@ -12,9 +12,3 @@ function uploadImage($request, $product)
     }
     return $filename;
 }
-
-// function abc($products)
-// {
-//     $concart = 'ok';
-//     return view('admin.pages.product.index', compact('concart', 'products'))->render();
-// }
