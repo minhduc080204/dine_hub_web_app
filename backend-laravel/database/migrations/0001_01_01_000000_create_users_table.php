@@ -18,7 +18,7 @@ return new class extends Migration {
             // $table->string('confirm_password')->nullable(); // Trường confirm_password có thể để trống
             $table->string('phone_number')->nullable(); // Trường phone_number có thể để trống
             $table->string('otp')->nullable(); // Trường otp có thể để trống
-            $table->string('code')->nullable(); // Trường code có thể để trống
+            $table->string('role')->nullable(); // Trường code có thể để trống
             $table->timestamps(); // Tạo created_at và updated_at
         });
 

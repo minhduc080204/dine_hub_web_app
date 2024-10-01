@@ -1,22 +1,17 @@
 <?php
 
-use App\Events\MessageEvent;
-use App\Events\MessageSent;
-use App\Http\Controllers\admin\MessageController;
-use App\Http\Controllers\admin\TagController;
+use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\admin\CategoryController;
-use App\Http\Controllers\admin\DashboardController;
-use App\Http\Controllers\admin\ProductController;
-use App\Http\Controllers\admin\OrderController;
-use App\Http\Controllers\admin\SlideController;
-use App\Http\Controllers\admin\UserController;
-use App\Http\Controllers\admin\CouponController;
-use App\Http\Controllers\admin\AuthController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Broadcast;
-use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\SlideController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\AuthController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,7 +24,7 @@ Route::get('/doLogout', [AuthController::class, 'doLogout'])->name('account.doLo
 
 // ADMIN ==============================================
 // Route::prefix('admin')->group(function () {
-Route::prefix('admin/')->name('admin.')->group(function () {
+Route::prefix('admin/')->name('admin.')->middleware("Authentication")->group(function () {
     // DASHBOARD ----------------------------------------------
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
