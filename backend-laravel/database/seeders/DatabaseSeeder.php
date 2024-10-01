@@ -37,7 +37,6 @@ class DatabaseSeeder extends Seeder
         Product::factory(5)->create();
         Category::factory(5)->create();
         Tag::factory(5)->create();
-        Order::factory(5)->create();
         Slide::factory(5)->create();
         
         
