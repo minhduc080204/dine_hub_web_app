@@ -46,7 +46,7 @@
                 $("#toastcontainer").append(`                    
                     <div class="alert alert-primary alert-dismissible fade show" role="alert">
                         <div>
-                            <a href="${BASE_URL}}admin/order">
+                            <a href="${BASE_URL}admin/order">
                                 <strong>Có đơn hàng mới!</strong>
                                 <h6 class="text-end">${getCurrentTime()}</h6>
                             </a>

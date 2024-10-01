@@ -55,10 +55,10 @@ class CategoryController extends Controller
         $category->name = $newCategory;
         if ($request->hasFile('image')) {
             $filename = $request->file('image')->getClientOriginalName();
-            $filePath = 'images/products/' . $filename;
-            $category->image ='products/'.$filename;
+            $filePath = 'images/categories/' . $filename;
+            $category->image ='categories/'.$filename;
             if (!Storage::disk('public')->exists($filePath)) {
-                $request->file('image')->storeAs('images/products', $filename, 'public');
+                $request->file('image')->storeAs('images/categories', $filename, 'public');
             }
         }
         $category->save();
