@@ -1,22 +1,17 @@
 <?php
 
-use App\Events\MessageEvent;
-use App\Events\MessageSent;
-use App\Http\Controllers\admin\MessageController;
-use App\Http\Controllers\admin\TagController;
+use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\admin\CategoryController;
-use App\Http\Controllers\admin\DashboardController;
-use App\Http\Controllers\admin\ProductController;
-use App\Http\Controllers\admin\OrderController;
-use App\Http\Controllers\admin\SlideController;
-use App\Http\Controllers\admin\UserController;
-use App\Http\Controllers\admin\CouponController;
-use App\Http\Controllers\admin\AuthController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Broadcast;
-use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\SlideController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\AuthController;
 
 Route::get('/', function () {
     return view('auth.auth');
@@ -29,7 +24,7 @@ Route::get('/doLogout', [AuthController::class, 'doLogout'])->name('account.doLo
 
 // ADMIN ==============================================
 // Route::prefix('admin')->group(function () {
-Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(function () {
+Route::prefix('admin/')->name('admin.')->middleware("Authentication")->group(function () {
     // DASHBOARD ----------------------------------------------
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -60,10 +55,12 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
     });
     // SLIDE ----------------------------------------------
     Route::prefix('slide')->name('slide.')->group(function () {
-        Route::get('/slide', [SlideController::class, 'index'])->name('index');
-        Route::get('/slide/edit/{id}', [SlideController::class, 'editView'])->name('edit.view');
-        Route::put('/slide/edit/{id}', [SlideController::class, 'edit'])->name('edit');
-        Route::delete('/slide/remove/{id}', [SlideController::class, 'remove'])->name('remove');
+        Route::get('', [SlideController::class, 'index'])->name('index');
+        Route::get('/create', [SlideController::class, 'create'])->name('create');
+        Route::post('/store', [SlideController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [SlideController::class, 'editView'])->name('edit.view');
+        Route::put('/edit/{id}', [SlideController::class, 'edit'])->name('edit');
+        Route::delete('/remove/{id}', [SlideController::class, 'remove'])->name('remove');
     });
 
 
@@ -82,6 +79,7 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
         // Route::get('/message/{id}', [MessageController::class, 'index'])->name('messages');
         Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
     });
+    // Route::get('/messages', [MessageController::class, 'index'])->name('messages');
     // TAG ----------------------------------------------
     Route::prefix('tag')->name('tag.')->group(function () {
         Route::get('/', [TagController::class, 'index'])->name('index');
@@ -102,4 +100,7 @@ Route::prefix('admin/')->name('admin.')->middleware('Authentication')->group(fun
         Route::put('/update/{id}', [CouponController::class, 'update'])->name('update');
         Route::delete('/remove/{id}', [CouponController::class, 'remove'])->name('remove');
     });
+
+    Route::get('/message/{id}', [MessageController::class, 'usermessage'])->name('usermessage');
+    Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');
 });

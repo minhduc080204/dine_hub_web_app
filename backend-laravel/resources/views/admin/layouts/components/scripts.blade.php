@@ -41,10 +41,11 @@
     }
 
     // Fetch categories for categories input
-    fetchData("{{ env('APP_URL') }}api/categories", 'categories-input');
+    fetchData(BASE_URL+"api/categories", 'categories-input');
 
     // Fetch tags for tags input
-    fetchData("{{ env('APP_URL') }}api/tags", 'tags-input');
+    fetchData(BASE_URL+"api/tags", 'tags-input');
+>>>>>>> ebf2e0459a7f7891265776cd30e76835daa20473
 </script>
 
 <script>

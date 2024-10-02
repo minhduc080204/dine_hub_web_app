@@ -1,11 +1,48 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
-import { Stack } from '../hooks';
+import pusherJs from 'pusher-js';
+import { showMessage } from 'react-native-flash-message';
+import MessageSvg from '../assets/svg/MessageSvg';
+import { theme } from '../constants';
+import { AuthContext } from '../context/AuthContext';
+import { Stack, useAppNavigation } from '../hooks';
 import { screens } from '../screens';
-import TabNavigator from './TabNavigator';
 import Chat from '../screens/tabs/Chat';
+import TabNavigator from './TabNavigator';
 
 const StackNavigator: React.FC = () => {
+  const { userInfor } = useContext(AuthContext);
+  const navigation = useAppNavigation();
+  useEffect(() => {
+    const pusher = new pusherJs('905ea1087d251dc4a082', {
+      cluster: 'ap1',
+    });
+
+    const channel = pusher.subscribe('commonroom');
+    channel.bind('CommonChannel', (data: any) => {
+      if (data && data.message) {
+        if (userInfor.id == data.userId && data.role=='admin') {
+          showMessage({
+            message: 'You have message from Admin',
+            description: `Admin: ${data.message}`,
+            // type: 'success',
+            // icon: 'success',
+            backgroundColor: theme.colors.mainTurquoise,
+            duration: 3500,
+            icon: MessageSvg,
+            onPress() {
+              navigation.navigate('Chat')
+            },
+          });
+        }
+      }
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, []);
   return (
     <Stack.Navigator>
       {/* <Stack.Screen

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\CommonChannel;
 use App\Http\Controllers\Controller;
-
+use App\Models\Message;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Product;
@@ -61,6 +62,15 @@ class OrderController extends Controller
             ]);
             // Trả về phản hồi JSON với mã đơn hàng vừa tạo
             // return true;
+            event(new CommonChannel($request->input('user_id'), '', 'order'));        
+
+            Message::create([
+                'user_id' => $request->input('user_id'),
+                'content' => 'Cảm ơn quý khách đã đặt hàng!. Hãy để lại lời nhắn nếu cần thiết.',
+                'role' => 'admin',
+                'status' => 'sended',
+            ]);
+
             return $order;
         } catch (\Exception $e) {
             // Ghi lỗi vào log nếu có ngoại lệ

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -29,10 +29,10 @@ class CategoryController extends Controller
         $category->name = $request->name;
         if ($request->hasFile('image')) {
             $filename = $request->file('image')->getClientOriginalName();
-            $filePath = 'images/products/' . $filename;
-            $category->image = $filename;
+            $filePath = 'images/categories/' . $filename;
+            $category->image = 'categories/'.$filename;
             if (!Storage::disk('public')->exists($filePath)) {
-                $request->file('image')->storeAs('images/products', $filename, 'public');
+                $request->file('image')->storeAs('images/categories', $filename, 'public');
             }
         }
         $category->save();
@@ -55,10 +55,10 @@ class CategoryController extends Controller
         $category->name = $newCategory;
         if ($request->hasFile('image')) {
             $filename = $request->file('image')->getClientOriginalName();
-            $filePath = 'images/products/' . $filename;
-            $category->image = $filename;
+            $filePath = 'images/categories/' . $filename;
+            $category->image ='categories/'.$filename;
             if (!Storage::disk('public')->exists($filePath)) {
-                $request->file('image')->storeAs('images/products', $filename, 'public');
+                $request->file('image')->storeAs('images/categories', $filename, 'public');
             }
         }
         $category->save();

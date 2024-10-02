@@ -61,7 +61,7 @@
         <li class="nav-item">
             <a class="nav-link @activeClass('admin.slide.index')" href="{{ route('admin.slide.index') }}">
                 <i class="bi bi-tv"></i>
-                <span>Trượt</span>
+                <span>Slide</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
