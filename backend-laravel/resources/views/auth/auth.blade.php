@@ -75,7 +75,7 @@
 </style>
 
 <body>
-    <div class="container w-25">
+    <div class="container w-50">
         <div class="">
             <div class="my-5">
                 <h1 class="fw-bolder">Welcome Back!</h1>

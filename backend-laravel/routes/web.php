@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.auth');
 });
 Route::prefix('account')->middleware('CheckLoginAdmin')->group(function () {
     Route::get('/login', [AuthController::class, 'index'])->name('account.login');

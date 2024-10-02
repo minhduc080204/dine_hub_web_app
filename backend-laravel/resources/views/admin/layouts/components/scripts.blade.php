@@ -41,10 +41,10 @@
     }
 
     // Fetch categories for categories input
-    fetchData("http://127.0.0.1:8000/api/categories", 'categories-input');
+    fetchData("{{ env('APP_URL') }}api/categories", 'categories-input');
 
     // Fetch tags for tags input
-    fetchData("http://127.0.0.1:8000/api/tags", 'tags-input');
+    fetchData("{{ env('APP_URL') }}api/tags", 'tags-input');
 </script>
 
 <script>
