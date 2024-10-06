@@ -51,7 +51,7 @@
         let abcc = '';
         $.ajax({
             type: "GET",
-            url: BASE_URL+"api/orders",
+            url: "/api/orders",
             success: function(data) {
                 data.forEach(element => {
                     abcc += `

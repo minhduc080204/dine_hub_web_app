@@ -27,7 +27,7 @@ class ProductRequest extends FormRequest
             'price' => 'required|numeric',
             'weight' => 'required|numeric',
             'calories' => 'required|integer',
-            'category' => 'required',
+            'category' => 'required|json',
             'image' => 'required|mimes:jpeg,png,jpg,gif|max:5120',
         ];
     }

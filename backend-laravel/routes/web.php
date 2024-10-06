@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\AccountSettingController;
 
 Route::get('/', function () {
     return view('auth.auth');
@@ -28,6 +29,13 @@ Route::prefix('admin/')->name('admin.')->middleware("Authentication")->group(fun
     // DASHBOARD ----------------------------------------------
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
+    });
+    // ACCOUNT-SETTING ----------------------------------------------
+    Route::prefix('account-setting')->name('account-setting.')->group(function () {
+        Route::get('/', [AccountSettingController::class, 'index'])->name('index');
+        Route::post('/change-info', [AccountSettingController::class, 'changeInfo'])->name('changeInfo');
+        Route::post('/change-password', [AccountSettingController::class, 'changePassword'])->name('changePassword');
+        Route::post('/vest', [AccountSettingController::class, 'vest'])->name('vest');
     });
     // USER ----------------------------------------------
     Route::prefix('user')->name('user.')->group(function () {

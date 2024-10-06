@@ -19,15 +19,12 @@ class AuthController extends Controller
             'password' => $request->password,
         ];
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->code == 'admin') {
+            if (Auth::user()->role == 'admin') {
                 toastr()->success('Đăng nhập thành công!');
-                return redirect()->route('admin.dashboard.index');
-            } else {
-                toastr()->warning('Bạn không phải là admin!');
-                return redirect()->back();
+                return to_route('admin.dashboard.index');
             }
         }
-        toastr()->error('Đăng nhập thất bại!');
+        toastr()->warning('Thông tin đăng nhập không đúng!');
         return redirect()->back();
     }
 
@@ -35,6 +32,6 @@ class AuthController extends Controller
     { //GET [/admin/doLogout]
         Auth::logout(); //đăng xuất
         toastr()->success('Đăng xuất thành công!'); //Thông báo
-        return redirect()->route('account.login'); //CHuyển hướng ra trang login
+        return to_route('account.login'); //CHuyển hướng ra trang login
     }
 }

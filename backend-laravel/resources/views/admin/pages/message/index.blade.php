@@ -1,14 +1,13 @@
 @extends('admin.layouts.layout')
-@section('content')    
-
+@section('content')
     @php
-        if(!$currrentMessages){
+        if (!$currrentMessages) {
             $currrentMessages = $messages->first();
-        }       
-       $currentUserId = $currrentMessages->first()->user_id;
-    @endphp    
+        }
+        $currentUserId = $currrentMessages->first()->user_id;
+    @endphp
     <style>
-        #box-status-item{{ $currentUserId }}{
+        #box-status-item{{ $currentUserId }} {
             background-color: rgba(80, 80, 255, 0.079);
         }
     </style>
@@ -30,9 +29,11 @@
                                     style="position: relative; height: 450px">
                                     <ul class="list-unstyled mb-0" id="box-status-list">
                                         @foreach ($messages as $key => $contents)
-                                        {{-- @dd($contents[0]->user) --}}
-                                            <li class="p-2 border-bottom rounded-2 box-status-item" id="box-status-item{{ $contents[0]->user->id }}">
-                                                <a href="{{ url('admin/message/'.$contents[0]->user->id) }}" class="d-flex justify-content-between">
+                                            {{-- @dd($contents[0]->user) --}}
+                                            <li class="p-2 border-bottom rounded-2 box-status-item"
+                                                id="box-status-item{{ $contents[0]->user->id }}">
+                                                <a href="{{ url('admin/message/' . $contents[0]->user->id) }}"
+                                                    class="d-flex justify-content-between">
                                                     <div class="d-flex flex-row">
                                                         <div>
                                                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
@@ -42,7 +43,8 @@
                                                         </div>
                                                         <div class="pt-1">
                                                             <p class="fw-bold mb-0">{{ $contents[0]->user->user_name }}</p>
-                                                            <p id="last_message{{ $contents[0]->user->id }}" class="small text-muted">
+                                                            <p id="last_message{{ $contents[0]->user->id }}"
+                                                                class="small text-muted">
                                                                 {{ $contents[0]->content }}</p>
                                                         </div>
                                                     </div>
@@ -62,14 +64,14 @@
 
                             <div id="box-chating" class="col-md-6 col-lg-7 col-xl-8" style="height: 100%">
 
-                                <div id="box-messages{{ $currentUserId }}" class="box-messages pt-3 pe-3" data-mdb-perfect-scrollbar-init
-                                    style="position: relative; height: 450px">
+                                <div id="box-messages{{ $currentUserId }}" class="box-messages pt-3 pe-3"
+                                    data-mdb-perfect-scrollbar-init style="position: relative; height: 450px">
                                     @foreach ($currrentMessages->reverse() as $content)
                                         @if ($content->role == 'admin')
                                             <div class="d-flex flex-row justify-content-end">
                                                 <div>
                                                     <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
-                                                        {{ $content->content }}</p>
+                                                        {{ !$content->content ? 'Tin nhắn mẫu' : ''}}</p>
                                                     <p class="small me-3 mb-3 rounded-3 text-muted">
                                                         {{ substr($content->created_at, 5, -3) }}
                                                     </p>
@@ -83,7 +85,7 @@
                                                     alt="avatar 1" style="width: 45px; height: 100%;">
                                                 <div>
                                                     <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">
-                                                        {{ $content->content }}</p>
+                                                        {{ !$content->content ? 'Tin nhắn mẫu' : ''}}</p>
                                                     <p class="small ms-3 mb-3 rounded-3 text-muted float-end">
                                                         {{ substr($content->created_at, 5, -3) }}
                                                     </p>
@@ -121,7 +123,7 @@
             var message = $('#send_message_input').val();
             $('#send_message_input').val('')
             $.ajax({
-                url: BASE_URL+'admin/messages/sendmessage',
+                url: '/admin/messages/sendmessage',
                 type: 'POST',
                 data: {
                     userId: {{ $currentUserId }},
@@ -137,7 +139,7 @@
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText)
-                    alert('Error sending message');
+                    alert('Chức năng đang phát triển');
                 }
             });
         });

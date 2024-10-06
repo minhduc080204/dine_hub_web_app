@@ -1,4 +1,5 @@
 <!-- Vendor JS Files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
 <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -16,65 +17,3 @@
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/custom.js"></script>
-
-<script>
-    function fetchData(url, inputId) {
-        let value = [];
-        var input = document.getElementById(inputId);
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function(data) {
-                data.forEach(element => {
-                    value.push(element.name);
-                });
-                new Tagify(input, {
-                    whitelist: value,
-                    focusable: false,
-                    dropdown: {
-                        position: 'input',
-                        enabled: 0
-                    }
-                });
-            }
-        });
-    }
-
-    // Fetch categories for categories input
-    fetchData(BASE_URL+"api/categories", 'categories-input');
-
-    // Fetch tags for tags input
-    fetchData(BASE_URL+"api/tags", 'tags-input');
->>>>>>> ebf2e0459a7f7891265776cd30e76835daa20473
-</script>
-
-<script>
-    $(document).ready(function() {
-        $('.input_number').on('input', function() {
-            var value = $(this).val();
-            var filteredValue = value.replace(/[^0-9]/g, '');
-            $(this).val(filteredValue);
-        });
-    });
-    $(document).ready(function() {
-        $('.input_discount').on('input', function() {
-            var value = $(this).val();
-            var numericValue = value.replace(/[^0-9]/g, '');
-            var intValue = parseInt(numericValue);
-            if (isNaN(intValue)) {
-                intValue = '';
-            } else if (intValue > 100) {
-                intValue = 100;
-            } else if (intValue < 1) {
-                intValue = '';
-            }
-            $(this).val(intValue);
-        });
-    });
-</script>
-<script>
-    const test = document.querySelector('.img-test');
-    test.addEventListener('change', function() {
-        console.log(test.files[0].name);
-    });
-</script>
