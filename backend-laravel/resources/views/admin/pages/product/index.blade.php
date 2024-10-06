@@ -28,10 +28,14 @@
                             <tbody>
                                 @foreach ($products as $key => $product)
                                     <tr>
-                                        <td><img src="{{ $product->image && \Storage::disk('public')->exists('images/' . $product->image)
+                                        {{-- <td><img src="{{ $product->image && \Storage::disk('public')->exists('images/' . $product->image)
                                             ? asset('storage/images/products/' . $product->image)
                                             : 'https://png.pngtree.com/png-vector/20220705/ourmid/pngtree-food-logo-png-image_5687686.png' }}"
                                                 alt="" width="70" class="rounded">
+                                        </td> --}}
+                                        <td><img 
+                                            src="{{ asset('/storage/images/' . $product->image) }}"
+                                            alt="" width="140" class="rounded">
                                         </td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ number_format($product->price, 0, ',') }} <span

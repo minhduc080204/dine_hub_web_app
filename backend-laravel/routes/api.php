@@ -10,10 +10,9 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankController;
-use App\Http\Controllers\Api\DiscountController;
+use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\TagController;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\Mime\MessageConverter;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -30,8 +29,8 @@ Route::prefix('')->middleware('api.key')->group(function () {
     Route::get('/QRcode', [OrderController::class, 'QRcode']);
     Route::get('/bank', [BankController::class, 'index']);
 
-    Route::post('/discount', [DiscountController::class, 'index']);
-    Route::post('/checkdiscount', [DiscountController::class, 'checkDiscount']);
+    Route::post('/discount', [CouponController::class, 'index']);
+    Route::post('/checkdiscount', [CouponController::class, 'checkDiscount']);
     Route::post('/order/create', [OrderController::class, 'newOrder']);
     Route::post('/message', [MessageController::class, 'getMessage']);
     Route::post('/sendmessage', [MessageController::class, 'sendMessage'])->name('sendmessage');

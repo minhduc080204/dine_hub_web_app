@@ -21,6 +21,7 @@ import {
   useGetProductsQuery,
 } from '../../store/slices/apiSlice';
 import { CategoryType } from '../../types';
+import { BASE_URL_IMG } from '../../config';
 
 const Menu: React.FC = (): JSX.Element => {
   const navigation = useAppNavigation();
@@ -194,7 +195,7 @@ const Menu: React.FC = (): JSX.Element => {
               }}
             >
               <components.ImageBackground
-                source={{ uri: item.image }}
+                source={{ uri: BASE_URL_IMG+item.image }}
                 imageStyle={{ borderRadius: 10 }}
                 style={{ ...imageBackgroundStyle }}
                 resizeMode='cover'

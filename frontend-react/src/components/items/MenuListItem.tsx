@@ -8,6 +8,7 @@ import {useAppNavigation} from '../../hooks';
 import ProductNew from '../product/ProductNew';
 import ProductName from '../product/ProductName';
 import ProductPrice from '../product/ProductPrice';
+import { BASE_URL_IMG } from '../../config';
 
 type Props = PropsWithChildren<{
   item: ProductType;
@@ -28,7 +29,7 @@ const MenuListItem: React.FC<Props> = ({item, lastItem}): JSX.Element => {
       onPress={() => navigation.navigate('Product', {item})}
     >
       <Image
-        source={{uri: item.image}}
+        source={{ uri: BASE_URL_IMG+item.image }}
         style={{
           width: 117,
           height: 117,

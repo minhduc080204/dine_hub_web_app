@@ -12,6 +12,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 
+import { showMessage } from 'react-native-flash-message';
 import { svg } from '../../assets/svg';
 import { components } from '../../components';
 import { theme } from '../../constants';
@@ -20,8 +21,6 @@ import BottomTabBar from '../../navigation/BottomTabBar';
 import { useCheckDiscountMutation } from '../../store/slices/apiSlice';
 import { setScreen } from '../../store/slices/tabSlice';
 import { text } from '../../text';
-import { ENDPOINTS } from '../../config';
-import { showMessage } from 'react-native-flash-message';
 
 const Order: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -80,6 +79,12 @@ const Order: React.FC = (): JSX.Element => {
       });
     }
     setLoading(false);
+    return showMessage({
+      message: 'Use promocode Failed :(',
+      description: "Server đang bận",
+      type: 'danger',
+      icon: 'danger',
+    });
   };
 
   const renderStatusBar = () => {

@@ -66,3 +66,12 @@ input:focus {
 .box-status-item:hover{
     background-color: rgba(80, 80, 255, 0.079);
 }
+
+.datatable > tbody tr td {
+    background-color: transparent !important;
+}
+
+.datatable > tbody > tr:hover {
+    background-color: #77777715 !important;
+}
+

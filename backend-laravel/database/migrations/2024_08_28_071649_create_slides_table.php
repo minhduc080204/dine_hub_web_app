@@ -12,10 +12,8 @@ return new class extends Migration {
     {
         Schema::create('slides', function (Blueprint $table) {
             $table->id(); // Tạo cột 'id' kiểu auto-increment
-            $table->string('title_line_1'); // Cột 'title_line_1' kiểu string
-            $table->string('title_line_2'); // Cột 'title_line_2' kiểu string
+            $table->string('title_line')->nullable(); // Cột 'title_line_1' kiểu string
             $table->string('image'); // Cột 'image' kiểu string
-            $table->string('button_text'); // Cột 'button_text' kiểu string
             $table->timestamps(); // Cột 'created_at' và 'updated_at'
         });
     }

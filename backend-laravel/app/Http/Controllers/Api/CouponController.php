@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Discount;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 
-class DiscountController extends Controller
+class CouponController extends Controller
 {
     public function index()
     {
-        $discounts = Discount::all();
+        $discounts = Coupon::all();
         return response()->json($discounts, 200);
     }
 
     public function checkDiscount(Request $request){
         $code = $request->input('code');
-        $discount = Discount::where('code', $code)->first();
+        $discount = Coupon::where('code', $code)->first();
         if ($discount) {
             $expiresAt = new \DateTime($discount->expires_at);
             $now = new \DateTime();

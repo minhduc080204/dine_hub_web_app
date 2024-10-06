@@ -1,5 +1,3 @@
-import { BASE_URL } from ".";
-
 export const ENDPOINTS = {  
   get: {
     tags: 'api/tags',

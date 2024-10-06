@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Storage;
 function uploadImage($request, $product)
 {
     $filename = $request->getClientOriginalName();
-    $filePath = 'images/products/' . $filename;
-    $product->image = $filename;
+    $filePath = 'products/' . $filename;
+    $product->image = $filePath;
     if (!Storage::disk('public')->exists($filePath)) {
         return $request->storeAs('images/products', $filename, 'public');
     }

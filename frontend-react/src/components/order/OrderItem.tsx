@@ -10,6 +10,7 @@ import OrderCounter from './OrderCounter';
 import DishName from '../product/ProductName';
 import ProductPrice from '../product/ProductPrice';
 import ImageBackground from '../custom/ImageBackground';
+import { BASE_URL_IMG } from '../../config';
 
 type Props = {
   item: ProductType;
@@ -30,7 +31,7 @@ const OrderItem: React.FC<Props> = ({
     const imageWidth = 94;
     return (
       <Image
-        source={{uri: item.image}}
+      source={{ uri: BASE_URL_IMG+item.image }}
         style={{width: imageWidth, aspectRatio: imageWidth / imageWidth}}
         resizeMode='cover'
       />

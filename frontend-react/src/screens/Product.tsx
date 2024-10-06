@@ -15,6 +15,7 @@ import {
   fullRemoveFromCart,
 } from '../store/slices/cartSlice';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { BASE_URL_IMG } from '../config';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Product'>;
 
@@ -37,7 +38,7 @@ const Product: React.FC<Props> = ({route}): JSX.Element => {
     return (
       <View style={{marginBottom: 30, backgroundColor: theme.colors.white}}>
         <components.ImageBackground
-          source={{uri: item.image}}
+          source={{ uri: BASE_URL_IMG+item.image }}
           resizeMode='cover'
           style={{
             height: 390,

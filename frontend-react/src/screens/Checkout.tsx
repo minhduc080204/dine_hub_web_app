@@ -1,32 +1,24 @@
-import React, {useContext, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import {text} from '../text';
-import {svg} from '../assets/svg';
-import {theme} from '../constants';
-import {components} from '../components';
-import type {AppStateType, RootStackParamList} from '../types';
-import {resetCart} from '../store/slices/cartSlice';
-import {useAppSelector, useAppNavigation, useAppDispatch} from '../hooks';
-import {useCreateOrderMutation} from '../store/slices/apiSlice';
-import {OrderType} from '../types/OrderType';
-import {useSelector} from 'react-redux';
-import {AuthContext} from '../context/AuthContext';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
+import { svg } from '../assets/svg';
+import { components } from '../components';
+import { theme } from '../constants';
+import { useAppNavigation, useAppSelector } from '../hooks';
+import { text } from '../text';
+import type { RootStackParamList } from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Checkout'>;
 
 const Checkout: React.FC<Props> = ({route}): JSX.Element => {
-  const dispatch = useAppDispatch();
   const {total, subtotal, delivery, discount} = route.params;
   const navigation = useAppNavigation();
   const [loading, setLoading] = useState(false);
   const cart = useAppSelector((state) => state.cartSlice.list);
   const [address, setAdress] = useState('');
   const [note, setNote] = useState('');
-  const [createOrder, {data, error, isLoading}] = useCreateOrderMutation();
-  const {userInfor} = useContext(AuthContext);
 
   const handleConfirmOrder = async () => {
     if (address === '') {

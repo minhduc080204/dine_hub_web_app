@@ -11,6 +11,7 @@ import ProductPrice from './product/ProductPrice';
 import ProductInCart from './product/ProductInCart';
 import ImageBackground from './custom/ImageBackground';
 import ProductInWishlist from './product/ProductInWishlist';
+import { BASE_URL_IMG } from '../config';
 
 type Props = PropsWithChildren<{
   item: ProductType;
@@ -32,7 +33,7 @@ const FavoriteItem: React.FC<Props> = ({item}): JSX.Element => {
       }}
     >
       <ImageBackground
-        source={{uri: item.image}}
+        source={{ uri: BASE_URL_IMG+item.image }}
         style={{
           width: '100%',
           aspectRatio: 1,

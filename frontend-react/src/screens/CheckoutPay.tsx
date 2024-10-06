@@ -1,10 +1,10 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useContext, useState } from 'react';
-import { ActivityIndicator, ImageComponent, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { showMessage } from 'react-native-flash-message';
 import { svg } from '../assets/svg';
 import { components } from '../components';
+import Image from '../components/custom/Image';
 import { theme } from '../constants';
 import { AuthContext } from '../context/AuthContext';
 import { useAppDispatch, useAppNavigation, useAppSelector } from '../hooks';
@@ -13,7 +13,6 @@ import { resetCart } from '../store/slices/cartSlice';
 import { text } from '../text';
 import type { BankInforType, RootStackParamList } from '../types';
 import { OrderType } from '../types/OrderType';
-import Image from '../components/custom/Image';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CheckoutPay'>;
 
@@ -42,7 +41,6 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
     price: total,
     note: Date.now().toString(),
   }
-  const qrcode_url = `https://img.vietqr.io/image/${bankInfor.bank_id}-${bankInfor.number}-compact.png?amount=${bankInfor.price}&addInfo=${bankInfor.note?.split("").join("%20")}&accountName=${bankInfor.name?.split(" ").join("%20")}`;
 
   const handlePayed = async () => {
     try {
@@ -156,7 +154,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
   };
 
   const renderQRInfor = () => {
-
+    const qrcode_url = `https://img.vietqr.io/image/${bankInfor.bank_id}-${bankInfor.number}-compact.png?amount=${bankInfor.price}&addInfo=${bankInfor.note?.split("").join("%20")}&accountName=${bankInfor.name?.split(" ").join("%20")}`;
     return (
       <View
         style={{
@@ -184,37 +182,46 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
             Quét mã qua ứng dụng Ngân hàng/ Ví điện tử
           </text.H4>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: 300,
-          }}
-        >
-          <Image
-            source={{ uri: qrcode_url }}
-            style={{ width: 300, aspectRatio: 1, alignSelf: 'center' }}
-            resizeMode='cover'
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            borderBottomWidth: 1,
-            borderBottomColor: '#DBE9F5',
-            paddingBottom: 20,
-            // marginBottom: 20,
-            marginTop: 20,
-            gap: 10,
-          }}
-        >
-          <text.H4>Tên NH: {bankInfor.bank_name}</text.H4>
-          <text.H4>STK: {bankInfor.number}</text.H4>
-          <text.H4>Tên: {bankInfor.name}</text.H4>
-        </View>
+        {!bankLoading?
+          <>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: 300,
+              }}
+            >
+              <Image
+                source={{ uri: qrcode_url }}
+                style={{ width: 300, aspectRatio: 1, alignSelf: 'center' }}
+                resizeMode='cover'
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                borderBottomWidth: 1,
+                borderBottomColor: '#DBE9F5',
+                paddingBottom: 20,
+                // marginBottom: 20,
+                marginTop: 20,
+                gap: 10,
+              }}
+            >
+              <text.H3>{bankInfor.bank_name}</text.H3>
+              <text.H3>{bankInfor.number}</text.H3>
+              <text.H3>{bankInfor.name}</text.H3>
+              {/* <text.H4>Tên NH: {bankInfor.bank_name}</text.H4>
+              <text.H4>STK: {bankInfor.number}</text.H4>
+              <text.H4>Tên: {bankInfor.name}</text.H4> */}
+            </View>
+          </> : <components.Loader />
+        }
+
+
       </View>
     );
   };
