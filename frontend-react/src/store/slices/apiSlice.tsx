@@ -19,7 +19,9 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
+      // Thêm header 'authorization' và 'api-key'
       headers.set('authorization', `Bearer ${AUTHORIZATION_TOKEN}`);
+      headers.set('api-key', AUTHORIZATION_TOKEN); // Sửa dòng này để thêm api-key
       return headers;
     },
   }),
