@@ -2,7 +2,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="{{ route('admin.dashboard.index') }}" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
+            <img src="/storage/images/products/logo-Photoroom.png" alt="" height="100%">
             <span class="d-none d-lg-block">Your Name</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -183,19 +183,13 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                            <i class="bi bi-person"></i>
-                            <span>My Profile</span>
-                        </a>
-                    </li>
-                    <li>
                         <hr class="dropdown-divider">
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                        <a class="dropdown-item d-flex align-items-center" href="{{route('admin.account-setting.index')}}">
                             <i class="bi bi-gear"></i>
-                            <span>Account Settings</span>
+                            <span>Cài đặt tài khoản</span>
                         </a>
                     </li>
                     <li>
@@ -205,7 +199,7 @@
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
                             <i class="bi bi-question-circle"></i>
-                            <span>Need Help?</span>
+                            <span>Hỗ trợ?</span>
                         </a>
                     </li>
                     <li>
@@ -213,9 +207,9 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('account.doLogout') }}">
                             <i class="bi bi-box-arrow-right"></i>
-                            <span>Sign Out</span>
+                            <span>Đăng xuất</span>
                         </a>
                     </li>
 

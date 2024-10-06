@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'Authentication' => \App\Http\Middleware\AuthMiddleware::class,
             'CheckLoginAdmin' => \App\Http\Middleware\CheckLoginAdminMiddleware::class,
-
+            'api.key' => \App\Http\Middleware\ApiKeyMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

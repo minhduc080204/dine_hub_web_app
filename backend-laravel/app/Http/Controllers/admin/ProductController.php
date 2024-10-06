@@ -54,24 +54,31 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->is_bestseller = $request->is_bestseller;
         $product->is_new = $request->is_new;
+
         $category = json_decode($request->category, true);
         $values = array_map(function ($item) {
             return $item['value'];
         }, $category);
-
         $product->category = json_encode($values);
+
         $product->save();
         $tags = json_decode($request->tag, true);
         $values_tags = array_map(function ($item) {
             return $item['value'];
         }, $tags);
+        dd($request);
         foreach ($values_tags as $item) {
-            $tag_id = Tag::where('name', $item)->pluck('id')->first();
-            if ($tag_id) {
-                $product->tags()->attach($tag_id);
+            if ($request->tag == $tag->name) {
+                $tag_id = Tag::where('name', $item)->pluck('id')->first();
+                if ($tag_id) {
+                    $product->tags()->attach($tag_id);
+                } else {
+                    dd('Không tìm thấy thẻ: ' . $item);
+                }
             } else {
-                dd('Tag not found: ' . $item);
+                toastr()->success('aaaaaaaa');
             }
+
         }
 
         toastr()->success('Thêm sản phẩm thành công');

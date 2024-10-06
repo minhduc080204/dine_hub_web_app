@@ -68,11 +68,10 @@
                                     </div>
                                     <div class="input mb-3">
                                         <label for="category" class="fw-bolder mb-1">
-                                            Danh mục:
+                                            Danh mục: <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" name="category" id="categories-input" value=""
-                                            class="form-control" placeholder="Nhập tên sản phẩm"
-                                            value="{{ old('category') }}">
+                                        <input type="text" name="category" id="categories-input" class="form-control"
+                                            placeholder="Nhập tên sản phẩm" value="{{ old('category') }}">
                                         @errorDirective('category')
                                     </div>
                                     <div class="input mb-3">

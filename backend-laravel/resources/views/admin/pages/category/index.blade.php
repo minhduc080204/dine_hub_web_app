@@ -28,7 +28,7 @@
                                     <tr>
                                         <td>#{{ $key + 1 }}</td>
                                         <td><img class="category_img"
-                                                src="{{ asset('storage/images/' . $category->image) }}"
+                                                src="{{ asset('/storage/images/' . $category->image) }}"
                                                 alt="img" width="150" style="max-height: 120px"></td>
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->updated_at }}</td>
