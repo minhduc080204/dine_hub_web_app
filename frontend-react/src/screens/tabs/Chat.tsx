@@ -162,7 +162,7 @@ const Chat: React.FC = (): JSX.Element => {
                 return (
                     <View key={'message' + index} style={boxStyle}>
                         <Image
-                            source={{ uri: message.role == 'admin' ? 'https://george-fx.github.io/dine-hub/10.jpg' : '' }}
+                            source={{ uri: message.role == 'admin' ? 'https://george-fx.github.io/dine-hub/10.jpg' : 'x' }}
                             style={{
                                 width: message.role == 'admin' ? 40 : 0,
                                 height: message.role == 'admin' ? 40 : 0,

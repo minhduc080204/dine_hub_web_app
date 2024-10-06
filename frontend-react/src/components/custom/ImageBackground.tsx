@@ -20,7 +20,7 @@ const ImageBackground: React.FC<Props> = ({
 }): JSX.Element => {
   return (
     <RNImageBackground
-      source={(BASE_URL+ENDPOINTS.image+source?.uri) as ImageSourcePropType}
+      source={source as ImageSourcePropType}
       style={style}
       imageStyle={imageStyle}
       // resizeMode={

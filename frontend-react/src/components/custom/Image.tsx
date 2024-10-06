@@ -9,6 +9,7 @@ type Props = {
   imageStyle?: object;
   resizeMode?: 'cover' | 'contain' | 'stretch';
   tintColor?: string;
+  isQR?: boolean;
 };
 
 const Image: React.FC<Props> = ({
@@ -17,11 +18,10 @@ const Image: React.FC<Props> = ({
   resizeMode,
   tintColor,
 }): JSX.Element => {
-  
   return (
     <RNImage
       style={style}
-      source={(BASE_URL+ENDPOINTS.image + source.uri) as ImageSourcePropType}
+      source={source as ImageSourcePropType}
       tintColor={tintColor}
     />
   );

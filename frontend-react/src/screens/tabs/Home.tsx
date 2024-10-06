@@ -12,6 +12,7 @@ import {
   useGetProductsQuery
 } from '../../store/slices/apiSlice';
 import { setScreen } from '../../store/slices/tabSlice';
+import { BASE_URL_IMG } from '../../config';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -71,7 +72,7 @@ const Home: React.FC = (): JSX.Element => {
           onScroll={(e) => { updateCurrentSlideIndex(e) }}
           renderItem={({ item }) => (
             <components.Image
-              source={{ uri: item.image }}
+              source={{ uri: BASE_URL_IMG+item.image }}
               style={{ width: theme.sizes.width, height: 250, aspectRatio: 1.5 }}
             />
           )}
@@ -171,7 +172,7 @@ const Home: React.FC = (): JSX.Element => {
                   }}
                 >
                   <components.ImageBackground
-                    source={{ uri: item.image }}
+                    source={{ uri: BASE_URL_IMG+item.image }}
                     style={{
                       width: 90,
                       height: 90,

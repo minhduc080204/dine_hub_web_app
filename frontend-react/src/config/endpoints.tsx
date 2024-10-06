@@ -1,7 +1,6 @@
 import { BASE_URL } from ".";
 
-export const ENDPOINTS = {
-  image: 'storage/images/',
+export const ENDPOINTS = {  
   get: {
     tags: 'api/tags',
     users: 'api/users',//

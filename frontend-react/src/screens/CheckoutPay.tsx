@@ -1,6 +1,6 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useContext, useState } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ImageComponent, Text, TouchableOpacity, View } from 'react-native';
 
 import { showMessage } from 'react-native-flash-message';
 import { svg } from '../assets/svg';
@@ -44,7 +44,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
   }
   const qrcode_url = `https://img.vietqr.io/image/${bankInfor.bank_id}-${bankInfor.number}-compact.png?amount=${bankInfor.price}&addInfo=${bankInfor.note?.split("").join("%20")}&accountName=${bankInfor.name?.split(" ").join("%20")}`;
 
-  const handlePayed = async () => {    
+  const handlePayed = async () => {
     try {
       setLoading(true);
       const product_id = cart.map((cart) => cart.id);
@@ -168,7 +168,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
           alignItems: 'center', // Căn giữa theo chiều ngang
           justifyContent: 'center', // Căn giữa theo chiều dọc
         }}
-      >        
+      >
         <View
           style={{
             flexDirection: 'row',
@@ -264,7 +264,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
   const renderButton = () => {
     return (
       <View
-        style={{          
+        style={{
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -280,9 +280,9 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
           danger={true}
           loading={loading}
           containerStyle={{
-            width: '48%',            
+            width: '48%',
           }}
-          onPress={()=>{
+          onPress={() => {
             navigation.goBack()
           }}
         />
@@ -292,7 +292,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
           containerStyle={{
             width: '48%',
           }}
-          onPress={()=>{
+          onPress={() => {
             handlePayed()
           }}
         />

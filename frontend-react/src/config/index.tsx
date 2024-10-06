@@ -5,6 +5,7 @@ const DEBUG = true;
 // const BASE_URL = 'http://192.168.100.53:8000/';
 // const BASE_URL = 'http://10.0.2.2:8000/';
 const BASE_URL = 'http://38.54.30.126:8000/';
+const BASE_URL_IMG = BASE_URL+'storage/images/';
 
 // const BASE_URL = 'https://dine-hub.rn-admin.site/';
 
@@ -17,4 +18,4 @@ const CONFIG = {
   },
 };
 
-export {BASE_URL, AUTHORIZATION_TOKEN, ENDPOINTS, CONFIG, DEBUG};
+export {BASE_URL, BASE_URL_IMG , AUTHORIZATION_TOKEN, ENDPOINTS, CONFIG, DEBUG};
