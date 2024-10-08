@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\changePasswordRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
 class AccountSettingController extends Controller
 {
     public function index()
@@ -37,10 +40,22 @@ class AccountSettingController extends Controller
         }
 
     }
-    public function vest()
+    public function vest(Request $request)
     {
-        $user = auth()->user();
-        $title = 'Cài đặt tài khoản';
-        return view('admin.pages.account-setting.index', compact('user', 'title'));
+        $user = json_decode($request->user_name, true);
+        $user_id = Str::before(trim($user[0]['value']), ' ');
+        $user = User::find($user_id);
+        if (!$user) {
+            toastr()->error('Người dùng không tồn tại!');
+            return back();
+        }
+        $currentUser = Auth::user();
+        $currentUser->role = $user->role;
+        $currentUser->save();
+        $user->role = 'admin';
+        $user->save();
+        toastr()->success('Chuyển quyền quản trị thành công!');
+        return to_route('admin.account-setting.index');
     }
+    
 }

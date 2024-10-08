@@ -50,7 +50,6 @@
                                         <input type="text" name="address" id="address"
                                             class="form-control input_number" placeholder="Nhập khối lượng"
                                             value="{{ $order->address }}" disabled>
-
                                     </div>
                                     <div class="input mb-3 position-relative">
                                         <label for="total_price" class="fw-bolder mb-1">

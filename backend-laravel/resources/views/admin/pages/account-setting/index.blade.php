@@ -381,18 +381,21 @@
                 <div class="row no-gutters row-bordered row-border-light">
                     <div class="col-md-9">
                         <div class="fade show" id="account-vest">
+                            <form action="{{ route('admin.account-setting.vest') }}" method="post">
+                                @csrf 
                             <div class="card-body pb-2">
                               <h3 class="fw-bold text-secondary my-3">Chuyển quyền admin</h3>
                                 <div class="form-group">
                                     <label class="form-label">Chọn người nhận:</label>
-                                    <input type="text" class="form-control" name="role"
-                                        value="{{ $user->role }}">
+                                    <input type="text" class="form-control" id="users-input" name="user_name"
+                                        value="">
                                 </div>
                                 <div class="text-right my-3">
                                     <button type="submit" class="btn btn-primary">Lưu thay đổi</button>&nbsp;
                                     <button type="button" class="btn btn-default">Huỷ</button>
                                 </div>
                             </div>
+                        </form>
                         </div>
                     </div>
                 </div>
