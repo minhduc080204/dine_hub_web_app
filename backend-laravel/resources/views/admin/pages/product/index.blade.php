@@ -34,7 +34,7 @@
                                                 alt="" width="70" class="rounded">
                                         </td> --}}
                                         <td><img 
-                                            src="{{ asset('/storage/images/' . $product->image) }}"
+                                            src="{{ asset('/storage/images/products/' . $product->image) }}"
                                             alt="" width="140" class="rounded">
                                         </td>
                                         <td>{{ $product->name }}</td>

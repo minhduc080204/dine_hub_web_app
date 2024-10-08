@@ -18,7 +18,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::prefix('')->middleware('api.key')->group(function () {
+// Route::prefix('')->middleware('api.key')->group(function () {
+Route::prefix('')->group(function () {
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/categories', [CategotyController::class, 'index']);
     Route::get('/slides', [SlideController::class, 'index']);

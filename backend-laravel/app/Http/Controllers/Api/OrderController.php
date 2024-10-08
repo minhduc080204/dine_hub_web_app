@@ -22,7 +22,7 @@ class OrderController extends Controller
             $productIds = json_decode($order->product_id, true);
             // var_dump($productIds);
             $Product = Product::whereIn('id', $productIds)->get();
-            $order['product_id'] = $Product->values()->all();
+            $order['products'] = $Product->values()->all();
             $showOrders[] = $order;
         }
         return response()->json($showOrders);
