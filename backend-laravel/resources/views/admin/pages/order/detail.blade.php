@@ -126,7 +126,7 @@
                                             <tbody>
                                                 @foreach ($products as $key => $product)
                                                     <tr>
-                                                        <td><img src="{{ asset('/storage/images/products/' . $product->image) }}"
+                                                        <td><img src="{{ asset('/storage/images/' . $product->image) }}"
                                                                 alt="" width="140" class="rounded">
                                                         </td>
                                                         <td>{{ $product->name }}</td>

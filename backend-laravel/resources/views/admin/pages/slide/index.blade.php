@@ -39,7 +39,7 @@
                                                         method="POST">
                                                         @csrf
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.slide.edit.view', ['id' => $slide->id]) }}">Sửa</a>
+                                                                href="{{ route('admin.slide.edit.view', ['id' => $slide->id]) }}"><i class="bi bi-pen"></i>Sửa</a>
                                                         </li>
 
                                                         <li> @deleteItem('admin.slide.remove', $slide->id)</li>

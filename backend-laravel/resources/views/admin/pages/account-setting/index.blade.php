@@ -134,7 +134,7 @@
                                   <h3 class="fw-bold text-secondary my-3">Cài đặt thông tin</h3>
                                     <img src="https://ui-avatars.com/api/?name={{ $user->user_name }}&background=random"
                                         alt="" class="d-block ui-w-80">
-                                    {{-- <img src="/storage/images/products/1_meme_chloe-26068285.jpg" alt=""
+                                    {{-- <img src="/storage/images/1_meme_chloe-26068285.jpg" alt=""
                                         class="d-block ui-w-80"> --}}
                                     <div class="media-body ml-4">
                                         <label class="btn btn-outline-primary">

@@ -41,6 +41,7 @@ class ProductRequest extends FormRequest
             'weight.required' => 'Khối lượng sản phẩm là bắt buộc!',
             'calories.required' => 'Năng lượng sản phẩm là bắt buộc!',
             'category.required' => 'Danh mục sản phẩm là bắt buộc!',
+            // 'tag.required' => 'Thẻ sản phẩm là bắt buộc!',
             'image.required' => 'Hình ảnh sản phẩm là bắt buộc!',
             'name.max' => 'Tên sản phẩm có tối đa 255 ký tự!',
             'price.numeric' => 'Giá sản phẩm phải nhập số!',

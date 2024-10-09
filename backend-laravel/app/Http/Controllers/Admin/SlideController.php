@@ -28,12 +28,8 @@ class SlideController extends Controller
     {
         $slide = new Slide();
         if ($request->hasFile('image')) {
-            $filename = $request->file('image')->getClientOriginalName();
-            $filePath = 'images/slides/' . $filename;
-            $slide->image = 'slides/'.$filename;
-            if (!Storage::disk('public')->exists($filePath)) {
-                $request->file('image')->storeAs('images/slides', $filename, 'public');
-            }
+            $image = $request->file('image');
+            uploadImage($image, $slide, 'slides');
         }
         $slide->save();
         toastr()->success('Thêm slide thành công');
@@ -51,12 +47,8 @@ class SlideController extends Controller
     {
         $slide = Slide::find($id);
         if ($request->hasFile('image')) {
-            $filename = $request->file('image')->getClientOriginalName();
-            $filePath = 'images/slides/' . $filename;
-            $slide->image ='slides/'.$filename;
-            if (!Storage::disk('public')->exists($filePath)) {
-                $request->file('image')->storeAs('images/slides', $filename, 'public');
-            }
+            $image = $request->file('image');
+            uploadImage($image, $slide, 'slides');
         }
         $slide->save();
         return to_route('admin.slide.index');

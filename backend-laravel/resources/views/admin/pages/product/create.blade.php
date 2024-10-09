@@ -1,5 +1,12 @@
 @extends('admin.layouts.layout')
 @section('content')
+    <style>
+        input:focus {
+            box-shadow: unset !important;
+        }
+
+            
+    </style>
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -37,33 +44,39 @@
                                         <label for="price" class="fw-bolder mb-1">
                                             Giá: <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" name="price" id="price"
-                                            class="form-control input_number" placeholder="Nhập giá tiền"
-                                            value="{{ old('price') }}">
-                                        <label for="" class="text-muted position-absolute"
-                                            style="top:55%; right:10px">VNĐ</label>
+                                        <div class="form-control d-flex p-1">
+                                            <input type="text" name="price" id="price"
+                                                class="form-control input_number border-0" placeholder="Nhập giá tiền"
+                                                value="{{ old('price') }}">
+                                            <span for="price"
+                                                class="text_note text-muted align-self-center pe-2">VNĐ</span>
+                                        </div>
                                         @errorDirective('price')
                                     </div>
                                     <div class="input mb-3 position-relative">
                                         <label for="weight" class="fw-bolder mb-1">
                                             Khối lượng: <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" name="weight" id="weight"
-                                            class="form-control input_number" placeholder="Nhập khối lượng"
-                                            value="{{ old('weight') }}">
-                                        <label for="" class="text-muted position-absolute"
-                                            style="top:55%; right:10px">g</label>
+                                        <div class="form-control d-flex p-1">
+                                            <input type="text" name="weight" id="weight"
+                                                class="form-control input_number border-0" placeholder="Nhập khối lượng"
+                                                value="{{ old('weight') }}">
+                                            <label for="weight"
+                                                class="text_note text-muted align-self-center pe-2">g</label>
+                                        </div>
                                         @errorDirective('weight')
                                     </div>
                                     <div class="input mb-3 position-relative">
                                         <label for="calories" class="fw-bolder mb-1">
                                             Năng lượng: <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" name="calories" id="calories"
-                                            class="form-control input_number" placeholder="Nhập năng lượng"
-                                            value="{{ old('calories') }}">
-                                        <label for="" class="text-muted position-absolute"
-                                            style="top:55%; right:10px">calories</label>
+                                        <div class="form-control d-flex p-1">
+                                            <input type="text" name="calories" id="calories"
+                                                class="form-control input_number border-0" placeholder="Nhập năng lượng"
+                                                value="{{ old('calories') }}">
+                                            <label for="calories"
+                                                class="text_note text-muted align-self-center pe-2">calories</label>
+                                        </div>
                                         @errorDirective('calories')
                                     </div>
                                     <div class="input mb-3">
