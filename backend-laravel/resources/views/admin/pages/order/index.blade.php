@@ -32,8 +32,9 @@
                                                     <li><a class="dropdown-item"
                                                             href="{{ route('admin.order.detail', $order->id) }}"> <i
                                                                 class="bi bi-pen"></i>Chi tiết</a></li>
-                                                    <li> @deleteItem('admin.order.remove', $order->id)</li>
-
+                                                    @if ($order->order_status == 'canceled')
+                                                        <li> @deleteItem('admin.order.remove', $order->id)</li>
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </td>
@@ -47,7 +48,7 @@
             </div>
         </div>
     </section>
-    <script>
+    {{-- <script>
         let abcc = '';
         $.ajax({
             type: "GET",
@@ -77,5 +78,5 @@
                 $('#tr').html(abcc);
             }
         });
-    </script>
+    </script> --}}
 @endsection

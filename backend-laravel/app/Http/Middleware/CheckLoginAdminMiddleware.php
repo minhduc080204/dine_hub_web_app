@@ -22,7 +22,7 @@ class CheckLoginAdminMiddleware
             return $next($request);
         } else {
             if (Auth::user()->role == 'admin') {
-                toastr()->success('You have already logged in');
+                // toastr()->success('You have already logged in');
                 return redirect()->route('admin.dashboard.index');
             } else {
                 return $next($request);

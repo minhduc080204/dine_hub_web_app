@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Storage;
 
-function uploadImage($request, $product)
+function uploadImage($image, $product, $folder)
 {
-    $filename = $request->getClientOriginalName();
-    $filePath = 'products/' . $filename;
-    $product->image = $filePath;
+    $filename = $image->getClientOriginalName();
+    $filePath = $folder . '/' . $filename;
     if (!Storage::disk('public')->exists($filePath)) {
-        return $request->storeAs('images/products', $filename, 'public');
+        $image->storeAs('images/' . $folder, $filename, 'public');
     }
+    $product->image = $filePath;
     return $filename;
 }
+

@@ -28,7 +28,7 @@ class ProductUpdateRequest extends FormRequest
             'weight' => 'required|numeric',
             'calories' => 'required|integer',
             'category' => 'required',
-            'image1' => 'required|max:5120',
+            // 'image1' => 'required|max:5120',
         ];
     }
 
@@ -41,13 +41,13 @@ class ProductUpdateRequest extends FormRequest
             'weight.required' => 'Khối lượng sản phẩm là bắt buộc!',
             'calories.required' => 'Năng lượng sản phẩm là bắt buộc!',
             'category.required' => 'Danh mục sản phẩm là bắt buộc!',
-            'image.required' => 'Hình ảnh sản phẩm là bắt buộc!',
+            // 'image1.required' => 'Hình ảnh sản phẩm là bắt buộc!',
             'name.max' => 'Tên sản phẩm có tối đa 255 ký tự!',
             'price.numeric' => 'Giá sản phẩm phải nhập số!',
             'weight.numeric' => 'Khối lượng sản phẩm phải nhập số!',
             'calories.integer' => 'Năng lượng sản phẩm phải là số nguyên!',
-            'image1.image' => 'File không phải là hình ảnh!',
-            'image1.max' => 'Hình ảnh có kích thước tối đa 5MB !',
+            // 'image1.image' => 'File không phải là hình ảnh!',
+            // 'image.max' => 'Hình ảnh có kích thước tối đa 5MB !',
         ];
     }
 }

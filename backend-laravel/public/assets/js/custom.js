@@ -14,23 +14,37 @@ function fetchData(url, inputId) {
         url: url,
         success: function (data) {
             data.forEach((element) => {
-                value.push(element.name);
+                if (inputId === "users-input") {
+                    value.push(element.id +' - '+ element.user_name);
+                } else {
+                    value.push(element.name);
+                }
             });
-            new Tagify(input, {
-                whitelist: value,
-                // focusable: false,
-                enforceWhitelist: true,
-                dropdown: {
-                    position: "input",
-                    enabled: 0,
-                },
-            });
+            if (inputId === "users-input") {
+                tagify = new Tagify(input, {
+                    enforceWhitelist: true,
+                    mode : "select",
+                    whitelist: value,
+                    blacklist: ['foo', 'bar'],
+                });
+            } else{
+                new Tagify(input, {
+                    whitelist: value,
+                    // focusable: false,
+                    enforceWhitelist: true,
+                    dropdown: {
+                        position: "input",
+                        enabled: 0,
+                    },
+                });
+            }
         },
     });
 }
 fetchData("/api/categories", "categories-input");
-
+fetchData("/api/users", "users-input");
 fetchData("/api/tags", "tags-input");
+
 // </script>
 // {{-- ======================== INPUT_NUMBER ======================== --}}
 

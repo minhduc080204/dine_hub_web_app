@@ -59,7 +59,8 @@ Route::prefix('admin/')->name('admin.')->middleware("Authentication")->group(fun
     Route::prefix('order')->name('order.')->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('index');
         Route::get('/detail/{id}', [OrderController::class, 'detail'])->name('detail');
-        Route::delete('/remove/{id}', [ProductController::class, 'remove'])->name('remove');
+        Route::put('/update/{id}', [OrderController::class, 'update'])->name('update');
+        Route::delete('/remove/{id}', [OrderController::class, 'remove'])->name('remove');
     });
     // SLIDE ----------------------------------------------
     Route::prefix('slide')->name('slide.')->group(function () {

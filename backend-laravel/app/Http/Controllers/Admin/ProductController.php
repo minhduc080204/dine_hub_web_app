@@ -31,17 +31,6 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        // $product->images = $request->images;
-        // $product->sizes = $request->sizes;
-        // $product->size = $request->size;
-        // $product->colors = $request->colors;
-        // $product->color = $request->color;
-        // $product->is_featured = $request->is_featured;
-        // $product->is_out_of_stock = $request->is_out_of_stock;
-        // $product->old_price = $request->old_price;
-        // $product->quantity = $request->quantity;
-        // $product->reviews = $request->reviews;
-        // dd($request->file('image'));
         $product = new Product();
         $tag = new Tag();
         $product->name = $request->name;
@@ -49,7 +38,8 @@ class ProductController extends Controller
         $product->calories = $request->calories;
         $product->price = $request->price;
         if ($request->hasFile('image')) {
-            uploadImage($request->file('image'), $product);
+            $image = $request->file('image');
+            uploadImage($request->image, $product, 'products'); 
         }
         $product->description = $request->description;
         $product->is_bestseller = $request->is_bestseller;
@@ -62,23 +52,23 @@ class ProductController extends Controller
         $product->category = json_encode($values);
 
         $product->save();
-        $tags = json_decode($request->tag, true);
-        $values_tags = array_map(function ($item) {
-            return $item['value'];
-        }, $tags);
-        dd($request);
-        foreach ($values_tags as $item) {
-            if ($request->tag == $tag->name) {
-                $tag_id = Tag::where('name', $item)->pluck('id')->first();
-                if ($tag_id) {
-                    $product->tags()->attach($tag_id);
+        if ($request->tag != null) {
+            $tags = json_decode($request->tag, true);
+            $values_tags = array_map(function ($item) {
+                return $item['value'];
+            }, $tags);
+            foreach ($values_tags as $item) {
+                if ($request->tag == $tag->name) {
+                    $tag_id = Tag::where('name', $item)->pluck('id')->first();
+                    if ($tag_id) {
+                        $product->tags()->attach($tag_id);
+                    } else {
+                        dd('Không tìm thấy thẻ: ' . $item);
+                    }
                 } else {
-                    dd('Không tìm thấy thẻ: ' . $item);
+                    toastr()->success('Đang chờ ...');
                 }
-            } else {
-                toastr()->success('aaaaaaaa');
             }
-
         }
 
         toastr()->success('Thêm sản phẩm thành công');
@@ -116,7 +106,8 @@ class ProductController extends Controller
             $product->calories = $request->calories;
             $product->price = $request->price;
             if ($request->hasFile('image')) {
-                uploadImage($request->file('image'), $product);
+                $image = $request->file('image');
+                uploadImage($image, $product, 'products');
             }
             $product->description = $request->description;
             $product->is_bestseller = $request->is_bestseller;
@@ -127,18 +118,17 @@ class ProductController extends Controller
             }, $categories);
             $product->category = json_encode($values_categories);
             $product->save();
-
-            $tags = json_decode($request->tag, true);
-            $values_tags = array_map(function ($item) {
-                return $item['value'];
-            }, $tags);
             $tag_ids = [];
-            foreach ($values_tags as $item) {
-                $tag_id = Tag::where('name', $item)->pluck('id')->first();
-                if ($tag_id) {
-                    $tag_ids[] = $tag_id;
-                } else {
-                    dd('Tag not found: ' . $item);
+            if ($request->filled('tag')) {
+                $tags = json_decode($request->tag, true);
+                $values_tags = array_map(function ($item) {
+                    return $item['value'];
+                }, $tags);
+                foreach ($values_tags as $item) {
+                    $tag_id = Tag::where('name', $item)->pluck('id')->first();
+                    if ($tag_id) {
+                        $tag_ids[] = $tag_id;
+                    }
                 }
             }
             $product->tags()->sync($tag_ids);
@@ -155,7 +145,9 @@ class ProductController extends Controller
      */
     public function remove(string $id)
     {
-        $product = Product::where("id", $id)->delete();
+        $product = Product::find($id);
+        $product->tags()->detach($product);
+        $product->delete();
         toastr()->success('Xoá sản phẩm thành công!');
         return to_route('admin.product.index');
     }

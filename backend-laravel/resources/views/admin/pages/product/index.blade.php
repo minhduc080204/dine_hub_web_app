@@ -29,7 +29,7 @@
                                 @foreach ($products as $key => $product)
                                     <tr>
                                         {{-- <td><img src="{{ $product->image && \Storage::disk('public')->exists('images/' . $product->image)
-                                            ? asset('storage/images/products/' . $product->image)
+                                            ? asset('storage/images/' . $product->image)
                                             : 'https://png.pngtree.com/png-vector/20220705/ourmid/pngtree-food-logo-png-image_5687686.png' }}"
                                                 alt="" width="70" class="rounded">
                                         </td> --}}
@@ -39,7 +39,7 @@
                                         </td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ number_format($product->price, 0, ',') }} <span
-                                                class="text-decoration-underline text-muted">đ</span></td>
+                                                class="text-muted">₫</span></td>
                                         <td>{{ $product->weight }}g</td>
                                         <td> {{ $product->updated_at }}</td>
                                         <td>#{{ $key + 1 }}</td>
