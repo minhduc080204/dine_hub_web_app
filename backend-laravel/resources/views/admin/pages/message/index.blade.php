@@ -71,7 +71,7 @@
                                             <div class="d-flex flex-row justify-content-end">
                                                 <div>
                                                     <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
-                                                        {{ !$content->content ? 'Tin nhắn mẫu' : ''}}</p>
+                                                        {{ !$content->content ? 'Error :((' : $content->content}}</p>
                                                     <p class="small me-3 mb-3 rounded-3 text-muted">
                                                         {{ substr($content->created_at, 5, -3) }}
                                                     </p>
@@ -85,7 +85,7 @@
                                                     alt="avatar 1" style="width: 45px; height: 100%;">
                                                 <div>
                                                     <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">
-                                                        {{ !$content->content ? 'Tin nhắn mẫu' : ''}}</p>
+                                                        {{ !$content->content ? 'Error :((' : $content->content}}</p>
                                                     <p class="small ms-3 mb-3 rounded-3 text-muted float-end">
                                                         {{ substr($content->created_at, 5, -3) }}
                                                     </p>

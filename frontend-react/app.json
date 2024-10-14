@@ -15,10 +15,12 @@
       "**/*"
     ],
     "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "ipa"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -34,6 +36,7 @@
       }
     },
     "plugins": [
+      ["@react-native-google-signin/google-signin"],
       "expo-font",
       [
         "expo-build-properties",

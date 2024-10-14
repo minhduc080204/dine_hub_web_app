@@ -1,14 +1,19 @@
-import React, {useState, useContext} from 'react';
-import {View, Text, ViewStyle, TextStyle, TouchableOpacity} from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { View, Text, ViewStyle, TextStyle, TouchableOpacity, Platform } from 'react-native';
 
-import {text} from '../../text';
-import {svg} from '../../assets/svg';
-import {theme} from '../../constants';
-import {components} from '../../components';
-import {useAppNavigation} from '../../hooks';
-import {homeIndicatorHeight} from '../../utils';
-import {AuthContext} from '../../context/AuthContext';
+import { text } from '../../text';
+import { svg } from '../../assets/svg';
+import { theme } from '../../constants';
+import { components } from '../../components';
+import { useAppNavigation } from '../../hooks';
+import { homeIndicatorHeight } from '../../utils';
+import { AuthContext } from '../../context/AuthContext';
 import { validation } from '../../utils/validation';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleLogin, TokenResponse, useGoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google';
+
+
+
 
 const SignIn: React.FC = (): JSX.Element => {
   const navigation = useAppNavigation();
@@ -16,7 +21,26 @@ const SignIn: React.FC = (): JSX.Element => {
   const [password, setPassword] = useState<string>('');
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  const {login} = useContext(AuthContext);
+  const { login, loginGoogleWeb } = useContext(AuthContext);
+
+  
+
+  const signInWithGoogle = async () => {
+
+
+
+    // try {
+    //   await GoogleSignin.hasPlayServices();
+    //   const userInfo = await GoogleSignin.signIn();
+    //   console.log(userInfo);
+
+    // } catch (error) {
+    //   console.log(error);
+
+    // }
+
+  };
+
 
   const renderStatusBar = () => {
     return <components.StatusBar />;
@@ -27,12 +51,12 @@ const SignIn: React.FC = (): JSX.Element => {
   };
 
   const renderWelcome = () => {
-    return <text.H1 style={{marginBottom: 14}}>Welcome Back!</text.H1>;
-    
+    return <text.H1 style={{ marginBottom: 14 }}>Welcome Back!</text.H1>;
+
   };
 
   const renderDescription = () => {
-    return <text.T16 style={{marginBottom: 30}}>Sign in to continue</text.T16>;
+    return <text.T16 style={{ marginBottom: 30 }}>Sign in to continue</text.T16>;
   };
 
   const renderInputFields = () => {
@@ -44,7 +68,7 @@ const SignIn: React.FC = (): JSX.Element => {
           checkIcon={true}
           placeholder='jordanhebert@mail.com'
           onChangeText={(text) => setEmail(text)}
-          containerStyle={{marginBottom: 14}}
+          containerStyle={{ marginBottom: 14 }}
         />
         <components.InputField
           type='password'
@@ -53,7 +77,7 @@ const SignIn: React.FC = (): JSX.Element => {
           secureTextEntry={true}
           placeholder='••••••••'
           onChangeText={(text) => setPassword(text)}
-          containerStyle={{marginBottom: 20}}
+          containerStyle={{ marginBottom: 20 }}
         />
       </React.Fragment>
     );
@@ -68,7 +92,7 @@ const SignIn: React.FC = (): JSX.Element => {
     return (
       <Text
         onPress={() => navigation.navigate('ForgotPassword')}
-        style={{...textStyles}}
+        style={{ ...textStyles }}
       >
         Forgot password?
       </Text>
@@ -78,7 +102,7 @@ const SignIn: React.FC = (): JSX.Element => {
   const renderRememberMe = () => {
     return (
       <TouchableOpacity
-        style={{flexDirection: 'row', alignItems: 'center'}}
+        style={{ flexDirection: 'row', alignItems: 'center' }}
         onPress={() => setRememberMe(!rememberMe)}
       >
         <View
@@ -117,7 +141,7 @@ const SignIn: React.FC = (): JSX.Element => {
     };
 
     return (
-      <View style={{...containerStyle}}>
+      <View style={{ ...containerStyle }}>
         {renderRememberMe()}
         {renderForgotPassword()}
       </View>
@@ -137,7 +161,7 @@ const SignIn: React.FC = (): JSX.Element => {
     };
 
     return (
-      <components.KAScrollView contentContainerStyle={{...styles}}>
+      <components.KAScrollView contentContainerStyle={{ ...styles }}>
         {renderWelcome()}
         {renderDescription()}
         {renderInputFields()}
@@ -152,9 +176,9 @@ const SignIn: React.FC = (): JSX.Element => {
     return (
       <components.Button
         title='Sign in'
-        containerStyle={{marginBottom: 20}}
+        containerStyle={{ marginBottom: 20 }}
         onPress={() => {
-          if(validation({email, password})){
+          if (validation({ email, password })) {
             login(email, password);
           }
           // navigation.navigate('TabNavigator');
@@ -169,7 +193,7 @@ const SignIn: React.FC = (): JSX.Element => {
         parse={[
           {
             pattern: /Sign up./,
-            style: {color: theme.colors.mainTurquoise},
+            style: { color: theme.colors.mainTurquoise },
             onPress: () => navigation.navigate('SignUp'),
           },
         ]}
@@ -200,13 +224,31 @@ const SignIn: React.FC = (): JSX.Element => {
     };
 
     return (
-      <View style={{...containerStyle}}>
-        <View style={{...styles}}>
-          <svg.FacebookSvg />
-        </View>
-        <View style={{...styles}}>
-          <svg.GoogleSvg />
-        </View>
+      <View style={{ ...containerStyle }}>
+        <TouchableOpacity
+          style={{ ...styles }}
+          onPress={() => signInWithGoogle()}
+        >
+          <View >
+            <svg.FacebookSvg />
+          </View>
+        </TouchableOpacity>
+        {/* <GoogleLogin
+          onSuccess={credentialResponse => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        /> */}
+        <TouchableOpacity
+          style={{ ...styles }}
+          onPress={() => loginGoogleWeb()}
+        >
+          <View>
+            <svg.GoogleSvg />
+          </View>
+        </TouchableOpacity>
       </View>
     );
   };

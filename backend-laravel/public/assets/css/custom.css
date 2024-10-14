@@ -75,3 +75,28 @@ input:focus {
     background-color: #77777715 !important;
 }
 
+.orderstatus{
+    padding: 5px 8px;
+    border-radius: 10px;
+    width: 100px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.Processing{
+    background-color:  rgb(255, 193, 7);
+    
+}
+
+.Completed{
+    background-color:  rgb(25, 135, 84);
+}
+
+.Cancelled{
+    background-color:   rgb(220, 53, 69);
+}
+
+.Shipping{
+    background-color:   lightgreen;
+}

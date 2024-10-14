@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UserStoreRequest;
@@ -6,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -18,6 +20,19 @@ class AuthController extends Controller
         ]);
         return $this->respondWithToken(auth('api')->login($user));
     }
+
+    public function check(Request $request){        
+        $user = User::where('email', $request->email)->first();
+        Log::error($request);
+        if (!$user) {
+            return response()->json([
+                'id' => -1,
+            ]);
+        }
+
+        return $this->respondWithToken(auth('api')->login($user));        
+    }
+
 
     public function login(Request $request)
     {

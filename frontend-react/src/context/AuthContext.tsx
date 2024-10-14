@@ -4,15 +4,70 @@ import { setUser } from '../store/slices/userSlice';
 import axiosInstance from '../config/axios/config';
 import { ENDPOINTS } from '../config';
 import { showMessage } from '../utils';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
-export const AuthContext = createContext<any>(null);
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
 
+GoogleSignin.configure({
+  webClientId: "848690270588-8ldfjqsueids25j0eekmfmiin2msumje.apps.googleusercontent.com",
+})
+
+export const AuthContext = createContext<any>(null);
 export const AuthProvider = ({ children }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userToken, setUserToken] = useState<string | null>(null);
   const [userInfor, setUserInfor] = useState<string | null>(null);
   const dispatch = useDispatch();
+
+  const loginGoogleWeb = useGoogleLogin({
+    onSuccess: async (tokenResponse: TokenResponse) => {
+      const accessToken = tokenResponse.access_token; // Lấy access_token
+
+      if (accessToken) {
+        try {
+          // Gửi yêu cầu đến Google UserInfo API để lấy thông tin người dùng
+          const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+
+          if (!userInfoResponse.ok) {
+            throw new Error('Failed to fetch user info');
+          }
+
+          const userProfile = await userInfoResponse.json();
+
+          const email = userProfile.email;
+          const user_name = userProfile.name;
+          const password = "alksnvksvnkdjsnv;ksndvknknajshkca";
+
+          try {
+            setIsLoading(true);
+            const res = await axiosInstance.post(ENDPOINTS.auth.check, { email });
+
+            if (res.data.id) {
+              register(user_name, email, password, password);
+            } else {
+
+              const token = res.data.access_token;
+              const user = res.data.user;
+              setUserToken(token);
+              setUserInfor(user);
+              await AsyncStorage.setItem('userInfor', JSON.stringify(user));
+              await AsyncStorage.setItem('userToken', token);
+              dispatch(setUser(user));
+            }
+          } finally {
+            setIsLoading(false);
+          }
+
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
+        }
+      }
+    }
+  });
 
   const login = async (email: string, password: string) => {
     try {
@@ -73,13 +128,14 @@ export const AuthProvider = ({ children }: any) => {
       const res = await axiosInstance.post(ENDPOINTS.auth.register, data);
       const token = res.data.access_token;
       const user = res.data.user;
-
+      
       setUserToken(token);
+      setUserInfor(user);
       await AsyncStorage.setItem('userInfor', JSON.stringify(user));
       await AsyncStorage.setItem('userToken', token);
+      dispatch(setUser(user));
 
     } catch (error: any) {
-      console.log(error);
       let codeErr = error.status;
       if (codeErr == 422) {
         return showMessage({
@@ -97,6 +153,7 @@ export const AuthProvider = ({ children }: any) => {
       }
     } finally {
       setIsLoading(false);
+      
     }
   };
 
@@ -149,7 +206,7 @@ export const AuthProvider = ({ children }: any) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, logout, register, isLoading, userToken, userInfor }}>
+    <AuthContext.Provider value={{ loginGoogleWeb, login, logout, register, isLoading, userToken, userInfor }}>
       {children}
     </AuthContext.Provider>
   );

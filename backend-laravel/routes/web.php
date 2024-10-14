@@ -24,8 +24,8 @@ Route::prefix('account')->middleware('CheckLoginAdmin')->group(function () {
 Route::get('/doLogout', [AuthController::class, 'doLogout'])->name('account.doLogout');
 
 // ADMIN ==============================================
-// Route::prefix('admin')->group(function () {
-Route::prefix('admin/')->name('admin.')->middleware("Authentication")->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
+// Route::prefix('admin/')->name('admin.')->middleware("Authentication")->group(function () {
     // DASHBOARD ----------------------------------------------
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');

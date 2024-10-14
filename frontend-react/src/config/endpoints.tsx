@@ -21,6 +21,7 @@ export const ENDPOINTS = {
     sendmessage: 'api/sendmessage',
   },
   auth: {
+    check: 'api/auth/check',
     login: 'api/auth/login',
     register: 'api/auth/register',
     updateUser: 'api/auth/user/update',

@@ -14,6 +14,7 @@ function AppNav() {
     return (
         <NavigationContainer>
             {userToken != null ? <StackNavigator /> : <AuthStackNavigator />}
+            
         </NavigationContainer>
     );
 }

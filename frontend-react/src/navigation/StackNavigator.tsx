@@ -12,6 +12,8 @@ import TabNavigator from './TabNavigator';
 
 const StackNavigator: React.FC = () => {
   const { userInfor } = useContext(AuthContext);
+  console.log(userInfor, "uUSER");
+  
   const navigation = useAppNavigation();
   useEffect(() => {
     const pusher = new pusherJs('905ea1087d251dc4a082', {
@@ -59,12 +61,7 @@ const StackNavigator: React.FC = () => {
         name='Chat'
         component={Chat}
         options={{ headerShown: false }}
-      />
-      {/* <Stack.Screen
-        name='QRcheckout'
-        component={screens.QRcheckout}
-        options={{headerShown: false}}
-      /> */}
+      />      
       <Stack.Screen
         name='Home'
         component={screens.Home}

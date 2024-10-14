@@ -23,7 +23,7 @@
                                         <td>{{ $order->user->user_name }}</td>
                                         <td>{{ $order->user->phone_number }}</td>
                                         <td>{{ $order->total_price }}</td>
-                                        <td> {{ $order->order_status }}</td>
+                                        <td> <label  class="orderstatus {{ $order->order_status }}">{{ $order->order_status }}</label></td>
                                         <td class="Action">
                                             <div class="dropdown">
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"
