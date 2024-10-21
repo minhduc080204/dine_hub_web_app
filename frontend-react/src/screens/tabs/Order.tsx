@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   ScrollView,
@@ -21,8 +21,10 @@ import BottomTabBar from '../../navigation/BottomTabBar';
 import { useCheckDiscountMutation } from '../../store/slices/apiSlice';
 import { setScreen } from '../../store/slices/tabSlice';
 import { text } from '../../text';
+import { AuthContext } from '../../context/AuthContext';
 
 const Order: React.FC = (): JSX.Element => {
+  const { userInfor } = useContext(AuthContext);
   const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
   const cart = useAppSelector((state) => state.cartSlice.list);
@@ -335,6 +337,10 @@ const Order: React.FC = (): JSX.Element => {
           }
 
           if (cart.length > 0) {
+            if (!userInfor) {
+              navigation.navigate("SignIn");
+              return;
+            }
             navigation.navigate('Checkout', {
               total,
               subtotal,

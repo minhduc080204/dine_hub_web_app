@@ -110,6 +110,11 @@ console.log(userInfor);
         <TouchableOpacity
           style={{ ...touchableStyle }}
           onPress={() => {
+            
+            if(!userInfor){
+              navigation.navigate("SignIn");
+              return;
+            }
             setShowModal(true);
           }}
         >

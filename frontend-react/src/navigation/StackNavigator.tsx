@@ -12,7 +12,7 @@ import TabNavigator from './TabNavigator';
 
 const StackNavigator: React.FC = () => {
   const { userInfor } = useContext(AuthContext);
-  
+
   const navigation = useAppNavigation();
   useEffect(() => {
     const pusher = new pusherJs('905ea1087d251dc4a082', {
@@ -22,7 +22,7 @@ const StackNavigator: React.FC = () => {
     const channel = pusher.subscribe('commonroom');
     channel.bind('CommonChannel', (data: any) => {
       if (data && data.message) {
-        if (userInfor.id == data.userId && data.role=='admin') {
+        if (userInfor.id == data.userId && data.role == 'admin') {
           showMessage({
             message: 'You have message from Admin',
             description: `Admin: ${data.message}`,
@@ -60,7 +60,7 @@ const StackNavigator: React.FC = () => {
         name='Chat'
         component={Chat}
         options={{ headerShown: false }}
-      />      
+      />
       <Stack.Screen
         name='Home'
         component={screens.Home}
@@ -87,42 +87,11 @@ const StackNavigator: React.FC = () => {
         component={screens.OrderHistory}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name='SignIn'
-        component={screens.SignIn}
-        options={{headerShown: false}}
-      /> */}
       <Stack.Screen
         name='NewPassword'
         component={screens.NewPassword}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name='SignUp'
-        component={screens.SignUp}
-        options={{headerShown: false}}
-      /> */}
-      {/* <Stack.Screen
-        name='ConfirmationCode'
-        component={screens.ConfirmationCode}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name='SignUpaccountCreated'
-        component={screens.SignUpaccountCreated}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name='ForgotPassword'
-        component={screens.ForgotPassword}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name='ForgotPasswordSentEmail'
-        component={screens.ForgotPasswordSentEmail}
-        options={{headerShown: false}}
-      /> */}
-
       <Stack.Screen
         name='EditProfile'
         component={screens.EditProfile}
@@ -179,6 +148,41 @@ const StackNavigator: React.FC = () => {
         component={screens.AddANewCard}
         options={{ headerShown: false }}
       />
+
+      
+
+
+
+      <Stack.Screen
+        name='SignIn'
+        component={screens.SignIn}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='SignUp'
+        component={screens.SignUp}
+        options={{headerShown: false}}
+      /> 
+      <Stack.Screen
+        name='ConfirmationCode'
+        component={screens.ConfirmationCode}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name='SignUpaccountCreated'
+        component={screens.SignUpaccountCreated}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name='ForgotPassword'
+        component={screens.ForgotPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name='ForgotPasswordSentEmail'
+        component={screens.ForgotPasswordSentEmail}
+        options={{headerShown: false}}
+      />      
     </Stack.Navigator>
   );
 };

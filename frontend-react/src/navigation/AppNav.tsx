@@ -16,7 +16,8 @@ function AppNav() {
     }
     return (
         <NavigationContainer>
-            {userToken != null ? <StackNavigator /> : <AuthStackNavigator />}            
+            {/* {userToken != null ? <StackNavigator /> : <AuthStackNavigator />}             */}
+            <StackNavigator />
 
         </NavigationContainer>
         // <SignIn></SignIn>

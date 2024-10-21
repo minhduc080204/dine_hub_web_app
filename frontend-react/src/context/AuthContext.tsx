@@ -7,13 +7,12 @@ import { ENDPOINTS } from '../config';
 import axiosInstance from '../config/axios/config';
 import { setUser } from '../store/slices/userSlice';
 import { showMessage } from '../utils';
+import { makeRedirectUri } from 'expo-auth-session';
 
 
 export const AuthContext = createContext<any>(null);
 WebBrowser.maybeCompleteAuthSession();
 export const AuthProvider = ({ children }: any) => {
-  // useEffect(()=>{
-  // }, [])
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userToken, setUserToken] = useState<string | null>(null);
   const [userInfor, setUserInfor] = useState<any | null>(null);
@@ -23,6 +22,9 @@ export const AuthProvider = ({ children }: any) => {
     webClientId: "529775059239-o4e6r433b2l2uun0rj370arli9bgq516.apps.googleusercontent.com",
     androidClientId: "529775059239-7u57lvor7ovm67cp9c9buqqi6j7qarac.apps.googleusercontent.com",
     iosClientId: "529775059239-2l5jv9hmb3cvfaff3rdpllbj18p5vmki.apps.googleusercontent.com",
+    // redirectUri: 'com.minhduc08022004.dine_hub://',
+
+    ...{ useProxy: true }
   });
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export const AuthProvider = ({ children }: any) => {
 
   const getUserInfo = async (token: any) => {
     if (!token) return;
+    setIsLoading(true);
     try {
       const response = await fetch(
         "https://www.googleapis.com/userinfo/v2/me",
@@ -51,16 +54,34 @@ export const AuthProvider = ({ children }: any) => {
       );
 
       const userRes = await response.json();
-      const user = {
-        email: userRes.email,
-        user_name: userRes.name,
-        picture: userRes.picture,
-      }
-      setUserToken(token);
-      setUserInfor(user);
-      await AsyncStorage.setItem('userInfor', JSON.stringify(user));
-      await AsyncStorage.setItem('userToken', token);
-      dispatch(setUser(user));
+      const email = userRes.email;
+      const user_name = userRes.name;
+      const password = "alksnvksvnkdjsnv;ksndvknknajshkca";
+      const picture = userRes.picture;
+
+      try {
+        const res = await axiosInstance.post(ENDPOINTS.auth.check, { email });
+
+        if (res.data.id) {
+          register(user_name, email, password, password, picture);
+        } else {
+          const token = res.data.access_token;
+
+          const user = {
+            id: res.data.user.id,
+            user_name: user_name,
+            email: email,
+            picture: picture,
+          }
+          setUserToken(token);
+          setUserInfor(user);
+          await AsyncStorage.setItem('userInfor', JSON.stringify(user));
+          await AsyncStorage.setItem('userToken', token);
+          dispatch(setUser(user));
+        }
+      } finally {
+        setIsLoading(false);
+      }      
 
     } catch (error) {
       console.log("fetch", error);
@@ -168,7 +189,7 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const register = async (name: string, email: string, password: string, password_c: string) => {
+  const register = async (name: string, email: string, password: string, password_c: string, picture: string) => {
     if (password !== password_c) {
       showMessage({
         message: 'Retype password ',
@@ -190,7 +211,13 @@ export const AuthProvider = ({ children }: any) => {
       setIsLoading(true);
       const res = await axiosInstance.post(ENDPOINTS.auth.register, data);
       const token = res.data.access_token;
-      const user = res.data.user;
+      
+      const user = {
+        id: res.data.user.id,
+        user_name: name,
+        email: email,
+        picture: picture,
+      };
 
       setUserToken(token);
       setUserInfor(user);

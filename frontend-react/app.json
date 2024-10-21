@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "main",
-    "slug": "dine_hub",
+    "name": "dine_hub",
+    "slug": "dine_hub",    
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,13 +27,13 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "scheme": "minhduc",
+    },    
     "extra": {
       "eas": {
         "projectId": "da90374d-599c-49a7-9b97-8b3fe8aad06a"
       }
     },
+    "scheme": "com.minhduc08022004.dine_hub",
     "plugins": [
       "expo-font",
       [
@@ -44,6 +44,6 @@
           }
         }
       ]
-    ] 
+    ]
   }
 }
