@@ -9,11 +9,6 @@ import { useAppNavigation } from '../../hooks';
 import { homeIndicatorHeight } from '../../utils';
 import { AuthContext } from '../../context/AuthContext';
 import { validation } from '../../utils/validation';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { GoogleLogin, TokenResponse, useGoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google';
-
-
-
 
 const SignIn: React.FC = (): JSX.Element => {
   const navigation = useAppNavigation();
@@ -21,26 +16,7 @@ const SignIn: React.FC = (): JSX.Element => {
   const [password, setPassword] = useState<string>('');
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  const { login, loginGoogleWeb } = useContext(AuthContext);
-
-  
-
-  const signInWithGoogle = async () => {
-
-
-
-    // try {
-    //   await GoogleSignin.hasPlayServices();
-    //   const userInfo = await GoogleSignin.signIn();
-    //   console.log(userInfo);
-
-    // } catch (error) {
-    //   console.log(error);
-
-    // }
-
-  };
-
+  const { login, loginGoogleWeb, signInWithGoogle, promptAsync } = useContext(AuthContext);
 
   const renderStatusBar = () => {
     return <components.StatusBar />;
@@ -227,23 +203,15 @@ const SignIn: React.FC = (): JSX.Element => {
       <View style={{ ...containerStyle }}>
         <TouchableOpacity
           style={{ ...styles }}
-          onPress={() => signInWithGoogle()}
+          onPress={() => {}}
         >
           <View >
             <svg.FacebookSvg />
           </View>
-        </TouchableOpacity>
-        {/* <GoogleLogin
-          onSuccess={credentialResponse => {
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log('Login Failed');
-          }}
-        /> */}
+        </TouchableOpacity>        
         <TouchableOpacity
           style={{ ...styles }}
-          onPress={() => loginGoogleWeb()}
+          onPress={() => signInWithGoogle()}
         >
           <View>
             <svg.GoogleSvg />

@@ -69,8 +69,9 @@ const Header: React.FC<Props> = ({
   const total = useAppSelector((state) => state.cartSlice.total);
   const { logout, userInfor } = useContext(AuthContext);
   const email = userInfor?.email;
-  const userAvatar = 'https://george-fx.github.io/dine-hub/10.jpg';
+  const userAvatar = userInfor?.picture? userInfor.picture :'https://george-fx.github.io/dine-hub/10.jpg';
 
+console.log(userInfor);
 
   const handleOnPress = () => {
     if (cart.length > 0) {

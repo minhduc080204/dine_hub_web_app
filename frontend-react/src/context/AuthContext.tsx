@@ -1,73 +1,136 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setUser } from '../store/slices/userSlice';
-import axiosInstance from '../config/axios/config';
-import { ENDPOINTS } from '../config';
-import { showMessage } from '../utils';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
+import React, { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
+import { ENDPOINTS } from '../config';
+import axiosInstance from '../config/axios/config';
+import { setUser } from '../store/slices/userSlice';
+import { showMessage } from '../utils';
 
-GoogleSignin.configure({
-  webClientId: "848690270588-8ldfjqsueids25j0eekmfmiin2msumje.apps.googleusercontent.com",
-})
 
 export const AuthContext = createContext<any>(null);
+WebBrowser.maybeCompleteAuthSession();
 export const AuthProvider = ({ children }: any) => {
+  // useEffect(()=>{
+  // }, [])
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userToken, setUserToken] = useState<string | null>(null);
-  const [userInfor, setUserInfor] = useState<string | null>(null);
+  const [userInfor, setUserInfor] = useState<any | null>(null);
   const dispatch = useDispatch();
 
-  const loginGoogleWeb = useGoogleLogin({
-    onSuccess: async (tokenResponse: TokenResponse) => {
-      const accessToken = tokenResponse.access_token; // Lấy access_token
-
-      if (accessToken) {
-        try {
-          // Gửi yêu cầu đến Google UserInfo API để lấy thông tin người dùng
-          const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-
-          if (!userInfoResponse.ok) {
-            throw new Error('Failed to fetch user info');
-          }
-
-          const userProfile = await userInfoResponse.json();
-
-          const email = userProfile.email;
-          const user_name = userProfile.name;
-          const password = "alksnvksvnkdjsnv;ksndvknknajshkca";
-
-          try {
-            setIsLoading(true);
-            const res = await axiosInstance.post(ENDPOINTS.auth.check, { email });
-
-            if (res.data.id) {
-              register(user_name, email, password, password);
-            } else {
-
-              const token = res.data.access_token;
-              const user = res.data.user;
-              setUserToken(token);
-              setUserInfor(user);
-              await AsyncStorage.setItem('userInfor', JSON.stringify(user));
-              await AsyncStorage.setItem('userToken', token);
-              dispatch(setUser(user));
-            }
-          } finally {
-            setIsLoading(false);
-          }
-
-        } catch (error) {
-          console.error('Error fetching user profile:', error);
-        }
-      }
-    }
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    webClientId: "529775059239-o4e6r433b2l2uun0rj370arli9bgq516.apps.googleusercontent.com",
+    androidClientId: "529775059239-7u57lvor7ovm67cp9c9buqqi6j7qarac.apps.googleusercontent.com",
+    iosClientId: "529775059239-2l5jv9hmb3cvfaff3rdpllbj18p5vmki.apps.googleusercontent.com",
   });
+
+  useEffect(() => {
+    handleSignInWithGoogle();
+  }, [response]);
+
+  const signInWithGoogle = async () => {
+    await promptAsync();
+  };
+
+  async function handleSignInWithGoogle() {
+    if (response?.type === "success") {
+      await getUserInfo(response.authentication?.accessToken)
+    } else {
+      console.log(response);
+    }
+
+  };
+
+  const getUserInfo = async (token: any) => {
+    if (!token) return;
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const userRes = await response.json();
+      const user = {
+        email: userRes.email,
+        user_name: userRes.name,
+        picture: userRes.picture,
+      }
+      setUserToken(token);
+      setUserInfor(user);
+      await AsyncStorage.setItem('userInfor', JSON.stringify(user));
+      await AsyncStorage.setItem('userToken', token);
+      dispatch(setUser(user));
+
+    } catch (error) {
+      console.log("fetch", error);
+    }
+  }
+
+  // const loginGoogleWeb = useGoogleLogin({
+  //   onSuccess: async (tokenResponse: TokenResponse) => {
+  //     const accessToken = tokenResponse.access_token; // Lấy access_token
+
+  //     if (accessToken) {
+  //       try {
+  //         // Gửi yêu cầu đến Google UserInfo API để lấy thông tin người dùng
+  //         const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //           },
+  //         });
+
+  //         if (!userInfoResponse.ok) {
+  //           throw new Error('Failed to fetch user info');
+  //         }
+
+  //         const userProfile = await userInfoResponse.json();
+
+  //         const email = userProfile.email;
+  //         const user_name = userProfile.name;
+  //         const password = "alksnvksvnkdjsnv;ksndvknknajshkca";
+
+  //         try {
+  //           setIsLoading(true);
+  //           const res = await axiosInstance.post(ENDPOINTS.auth.check, { email });
+
+  //           if (res.data.id) {
+  //             register(user_name, email, password, password);
+  //           } else {
+
+  //             const token = res.data.access_token;
+  //             const user = res.data.user;
+  //             setUserToken(token);
+  //             setUserInfor(user);
+  //             await AsyncStorage.setItem('userInfor', JSON.stringify(user));
+  //             await AsyncStorage.setItem('userToken', token);
+  //             dispatch(setUser(user));
+  //           }
+  //         } finally {
+  //           setIsLoading(false);
+  //         }
+
+  //       } catch (error) {
+  //         console.error('Error fetching user profile:', error);
+  //       }
+  //     }
+  //   }
+  // });
+  const loginGoogleWeb = () => { }
+  // const loginGoogleApp = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfoResponse = await GoogleSignin.signIn();
+  //     console.log(userInfoResponse, "APPP");
+  //     promptAsync();
+
+  //   } catch (error: any) {
+  //     console.log("Đăng nhập thất bại: ", error.code); // Ghi lại mã lỗi
+  //     console.log("Thông báo thất bại: ", error.message); // Ghi lại thông báo lỗi
+  //   }
+  // }
+
+
 
   const login = async (email: string, password: string) => {
     try {
@@ -128,7 +191,7 @@ export const AuthProvider = ({ children }: any) => {
       const res = await axiosInstance.post(ENDPOINTS.auth.register, data);
       const token = res.data.access_token;
       const user = res.data.user;
-      
+
       setUserToken(token);
       setUserInfor(user);
       await AsyncStorage.setItem('userInfor', JSON.stringify(user));
@@ -153,7 +216,7 @@ export const AuthProvider = ({ children }: any) => {
       }
     } finally {
       setIsLoading(false);
-      
+
     }
   };
 
@@ -206,7 +269,7 @@ export const AuthProvider = ({ children }: any) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loginGoogleWeb, login, logout, register, isLoading, userToken, userInfor }}>
+    <AuthContext.Provider value={{ promptAsync, signInWithGoogle, loginGoogleWeb, login, logout, register, isLoading, userToken, userInfor }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dine_hub",
+    "name": "main",
     "slug": "dine_hub",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,12 +15,10 @@
       "**/*"
     ],
     "ios": {
-      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
-      "bundleIdentifier": "ipa"
+      "bundleIdentifier": "com.minhduc08022004.dine_hub"
     },
     "android": {
-      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -30,13 +28,13 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "scheme": "minhduc",
     "extra": {
       "eas": {
         "projectId": "da90374d-599c-49a7-9b97-8b3fe8aad06a"
       }
     },
     "plugins": [
-      ["@react-native-google-signin/google-signin"],
       "expo-font",
       [
         "expo-build-properties",
@@ -46,6 +44,6 @@
           }
         }
       ]
-    ]
+    ] 
   }
 }

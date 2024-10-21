@@ -12,7 +12,6 @@ import TabNavigator from './TabNavigator';
 
 const StackNavigator: React.FC = () => {
   const { userInfor } = useContext(AuthContext);
-  console.log(userInfor, "uUSER");
   
   const navigation = useAppNavigation();
   useEffect(() => {
