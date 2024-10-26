@@ -36,11 +36,11 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->weight = $request->weight;
         $product->calories = $request->calories;
-        $product->price = $request->price;
+        $product->price = $request->price;        
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            uploadImage($request->image, $product, 'products'); 
-        }
+            uploadImage($image, $product, 'products');
+        }        
         $product->description = $request->description;
         $product->is_bestseller = $request->is_bestseller;
         $product->is_new = $request->is_new;
@@ -108,7 +108,7 @@ class ProductController extends Controller
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 uploadImage($image, $product, 'products');
-            }
+            }            
             $product->description = $request->description;
             $product->is_bestseller = $request->is_bestseller;
             $product->is_new = $request->is_new;

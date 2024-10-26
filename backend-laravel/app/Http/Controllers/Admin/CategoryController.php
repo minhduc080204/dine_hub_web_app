@@ -24,17 +24,13 @@ class CategoryController extends Controller
         return view('admin.pages.category.createCategory', compact('title'));
     }
     public function store(CategoryRequest $request)
-    {
+    {        
         $category = new Category();
         $category->name = $request->name;
         if ($request->hasFile('image')) {
-            $filename = $request->file('image')->getClientOriginalName();
-            $filePath = 'images/categories/' . $filename;
-            $category->image = 'categories/'.$filename;
-            if (!Storage::disk('public')->exists($filePath)) {
-                $request->file('image')->storeAs('images/categories', $filename, 'public');
-            }
-        }
+            $image = $request->file('image');
+            uploadImage($image, $category, 'categories');
+        }        
         $category->save();
         toastr()->success('Thêm danh mục thành công');
         return to_route('admin.category.index');
@@ -54,13 +50,9 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->name = $newCategory;
         if ($request->hasFile('image')) {
-            $filename = $request->file('image')->getClientOriginalName();
-            $filePath = 'images/categories/' . $filename;
-            $category->image ='categories/'.$filename;
-            if (!Storage::disk('public')->exists($filePath)) {
-                $request->file('image')->storeAs('images/categories', $filename, 'public');
-            }
-        }
+            $image = $request->file('image');
+            uploadImage($image, $category, 'categories');
+        }        
         $category->save();
         // Cập nhật các bản ghi có chứa oldCategory
         Product::whereJsonContains('category', $oldCategory)

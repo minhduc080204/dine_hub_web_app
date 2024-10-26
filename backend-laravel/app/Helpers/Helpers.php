@@ -1,15 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 
 function uploadImage($image, $product, $folder)
 {
-    $filename = $image->getClientOriginalName();
-    $filePath = $folder . '/' . $filename;
-    if (!Storage::disk('public')->exists($filePath)) {
-        $image->storeAs('images/' . $folder, $filename, 'public');
-    }
-    $product->image = $filePath;
-    return $filename;
-}
+    $filename = $image->getRealPath();
 
+    $manager = new ImageManager(new Driver());
+
+    $img = $manager->read($filename);
+        
+    $filePath = $folder . '/i_' . time(). '.jpg';
+
+    $encoded = $img->encodeByMediaType('image/jpeg', progressive: true, quality: 20);
+
+    Storage::disk('public')->put('images/' . $filePath , (string) $encoded);
+
+    $product->image = $filePath;
+
+    return $filename; // Trả về tên file mới
+}

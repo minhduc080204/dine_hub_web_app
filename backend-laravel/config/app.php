@@ -122,7 +122,10 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-    // 'providers' => [
-    //     Spatie\Permission\PermissionServiceProvider::class,
+    // 'providers' => [    
+    //     Intervention\Image\ImageServiceProvider::class,
+    // ],
+    // 'aliases' => [
+    //     'Image' => Intervention\Image\Facades\Image::class,
     // ],
 ];
