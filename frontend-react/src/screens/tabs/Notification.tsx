@@ -5,6 +5,7 @@ import {svg} from '../../assets/svg';
 import {theme} from '../../constants';
 import {components} from '../../components';
 import BottomTabBar from '../../navigation/BottomTabBar';
+import { t } from 'i18next';
 
 const notifications = [
   {
@@ -51,7 +52,7 @@ const Notification: React.FC = (): JSX.Element => {
   const renderHeader = () => {
     return (
       <components.Header
-        title='Notifications'
+        title={t('notification')}
         basket={true}
         user={true}
         userImage={true}

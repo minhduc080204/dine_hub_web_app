@@ -36,8 +36,14 @@ import TagSvg from './TagSvg';
 import UserSvg from './UserSvg';
 import ViewAllSvg from './ViewAllSvg';
 import MessageSvg from './MessageSvg';
+import LanguageSvg from './LanguageSvg';
+import VietNamSvg from './VietNamSvg';
+import AmericaSvg from './AmericaSvg';
 
 export const svg = {
+  AmericaSvg,
+  VietNamSvg,
+  LanguageSvg,
   MessageSvg,
   PictureSvg,
   PhoneCallSvg,

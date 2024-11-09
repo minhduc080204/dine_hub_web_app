@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 
@@ -6,13 +6,10 @@ import { components } from '../components';
 import { theme } from '../constants';
 import { AuthContext } from '../context/AuthContext';
 import { useAppNavigation } from '../hooks';
-import { useGetOrdersQuery, useGetProductsQuery } from '../store/slices/apiSlice';
+import { useGetOrdersQuery } from '../store/slices/apiSlice';
 import { text } from '../text';
-import { OrderType } from '../types/OrderType';
 import { homeIndicatorHeight as getHomeIndicatorHeight } from '../utils';
-import { ProductType, RootStackParamList } from '../types';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
+import { t } from 'i18next';
 
 // let historyy = [
 //   {
@@ -112,7 +109,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
   };
 
   const renderHeader = () => {
-    return <components.Header goBack={true} title='Order history' />;
+    return <components.Header goBack={true} title={t('order_history')} />;
   };
 
   const accordionHeader = (section: any) => {
@@ -189,7 +186,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
               lineHeight: 12 * 1.5,
             }}
           >
-            Address: {section.address}
+            {t('address_title')}: {section.address}
           </Text>
 
           <View
@@ -213,7 +210,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
                 color: theme.colors.white,
               }}
             >
-              {section.order_status}
+              {t(section.order_status)}
             </Text>
           </View>
         </View>
@@ -266,7 +263,7 @@ const OrderHistory: React.FC = (): JSX.Element => {
               marginBottom: 10,
             }}
           >
-            <text.T14>Discount</text.T14>
+            <text.T14>{t('discount')}</text.T14>
             <text.T14>- ${section.discount}</text.T14>
           </View>
           <View
@@ -276,14 +273,14 @@ const OrderHistory: React.FC = (): JSX.Element => {
               justifyContent: 'space-between',
             }}
           >
-            <text.T14>Delivery</text.T14>
+            <text.T14>{t('delivery')}</text.T14>
             <text.T14>${section.delivery_price}</text.T14>
           </View>
         </View>
 
         {["Shipping", "Processing"].includes(section.order_status) && (
           <components.Button
-            title='track order'
+            title={t('track_order')}
             onPress={() => {
               navigation.navigate('TrackYourOrder', {
                 orderId: section.id
@@ -383,11 +380,10 @@ const OrderHistory: React.FC = (): JSX.Element => {
                 marginBottom: 14,
               }}
             >
-              No Order History Yet!
+              {t('order_history_title')}
             </text.H2>
             <text.T16 style={{ textAlign: 'center' }}>
-              It looks like your order history is empty.{'\n'}Place your order
-              now to start building{'\n'}your history!
+              {t('order_history_descript')}
             </text.T16>
           </View>
         </ScrollView>

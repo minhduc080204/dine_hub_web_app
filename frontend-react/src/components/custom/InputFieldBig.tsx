@@ -5,11 +5,12 @@ import {theme} from '../../constants';
 
 type Props = {
   containerStyle?: object;
+  placeholder?: string;
   onChangeText?: (text: string) => void;
   value?: string;
 };
 
-const InputFieldBig: React.FC<Props> = ({containerStyle, onChangeText, value}): JSX.Element => {
+const InputFieldBig: React.FC<Props> = ({placeholder,containerStyle, onChangeText, value}): JSX.Element => {
   return (
     <View
       style={{
@@ -31,7 +32,7 @@ const InputFieldBig: React.FC<Props> = ({containerStyle, onChangeText, value}): 
           ...theme.fonts.DMSans_400Regular,
           fontSize: 16,
         }}
-        placeholder='Enter your note'
+        placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
         textAlignVertical='top'

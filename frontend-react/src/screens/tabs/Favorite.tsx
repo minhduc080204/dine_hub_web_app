@@ -9,6 +9,7 @@ import {useAppDispatch} from '../../hooks';
 import {components} from '../../components';
 import {setScreen} from '../../store/slices/tabSlice';
 import BottomTabBar from '../../navigation/BottomTabBar';
+import { t } from 'i18next';
 
 const Favorite: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ const Favorite: React.FC = (): JSX.Element => {
 
   const renderHeader = () => {
     return (
-      <components.Header title='Favorite' basket={true} userImage={true} />
+      <components.Header title={t('favorite')} basket={true} userImage={true} />
     );
   };
 

@@ -9,6 +9,7 @@ import {components} from '../components';
 import {useAppNavigation} from '../hooks';
 import {homeIndicatorHeight} from '../utils';
 import {setScreen} from '../store/slices/tabSlice';
+import { t } from 'i18next';
 
 const OrderSuccessful: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -47,7 +48,7 @@ const OrderSuccessful: React.FC = (): JSX.Element => {
             }}
           />
           <text.H2 style={{textAlign: 'center', marginBottom: 14}}>
-            Thank you for {'\n'} your order!
+            {t('order_successful_title')}
           </text.H2>
           <Text
             style={{
@@ -58,7 +59,7 @@ const OrderSuccessful: React.FC = (): JSX.Element => {
               lineHeight: 16 * 1.5,
             }}
           >
-            Your order will be delivered on time. {'\n'} Thank you!
+           {t('order_successful_descript')} 
           </Text>
         </View>
       </ScrollView>
@@ -75,7 +76,7 @@ const OrderSuccessful: React.FC = (): JSX.Element => {
         }}
       >
         <components.Button
-          title='Continue Shopping'
+          title={t('countinue_shopping')}
           containerStyle={{
             marginBottom: 14,
           }}
@@ -85,7 +86,7 @@ const OrderSuccessful: React.FC = (): JSX.Element => {
           }}
         />
         <components.Button
-          title='View orders'
+          title={t('view_order')}
           transparent={true}
           onPress={() => {
             navigation.replace('OrderHistory');

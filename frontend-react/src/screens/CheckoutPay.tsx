@@ -13,6 +13,7 @@ import { resetCart } from '../store/slices/cartSlice';
 import { text } from '../text';
 import type { BankInforType, RootStackParamList } from '../types';
 import { OrderType } from '../types/OrderType';
+import { t } from 'i18next';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CheckoutPay'>;
 
@@ -105,7 +106,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
             marginBottom: 20,
           }}
         >
-          <text.H4>Số tiền cần thanh toán</text.H4>
+          <text.H4>{t('amount_pay')}</text.H4>
           <text.H4>${total}</text.H4>
         </View>
         {cart.map((item, index) => {
@@ -146,7 +147,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
             justifyContent: 'space-between',
           }}
         >
-          <text.T14>Delivery</text.T14>
+          <text.T14>{t('delivery')}</text.T14>
           <text.T14>${delivery}</text.T14>
         </View>
       </View>
@@ -179,7 +180,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
           }}
         >
           <text.H4 style={{ textAlign: 'center', width: '100%' }}>
-            Quét mã qua ứng dụng Ngân hàng/ Ví điện tử
+          {t('payment_title')}
           </text.H4>
         </View>
         {!bankLoading?
@@ -250,7 +251,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
               marginBottom: 10,
             }}
           >
-            Shipping Address
+            {t('address_title')}
           </Text>
           <Text
             style={{
@@ -283,7 +284,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
 
       >
         <components.Button
-          title='UnPay'
+          title={t('unpay')}
           danger={true}
           loading={loading}
           containerStyle={{
@@ -294,7 +295,7 @@ const Checkout: React.FC<Props> = ({ route }): JSX.Element => {
           }}
         />
         <components.Button
-          title='Payed'
+          title={t('payed')}
           loading={loading}
           containerStyle={{
             width: '48%',

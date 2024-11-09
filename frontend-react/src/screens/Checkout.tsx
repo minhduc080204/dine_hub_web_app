@@ -9,6 +9,7 @@ import { theme } from '../constants';
 import { useAppNavigation, useAppSelector } from '../hooks';
 import { text } from '../text';
 import type { RootStackParamList } from '../types';
+import { t } from 'i18next';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Checkout'>;
 
@@ -44,7 +45,7 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
   };
 
   const renderHeader = () => {
-    return <components.Header goBack={true} title='Checkout' />;
+    return <components.Header goBack={true} title={t('checkout')} />;
   };
 
   const renderOrderSummary = () => {
@@ -69,7 +70,7 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
             marginBottom: 20,
           }}
         >
-          <text.H4>My order</text.H4>
+          <text.H4>{t('total')}</text.H4>
           <text.H4>${total}</text.H4>
         </View>
         {cart.map((item, index) => {
@@ -110,7 +111,7 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
             justifyContent: 'space-between',
           }}
         >
-          <text.T14>Delivery</text.T14>
+          <text.T14>{t('delivery')}</text.T14>
           <text.T14>${delivery}</text.T14>
         </View>
       </View>
@@ -171,7 +172,7 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
       >
         <components.InputField
           type='address'
-          placeholder='Enter address'
+          placeholder={t('address')}
           value={address}
           onChangeText={(text) => {
             setAdress(text);
@@ -194,13 +195,14 @@ const Checkout: React.FC<Props> = ({route}): JSX.Element => {
         <components.InputFieldBig
           containerStyle={{marginBottom: 14}}
           value={note}
+          placeholder={t('note')}
           onChangeText={(text) => {
             setNote(text);
           }}
         />
         <components.Button
           loading={loading}
-          title='Confirm order'
+          title={t('confirm_order')}
           onPress={() => {
             handleConfirmOrder()
           }}

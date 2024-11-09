@@ -22,6 +22,8 @@ import { statusBarHeight, homeIndicatorHeight } from '../utils';
 import { useAppNavigation, useAppSelector, useAppDispatch } from '../hooks';
 import { AuthContext } from '../context/AuthContext';
 import { showMessage } from 'react-native-flash-message';
+import { useTranslation } from 'react-i18next';
+import ChangeLanguage from './Language';
 
 type Props = PropsWithChildren<{
   skip?: boolean;
@@ -56,6 +58,7 @@ const Header: React.FC<Props> = ({
   bottomLine,
   skipOnPress,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
 
@@ -71,22 +74,20 @@ const Header: React.FC<Props> = ({
   const email = userInfor?.email;
   const userAvatar = userInfor?.picture? userInfor.picture :'https://george-fx.github.io/dine-hub/10.jpg';
 
-console.log(userInfor);
-
   const handleOnPress = () => {
-    if (cart.length > 0) {
+    // if (cart.length > 0) {
       dispatch(setScreen('Order'));
       route.name === 'Shop' && navigation.navigate('TabNavigator');
       route.name === 'Product' && navigation.navigate('TabNavigator');
-    }
-    if (cart.length === 0) {
-      Alert.alert('Your cart is empty', 'Please add some items to your cart', [
-        {
-          text: 'OK',
-          onPress: () => console.log('OK Pressed'),
-        },
-      ]);
-    }
+    // }
+    // if (cart.length === 0) {
+    //   Alert.alert('Your cart is empty', 'Please add some items to your cart', [
+    //     {
+    //       text: 'OK',
+    //       onPress: () => console.log('OK Pressed'),
+    //     },
+    //   ]);
+    // }
   };
 
   const renderUser = (): JSX.Element | null => {
@@ -192,37 +193,37 @@ console.log(userInfor);
 
   const renderBurgerContent = (): JSX.Element | null => {
     return (
-      <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
+      <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>        
         <BurgerProfileItem
-          text={'Personal information'}
+          text={t('personal_info')}
           onPress={() => {
             setShowModal(false);
             navigation.navigate('EditProfile');
           }}
         />
         <BurgerProfileItem
-          text={'My orders'}
+          text={t('my_orders')}
           onPress={() => {
             setShowModal(false);
             navigation.navigate('OrderHistory');
           }}
         />
         <BurgerProfileItem
-          text={'Promocodes & gift cards'}
+          text={t('promodecodes_gifts')}
           onPress={() => {
             setShowModal(false);
             navigation.navigate('Promocodes');
           }}
         />
         <BurgerProfileItem
-          text={'Wallet'}
+          text={t('wallet')}
           onPress={() => {
             setShowModal(false);
             navigation.navigate('Wallet');
           }}
         />
         <BurgerProfileItem
-          text={'Notifications'}
+          text={t('notification')}
           onPress={() => {
             setNotification(!notification);
           }}
@@ -236,19 +237,20 @@ console.log(userInfor);
           disabled={faceID}
         />
         <BurgerProfileItem
-          text={'Chat Support'}
+          text={t('chat_support')}
           onPress={() => {
             setShowModal(false);
             navigation.navigate('Chat');
           }}
         />
         <BurgerProfileItem
-          text={'Sign out'}
+          text={t('sign_out')}
           onPress={() => {
             setShowModal(false);
             logout();
           }}
         />
+        <ChangeLanguage/>
       </ScrollView>
     );
   };

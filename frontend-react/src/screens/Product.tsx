@@ -16,6 +16,7 @@ import {
 } from '../store/slices/cartSlice';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import { BASE_URL_IMG } from '../config';
+import { t } from 'i18next';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Product'>;
 
@@ -158,7 +159,7 @@ const Product: React.FC<Props> = ({route}): JSX.Element => {
           </View>
         </View>
         <components.Button
-          title='+ Add to cart'
+          title={'+ '+t('add_cart')}
           containerStyle={{marginBottom: 14}}
           onPress={() => {
             // if (quantity > 0) {
@@ -170,7 +171,7 @@ const Product: React.FC<Props> = ({route}): JSX.Element => {
           }}
         />
         <components.Button
-          title='Leave a review'
+          title={t('leave_review')}
           transparent={true}
           containerStyle={{
             backgroundColor: theme.colors.white,

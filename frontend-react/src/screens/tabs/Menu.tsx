@@ -22,9 +22,11 @@ import {
 } from '../../store/slices/apiSlice';
 import { CategoryType } from '../../types';
 import { BASE_URL_IMG } from '../../config';
+import { useTranslation } from 'react-i18next';
 
 const Menu: React.FC = (): JSX.Element => {
   const navigation = useAppNavigation();
+  const { t } = useTranslation();
 
   const {
     data: categoryData,
@@ -115,7 +117,7 @@ const Menu: React.FC = (): JSX.Element => {
             </TouchableOpacity>
           </View>
           <TextInput
-            placeholder='Search ...'
+            placeholder={t('search')}
             value={search}
             onChangeText={(text) => { setSearch(text) }}
             style={{

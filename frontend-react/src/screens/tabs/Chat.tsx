@@ -20,6 +20,7 @@ import { useGetMessageMutation, useSendMessageMutation } from '../../store/slice
 import { MessageType } from '../../types';
 import { homeIndicatorHeight } from '../../utils';
 import Pusher from 'pusher-js';
+import { t } from 'i18next';
 
 
 const Chat: React.FC = (): JSX.Element => {
@@ -98,7 +99,7 @@ const Chat: React.FC = (): JSX.Element => {
         return (
             <components.Header
                 goBack={true}
-                title='Chat Support'
+                title={t('yournamecoffee')}
                 phone={true}
                 bottomLine={true}
             />
@@ -240,7 +241,7 @@ const Chat: React.FC = (): JSX.Element => {
                         borderColor: '#DBE9F5',
                         borderRadius: 15,
                     }}
-                    placeholder="Let talk !"
+                    placeholder={t('chat_title')}
                     placeholderTextColor={'#A7AFB7'}
                     value={message}
                     onChangeText={(text) => setMessage(text)}

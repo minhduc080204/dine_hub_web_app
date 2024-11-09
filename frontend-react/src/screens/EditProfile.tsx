@@ -12,6 +12,7 @@ import {setUser} from '../store/slices/userSlice';
 import {BASE_URL, ENDPOINTS, CONFIG} from '../config';
 import {useAppSelector, useAppDispatch} from '../hooks';
 import { AuthContext } from '../context/AuthContext';
+import { t } from 'i18next';
 
 const EditProfile: React.FC = (): JSX.Element => {
   const { userInfor} = useContext(AuthContext);
@@ -47,7 +48,7 @@ const EditProfile: React.FC = (): JSX.Element => {
   };
 
   const renderHeader = () => {
-    return <components.Header goBack={true} title='Edit profile' />;
+    return <components.Header goBack={true} title={t('personal_info')} />;
   };
 
   const renderUserImage = () => {
@@ -96,7 +97,7 @@ const EditProfile: React.FC = (): JSX.Element => {
         <components.InputField
           value={userName}
           innerRef={inp1Ref}
-          placeholder='Name'
+          placeholder={t('name')}
           onChangeText={(text) => setUserName(text)}
           type='username'
           containerStyle={{marginBottom: 14}}
@@ -104,7 +105,7 @@ const EditProfile: React.FC = (): JSX.Element => {
         <components.InputField
           value={email}
           innerRef={inp2Ref}
-          placeholder='Email'
+          placeholder={t('email')}
           onChangeText={(text) => setEmail(text)}
           type='email'
           // checkIcon={true}
@@ -113,7 +114,7 @@ const EditProfile: React.FC = (): JSX.Element => {
         <components.InputField
           value={phoneNumber}
           innerRef={inp3Ref}
-          placeholder='Phone'
+          placeholder={t('phone')}
           onChangeText={(text) => setPhoneNumber(text)}
           type='phone'
           containerStyle={{marginBottom: 14}}
@@ -121,7 +122,7 @@ const EditProfile: React.FC = (): JSX.Element => {
         <components.InputField
           value={address}
           innerRef={inp4Ref}
-          placeholder='Adress'
+          placeholder={t('address')}
           onChangeText={(text) => setAdress(text)}
           type='location'
           containerStyle={{marginBottom: 20}}
@@ -134,7 +135,7 @@ const EditProfile: React.FC = (): JSX.Element => {
     return (
       <View>
         <components.Button
-          title='save changes'
+          title={t('save_changes')}
           loading={loading}
           onPress={() => {
             setLoading(true)

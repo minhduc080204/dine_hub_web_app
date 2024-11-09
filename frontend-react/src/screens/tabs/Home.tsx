@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 
+import { useTranslation } from 'react-i18next';
 import { components } from '../../components';
+import { BASE_URL_IMG } from '../../config';
 import { reviews, theme } from '../../constants';
 import { useAppDispatch, useAppNavigation } from '../../hooks';
 import BottomTabBar from '../../navigation/BottomTabBar';
@@ -12,9 +14,10 @@ import {
   useGetProductsQuery
 } from '../../store/slices/apiSlice';
 import { setScreen } from '../../store/slices/tabSlice';
-import { BASE_URL_IMG } from '../../config';
 
 const Home: React.FC = (): JSX.Element => {
+  const { t } = useTranslation();
+  
   const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
 
@@ -147,12 +150,12 @@ const Home: React.FC = (): JSX.Element => {
       return (
         <View style={{ marginBottom: 30 }}>
           <components.BlockHeading
-            title='We offer'
+            title={t('offer')}
             onPress={() => {
               dispatch(setScreen('Menu'));
             }}
             containerStyle={{ marginHorizontal: 20, marginBottom: 14 }}
-          />
+          />                    
           <FlatList
             data={categories}
             horizontal={true}
@@ -212,7 +215,7 @@ const Home: React.FC = (): JSX.Element => {
       return (
         <View style={{ marginBottom: 30 }}>
           <components.BlockHeading
-            title='Recommended for you'
+            title={t('recommended')}
             containerStyle={{ marginHorizontal: 20, marginBottom: 14 }}
           />
           <FlatList
@@ -246,7 +249,7 @@ const Home: React.FC = (): JSX.Element => {
     return (
       <View style={{ marginBottom: 20 }}>
         <components.BlockHeading
-          title='Our Happy clients say'
+          title={t('review')}
           onPress={() => {
             navigation.navigate('Reviews');
           }}

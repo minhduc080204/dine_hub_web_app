@@ -22,6 +22,7 @@ import { useCheckDiscountMutation } from '../../store/slices/apiSlice';
 import { setScreen } from '../../store/slices/tabSlice';
 import { text } from '../../text';
 import { AuthContext } from '../../context/AuthContext';
+import { t } from 'i18next';
 
 const Order: React.FC = (): JSX.Element => {
   const { userInfor } = useContext(AuthContext);
@@ -144,7 +145,7 @@ const Order: React.FC = (): JSX.Element => {
         >
           <View style={{ flex: 1, paddingLeft: 14 }}>
             <TextInput
-              placeholder='Enter your promocode'
+              placeholder={t('promodecode_title')}
               value={promocode}
               onChangeText={(text) => setPromocode(text)}
               style={{
@@ -178,7 +179,7 @@ const Order: React.FC = (): JSX.Element => {
                   color: theme.colors.white,
                 }}
               >
-                apply
+                {t('apply')}
               </Text>
             )}
           </TouchableOpacity>
@@ -219,7 +220,7 @@ const Order: React.FC = (): JSX.Element => {
               color: theme.colors.mainColor,
             }}
           >
-            Subtotal
+            {t('subtotal')}
           </Text>
           <text.T14 style={{ color: theme.colors.mainColor }}>
             ${subtotal}
@@ -234,7 +235,7 @@ const Order: React.FC = (): JSX.Element => {
               marginBottom: 10,
             }}
           >
-            <text.T14>Discount</text.T14>
+            <text.T14>{t('discount')}</text.T14>
             <text.T14>- ${discount.toFixed(2)}</text.T14>
           </View>
         )}
@@ -246,7 +247,7 @@ const Order: React.FC = (): JSX.Element => {
             marginBottom: 10,
           }}
         >
-          <text.T14>Delivery</text.T14>
+          <text.T14>{t('delivery')}</text.T14>
           <text.T14>${delivery}</text.T14>
         </View>
         <View
@@ -256,7 +257,7 @@ const Order: React.FC = (): JSX.Element => {
             justifyContent: 'space-between',
           }}
         >
-          <text.H4>Total</text.H4>
+          <text.H4>{t('total')}</text.H4>
           <text.H4>${total}</text.H4>
         </View>
       </View>
@@ -304,10 +305,10 @@ const Order: React.FC = (): JSX.Element => {
           }}
         />
         <text.H2 style={{ marginTop: 30, marginBottom: 14 }}>
-          Your cart is empty!
+          {t('order_empty_title')}
         </text.H2>
         <text.T16 style={{ textAlign: 'center' }}>
-          Looks like you haven't made{'\n'}your order yet.
+        {t('order_empty_descript')}
         </text.T16>
       </ScrollView>
     );
@@ -324,7 +325,7 @@ const Order: React.FC = (): JSX.Element => {
   const renderButton = () => {
     return (
       <components.Button
-        title={cart.length === 0 ? 'Shop now' : 'Checkout'}
+        title={cart.length === 0 ? t('shop_now') : t('checkout')}
         containerStyle={{
           paddingHorizontal: 20,
           paddingTop: 20,

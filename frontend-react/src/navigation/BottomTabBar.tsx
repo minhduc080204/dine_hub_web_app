@@ -6,9 +6,11 @@ import {theme} from '../constants';
 import {homeIndicatorHeight} from '../utils';
 import {setScreen} from '../store/slices/tabSlice';
 import {useAppDispatch, useAppSelector} from '../hooks';
+import { useTranslation } from 'react-i18next';
 
 const BottomTabBar: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const currentTabScreen = useAppSelector((state) => state.tab.screen);
 
@@ -159,27 +161,32 @@ const BottomTabBar: React.FC = (): JSX.Element => {
 
   const tabs = [
     {
-      id: 1,
+      id: 1,  
+      name_view: t('home'),
       name: 'Home',
       icon: HomeSvg,
     },
     {
-      id: 2,
+      id: 2,  
+      name_view: t('menu'),
       name: 'Menu',
       icon: MenuSvg,
     },
     {
-      id: 3,
+      id: 3,  
+      name_view: t('order'),
       name: 'Order',
       icon: OrderSvg,
     },
     {
-      id: 4,
+      id: 4,  
+      name_view: t('favorite'),
       name: 'Favorite',
       icon: FavoriteSvg,
     },
     {
-      id: 5,
+      id: 5,  
+      name_view: t('notification'),
       name: 'Notification',
       icon: NotificationSvg,
     },
@@ -225,7 +232,7 @@ const BottomTabBar: React.FC = (): JSX.Element => {
                     : theme.colors.textColor,
               }}
             >
-              {item.name}
+              {item.name_view}
             </Text>
           </TouchableOpacity>
         );

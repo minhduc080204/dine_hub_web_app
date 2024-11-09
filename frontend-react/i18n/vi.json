@@ -1,0 +1,91 @@
+{
+  "yournamecoffee": "Your Name Coffee",  
+  "search": "Tìm kiếm",
+
+  "offer": "Xu hướng",
+  "recommended": "Gợi ý cho bạn",
+  "review": "Bình luận của khách hàng",
+  "view_all": "Xem tất cả",
+  
+  "home": "Trang chủ",
+  "menu": "Menu",
+  "order": "Giỏ Hàng",
+  "favorite": "Yêu Thích",
+  "notification": "Thông Báo",
+  
+  "add_cart": "Thêm Vào Giỏ Hàng",
+  "leave_review": "Đánh Giá",
+
+  "order_empty_title": "Giỏ hàng đang trống!",
+  "order_empty_descript": "Có vẻ như bạn chưa thêm đơn hàng nào vào giỏ hàng.",
+  "shop_now": "Mua sắm ngay",
+  "promodecode_title": "Nhập mã giảm giá của bạn",
+  "apply": "SỬ DỤNG",
+  "subtotal": "Tổng hàng",
+  "discount": "Giảm giá",
+  "delivery": "Phí vận chuyển",
+  "total": "TỔNG",
+  "checkout": "Thanh toán",
+
+  "personal_info": "Thông tin cá nhân",
+  "my_orders": "Đơn hàng",
+  "promodecodes_gifts": "Mã giảm giá và thẻ quà tặng",
+  "wallet": "Ví",    
+  "chat_support": "Liên hệ hỗ trợ",    
+  
+  "chat_title": "Nhập tin nhắn !",
+  "call_title": "Hãy liên lạc nếu bạn cần !",
+
+  "name": "Nhập tên",
+  "email": "Nhập email",
+  "phone": "Nhập số điện thoại",
+  "address": "Nhập địa chỉ",
+  "save_changes": "Lưu Thay Đổi",
+
+  "note": "Nhập ghi chú",    
+  "confirm_order": "Xác nhận",
+
+  "payment_title": "Quét mã QR thông qua ứng dụng ngân hàng hoặc Ví điện tử",
+  "address_title": "Địa chỉ giao hàng",
+  "amount_pay": "Số tiền cần thanh toán",
+  "unpay": "Hủy thanh toán",
+  "payed": "Đã thanh toán",
+
+  "order_successful_title": "Your Name chân thành cảm ơn  quý khách !",
+  "order_successful_descript": "Đơn hàng của bạn bạn sẽ được giao sớm nhất có thể !",
+  "countinue_shopping": "Tiếp tục mua sắm",
+  "view_order": "Xem lịch sử đơn hàng",
+
+  "order_history": "Lịch sử đơn hàng",
+  "order_history_title": "Bạn chưa có đơn hàng nào!",
+  "order_history_descript": "Lịch sử đơn hàng của bạn đang trống. Hãy đặt sản phẩm đầu tiên và nhận ưu đãi nào !",
+
+  "order_detail": "Chi tiết đơn hàng",
+  "date": "Thời gian",
+  "done": "Hoàn thành",
+  "shipping": "Đơn hàng đang được giao",
+  "order_confirmed": "Đơn hàng đã được xác nhận",
+  "waiting": "Đang chờ",
+  "completed_at": "Hoàn tất vào lúc ",
+  "unorder": "Hủy Đơn Hàng",
+
+  "sign_out": "Đăng Xuất",
+  "sign_in": "Đăng Nhập",
+  "sign_up": "Đăng Ký",
+  "dont_have_account": "Bạn chưa có tài khoản ?",
+  "already_have_account": "Bạn đã có tài khoản ?",
+
+  "welcome_back": "Chào Mừng Trở Lại Với Your Name !",
+  "sigin_title": "Hãy đăng nhập để tiếp tục",
+  "remember_me": "Ghi nhớ",
+  "forgot_password": "Quên mật khẩu?",    
+
+  "Processing": "Đang xử lý",
+  "Delivered": "Đã giao hàng",
+  "Canceled": "Đã hủy",
+  "track_order": "Xem chi tiết đơn hàng",
+
+  "description": "This is an example",
+  "error": "Something went wrong",
+  "contact_us": "Contact Us"
+}

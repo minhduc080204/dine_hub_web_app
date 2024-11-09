@@ -1,15 +1,15 @@
-import React, { PropsWithChildren, useContext } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import React, { useContext } from 'react';
+import { ScrollView, View } from 'react-native';
 
-import { text } from '../text';
-import { theme } from '../constants';
-import { components } from '../components';
-import { useAppNavigation } from '../hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
+import { components } from '../components';
+import { theme } from '../constants';
 import { AuthContext } from '../context/AuthContext';
+import { useAppNavigation } from '../hooks';
 import { useGetOrdersQuery } from '../store/slices/apiSlice';
-import { OrderType } from '../types/OrderType';
+import { text } from '../text';
+import { RootStackParamList } from '../types';
+import { t } from 'i18next';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'TrackYourOrder'>;
 
@@ -29,7 +29,7 @@ const TrackYourOrder: React.FC<Props> = ({ route }): JSX.Element => {
   };
 
   const renderHeader = () => {
-    return <components.Header goBack={true} title='Track your order' />;
+    return <components.Header goBack={true} title={t('order_detail')} />;
   };
 
   const renderDescription = () => {
@@ -48,13 +48,13 @@ const TrackYourOrder: React.FC<Props> = ({ route }): JSX.Element => {
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 14 }}
         >
           <text.T14 style={{ marginRight: 14, textTransform: 'none' }}>
-            Date:
+          {t('date')}
           </text.T14>
           <text.H5 style={{ color: theme.colors.mainTurquoise }}>{date}</text.H5>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <text.T14 style={{ marginRight: 14, textTransform: 'none' }}>
-            Address:
+          {t('address_title')}
           </text.T14>
           <text.H5 style={{ color: theme.colors.mainTurquoise }}>
             {address}
@@ -68,23 +68,23 @@ const TrackYourOrder: React.FC<Props> = ({ route }): JSX.Element => {
     const order_status = [
       {
         id: "Delivered",
-        title: "Done",
-        description: 'Your order has been delivered',
+        title: t('done'),
+        description: t('completed_at')+'9:32 pm',
       },
       {
         id: "Shipping",
-        title: 'Order is being shipped',
-        description: 'Estimated for 9:12 pm',
+        title: t('shipping'),
+        description: t('completed_at')+'9:32 pm',
       },
       {
         id: "Confirm",
-        title: 'Order confirmed',
-        description: 'Estimated for 9:12 pm',
+        title: t('order_confirmed'),
+        description: t('completed_at')+'9:32 pm',
       },
       {
         id: "Processing",
-        title: 'Processing',
-        description: 'Estimated for 9:32 pm',
+        title: t('processing'),
+        description: t('completed_at')+'9:32 pm',
       },
     ]
     let checkStatus = false;
@@ -103,7 +103,7 @@ const TrackYourOrder: React.FC<Props> = ({ route }): JSX.Element => {
             <components.OrderStatus
               key={os.id}
               title={os.title}
-              description={checkStatus ? os.description : "Waiting"}
+              description={checkStatus ? os.description : t('waiting')}
               status={checkStatus}
               containerStyle={{ marginBottom: 7 }}
             />
@@ -125,7 +125,7 @@ const TrackYourOrder: React.FC<Props> = ({ route }): JSX.Element => {
     );
   };
 
-  const renderButton = (title: string = 'Chat support', danger: boolean = false) => {
+  const renderButton = (title: string = t('chat_support'), danger: boolean = false) => {
     return (
       <View style={{ paddingHorizontal: 20, paddingBottom: 10, paddingTop: 5 }}>
         <components.Button title={title} danger={danger} onPress={() => { }} />
@@ -144,7 +144,7 @@ const TrackYourOrder: React.FC<Props> = ({ route }): JSX.Element => {
       {renderContent()}
       {renderButton()}
       {status == "Processing" && (
-        renderButton('UnOrder', true)
+        renderButton(t('unorder'), true)
       )}
 
       {renderHomeIndicator()}

@@ -1,0 +1,91 @@
+{
+  "yournamecoffee": "Your Name Coffee",    
+  "search": "Search",
+
+  "offer": "We offer",
+  "recommended": "Recommended for you",
+  "review": "Our Happy clients say",
+  "view_all": "View all",
+  
+  "home": "Home",
+  "menu": "Menu",
+  "order": "Order",
+  "favorite": "Favorite",
+  "notification": "Notification",
+  
+  "add_cart": "Add To Cart",
+  "leave_review": "Leave A Review",
+
+  "order_empty_title": "Your cart is empty!",
+  "order_empty_descript": "Looks like you haven't made your order yet.",
+  "shop_now": "Shop Now",
+  "promodecode_title": "Enter your promocode",
+  "apply": "APPLY",
+  "subtotal": "Subtotal",
+  "discount": "Discount",
+  "delivery": "Delivery",
+  "total": "Total",
+  "checkout": "Checkout",
+
+  "personal_info": "Personal information",
+  "my_orders": "My orders",
+  "promodecodes_gifts": "Promocodes & gift cards",
+  "wallet": "Wallet",
+  "chat_support": "Chat Support",    
+  
+  "chat_title": "Let's talk !",
+  "call_title": "Call if you need !",
+  
+  "name": "Enter name",
+  "email": "Enter email",
+  "phone": "Enter phone",
+  "address": "Enter address",
+  "save_changes": "Save Changes",
+
+  "note": "Enter note",    
+  "confirm_order": "Confirm Order",
+
+  "payment_title": "Scan QR code via banking app or E-wallet",
+  "address_title": "Shipping Address",
+  "amount_pay": "Amount to be paid",
+  "unpay": "Unpay",
+  "payed": "Payed",
+
+  "order_successful_title": "Thank you for your order!",
+  "order_successful_descript": "Your order will be delivered on time. Thank you!",
+  "countinue_shopping": "Continue Shopping",
+  "view_order": "View orders",
+
+  "order_history": "Order history",
+  "order_history_title": "No Order History Yet!",
+  "order_history_descript": "It looks like your order history is empty. Place your order now to start building your history!",
+
+  "order_detail": "Track your order",
+  "date": "Date",
+  "done": "Done",
+  "shipping": "Order is being shipped",
+  "order_confirmed": "Order confirmed",
+  "waiting": "Waiting",
+  "completed_at": "Completed at ",
+  "unorder": "UnOrder",
+
+  "sign_out": "Sign Out",
+  "sign_in": "Sign In",
+  "sign_up": "Sign Up",
+  "dont_have_account": "Don’t have an account?",
+  "already_have_account": "Already have an account?",
+
+  "welcome_back": "Welcome Back !",
+  "sigin_title": "Sign in to continue",
+  "remember_me": "Remember me",
+  "forgot_password": "Forgot password?",    
+
+  "Processing": "Processing",
+  "Delivered": "Delivered",
+  "Canceled": "Canceled",
+  "track_order": "Track Order",
+
+  "description": "This is an example",
+  "error": "Something went wrong",
+  "contact_us": "Contact Us"
+}

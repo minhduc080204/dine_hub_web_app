@@ -9,13 +9,15 @@ import { components } from './src/components';
 import { AuthProvider } from './src/context/AuthContext';
 import AppNav from './src/navigation/AppNav';
 import { persistor, store } from './src/store/store';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
 
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'DMSans-Bold': require('./src/assets/fonts/DMSans-Bold.ttf'),
-    'DMSans-Medium': require('./src/assets/fonts/DMSans-Medium.ttf'),
-    'DMSans-Regular': require('./src/assets/fonts/DMSans-Regular.ttf'),
+    'DMSans-Bold': require('./src/assets/fonts/OpenSans-Bold.ttf'),
+    'DMSans-Medium': require('./src/assets/fonts/OpenSans-Medium.ttf'),
+    'DMSans-Regular': require('./src/assets/fonts/OpenSans-Regular.ttf'),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -33,7 +35,10 @@ export default function App() {
       <Provider store={store}>
         <PersistGate loading={<components.Loader />} persistor={persistor}>
           <AuthProvider>
+            <I18nextProvider i18n={i18n}>
             <AppNav />
+              {/* <App /> */}
+            </I18nextProvider>
           </AuthProvider>
         </PersistGate>
       </Provider>
