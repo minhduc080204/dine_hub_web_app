@@ -161,10 +161,10 @@ const Product: React.FC<Props> = ({route}): JSX.Element => {
           title='+ Add to cart'
           containerStyle={{marginBottom: 14}}
           onPress={() => {
-            if (quantity > 0) {
-              renderAlert();
-              return;
-            }
+            // if (quantity > 0) {
+            //   renderAlert();
+            //   return;
+            // }
             dispatch(addToCart(item));
             addedToCartMessage(item);
           }}

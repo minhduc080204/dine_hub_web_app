@@ -54,7 +54,7 @@ const StackNavigator: React.FC = () => {
       <Stack.Screen
         name='TabNavigator'
         component={TabNavigator}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, title: 'Your Name Coffee' }}
       />
       <Stack.Screen
         name='Chat'

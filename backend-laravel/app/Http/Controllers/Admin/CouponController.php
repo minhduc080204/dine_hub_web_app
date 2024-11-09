@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\coupon;
-use App\Http\Requests\StorecouponRequest;
-use App\Http\Requests\UpdatecouponRequest;
+use App\Models\Coupon;
+use App\Http\Requests\StoreCouponRequest;
+use App\Http\Requests\UpdateCouponRequest;
 use Exception;
 class CouponController extends Controller
 {
