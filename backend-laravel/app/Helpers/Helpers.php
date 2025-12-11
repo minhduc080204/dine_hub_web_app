@@ -21,5 +21,5 @@ function uploadImage($image, $product, $folder)
 
     $product->image = $filePath;
 
-    return $filename; // Trả về tên file mới
+    return $filePath; // Trả về tên file mới
 }

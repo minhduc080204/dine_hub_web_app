@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native';
-import React, { PropsWithChildren, useState, useContext } from 'react';
+import React, { PropsWithChildren, useState, useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -72,7 +72,11 @@ const Header: React.FC<Props> = ({
   const total = useAppSelector((state) => state.cartSlice.total);
   const { logout, userInfor } = useContext(AuthContext);
   const email = userInfor?.email;
-  const userAvatar = userInfor?.picture? userInfor.picture :'https://george-fx.github.io/dine-hub/10.jpg';
+  const [userAvatar, setUserAvatar] = useState('https://george-fx.github.io/dine-hub/10.jpg');
+  useEffect(()=>{
+    setUserAvatar(userInfor?.picture? userInfor.picture :'https://george-fx.github.io/dine-hub/10.jpg')
+  },[userInfor])
+  console.log(userAvatar, "AVT");
 
   const handleOnPress = () => {
     // if (cart.length > 0) {
@@ -148,7 +152,7 @@ const Header: React.FC<Props> = ({
         }}
       >
         <Image
-          source={{ uri: userAvatar }}
+          source={{ uri: userInfor?.picture? userInfor.picture :'https://george-fx.github.io/dine-hub/10.jpg' }}
           style={{
             width: responsiveWidth(14),
             aspectRatio: 1,

@@ -36,14 +36,16 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->weight = $request->weight;
         $product->calories = $request->calories;
-        $product->price = $request->price;        
+        $product->price = $request->price;  
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            uploadImage($image, $product, 'products');
-        }        
+            $filepath= uploadImage($image, $product, 'products');
+            // $product->image= $filepath;
+        }
         $product->description = $request->description;
         $product->is_bestseller = $request->is_bestseller;
         $product->is_new = $request->is_new;
+        $product->rating = 4;
 
         $category = json_decode($request->category, true);
         $values = array_map(function ($item) {

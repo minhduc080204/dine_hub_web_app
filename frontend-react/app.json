@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "dine_hub",
-    "slug": "dine_hub",    
+    "slug": "dinehub",    
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,12 +18,24 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.minhduc08022004.dine_hub"
     },
+    "scheme": "dinehub",
     "android": {
+      "permissions": [],  
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.minhduc08022004.dine_hub"
+      },      
+      "package": "com.minhduc08022004.dine_hub",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": {
+            "scheme": "dinehub",
+            "host": "auth"
+          },
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,8 +44,7 @@
       "eas": {
         "projectId": "da90374d-599c-49a7-9b97-8b3fe8aad06a"
       }
-    },
-    "scheme": "com.minhduc08022004.dine_hub",
+    },    
     "plugins": [
       "expo-font",
       [

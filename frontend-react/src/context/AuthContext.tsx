@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as AuthSession from "expo-auth-session";
 import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
 import React, { createContext, useEffect, useState } from 'react';
@@ -7,29 +8,44 @@ import { ENDPOINTS } from '../config';
 import axiosInstance from '../config/axios/config';
 import { setUser } from '../store/slices/userSlice';
 import { showMessage } from '../utils';
-import { makeRedirectUri } from 'expo-auth-session';
-
+import { setWishlist } from '../store/slices/wishlistSlice';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export const AuthContext = createContext<any>(null);
 WebBrowser.maybeCompleteAuthSession();
 export const AuthProvider = ({ children }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [userToken, setUserToken] = useState<string | null>(null);
+  const [userToken, setUserToken] = useState<string | null>(localStorage.getItem('userToken'));
   const [userInfor, setUserInfor] = useState<any | null>(null);
   const dispatch = useDispatch();
+
+  const redirectUri = AuthSession.makeRedirectUri({ scheme: 'dinehub' });
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     webClientId: "529775059239-o4e6r433b2l2uun0rj370arli9bgq516.apps.googleusercontent.com",
     androidClientId: "529775059239-7u57lvor7ovm67cp9c9buqqi6j7qarac.apps.googleusercontent.com",
     iosClientId: "529775059239-2l5jv9hmb3cvfaff3rdpllbj18p5vmki.apps.googleusercontent.com",
-    // redirectUri: 'com.minhduc08022004.dine_hub://',
-
-    ...{ useProxy: true }
+    redirectUri: redirectUri
   });
 
   useEffect(() => {
+    if (userToken) {
+      dispatch(
+        setUser({
+          user: userInfor,
+          token: userToken,
+        })
+      );
+      getWhishlistData();
+    }
     handleSignInWithGoogle();
   }, [response]);
+
+  const getWhishlistData = async () => {
+    const resWishlist = await axiosInstance.get(ENDPOINTS.get.favorites);
+    console.log("resWishlist", resWishlist);
+    dispatch(setWishlist(resWishlist.data || []));
+  }
 
   const signInWithGoogle = async () => {
     await promptAsync();
@@ -39,12 +55,12 @@ export const AuthProvider = ({ children }: any) => {
     if (response?.type === "success") {
       await getUserInfo(response.authentication?.accessToken)
     } else {
-      console.log(response);
+      console.log("handleSignInWithGoogle", response);
     }
-
   };
 
   const getUserInfo = async (token: any) => {
+    console.log("BUMMMM");
     if (!token) return;
     setIsLoading(true);
     try {
@@ -61,10 +77,9 @@ export const AuthProvider = ({ children }: any) => {
 
       try {
         const res = await axiosInstance.post(ENDPOINTS.auth.check, { email });
-
-        if (res.data.id) {
-          register(user_name, email, password, password, picture);
-        } else {
+ 
+        console.log("ressssss", res);
+        if (res.data.user.id) {
           const token = res.data.access_token;
 
           const user = {
@@ -73,15 +88,26 @@ export const AuthProvider = ({ children }: any) => {
             email: email,
             picture: picture,
           }
+          console.log(user);
+
           setUserToken(token);
           setUserInfor(user);
+          dispatch(
+            setUser({
+              user: user,
+              token: token,
+            })
+          );
           await AsyncStorage.setItem('userInfor', JSON.stringify(user));
           await AsyncStorage.setItem('userToken', token);
-          dispatch(setUser(user));
+
+          getWhishlistData();
+        } else {
+          register(user_name, email, password, password, picture);
         }
       } finally {
         setIsLoading(false);
-      }      
+      }
 
     } catch (error) {
       console.log("fetch", error);
@@ -166,7 +192,12 @@ export const AuthProvider = ({ children }: any) => {
       await AsyncStorage.setItem('userInfor', JSON.stringify(user));
       await AsyncStorage.setItem('userToken', token);
 
-      dispatch(setUser(user));
+      dispatch(
+        setUser({
+          user: user,
+          token: token,
+        })
+      );
     } catch (error: any) {
       let codeErr = error.status;
       if (codeErr == 401) {
@@ -211,7 +242,7 @@ export const AuthProvider = ({ children }: any) => {
       setIsLoading(true);
       const res = await axiosInstance.post(ENDPOINTS.auth.register, data);
       const token = res.data.access_token;
-      
+
       const user = {
         id: res.data.user.id,
         user_name: name,
@@ -223,7 +254,12 @@ export const AuthProvider = ({ children }: any) => {
       setUserInfor(user);
       await AsyncStorage.setItem('userInfor', JSON.stringify(user));
       await AsyncStorage.setItem('userToken', token);
-      dispatch(setUser(user));
+      dispatch(
+        setUser({
+          user: user,
+          token: token,
+        })
+      );
 
     } catch (error: any) {
       let codeErr = error.status;
@@ -257,7 +293,10 @@ export const AuthProvider = ({ children }: any) => {
       await AsyncStorage.removeItem('userToken');
 
       // Reset thông tin người dùng trong Redux
-      dispatch(setUser(null));
+      dispatch(setUser({
+        user: null,
+        token: null,
+      }));
 
       // Reset trạng thái context
       setUserToken(null);
