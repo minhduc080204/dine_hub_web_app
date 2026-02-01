@@ -248,6 +248,13 @@ const Header: React.FC<Props> = ({
           }}
         />
         <BurgerProfileItem
+          text={t('ai_support')}
+          onPress={() => {
+            setShowModal(false);
+            navigation.navigate('AiChat');
+          }}
+        />
+        <BurgerProfileItem
           text={t('sign_out')}
           onPress={() => {
             setShowModal(false);

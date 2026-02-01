@@ -5,7 +5,7 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
     <link rel="stylesheet" href="">
-    <link href="/storage/images/products/logo.png" rel="icon">
+    <link href="/storage/images/logo.png" rel="icon">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

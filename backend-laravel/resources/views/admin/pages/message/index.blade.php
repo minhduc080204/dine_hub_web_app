@@ -29,7 +29,6 @@
                                     style="position: relative; height: 450px">
                                     <ul class="list-unstyled mb-0" id="box-status-list">
                                         @foreach ($messages as $key => $contents)
-                                            {{-- @dd($contents[0]->user) --}}
                                             <li class="p-2 border-bottom rounded-2 box-status-item"
                                                 id="box-status-item{{ $contents[0]->user->id }}">
                                                 <a href="{{ url('admin/message/' . $contents[0]->user->id) }}"
@@ -115,6 +114,18 @@
         </div>
     </div>
     <script>
+        const messages = @json($messages);
+        const idStore = new Array();
+        
+        Object.keys(messages).forEach(userId => {
+            idStore.push(userId)
+        });
+
+        console.log(idStore, "OKOKOKO");
+        
+        localStorage.setItem('chat_userId', JSON.stringify(idStore));
+    </script>
+    <script>
         var scrollableDiv = document.getElementById("box-messages{{ $currentUserId }}");
         scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
     </script>
@@ -122,26 +133,31 @@
         $('#send_message_button').on('click', function(e) {
             var message = $('#send_message_input').val();
             $('#send_message_input').val('')
-            $.ajax({
-                url: '/admin/messages/sendmessage',
-                type: 'POST',
-                data: {
-                    userId: {{ $currentUserId }},
-                    content: message,
-                    role: 'admin',
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                        'content')
-                },
-                success: function(response) {
-
-                },
-                error: function(xhr, status, error) {
-                    console.log(xhr.responseText)
-                    alert('Chức năng đang phát triển');
-                }
-            });
+            if(message){
+                $.ajax({
+                    url: '/admin/messages/sendmessage',
+                    type: 'POST',
+                    data: {
+                        userId: {{ $currentUserId }},
+                        content: message,
+                        role: 'admin',
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                            'content')
+                    },
+                    success: function(response) {
+                        console.log("Gui tin nhăn thanh cong");
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText)
+                        alert('Chức năng đang phát triển');
+                    }
+                });
+            }else{
+                alert('Hãy nhập tin nhắn !');
+            }
         });
     </script>
 @endsection

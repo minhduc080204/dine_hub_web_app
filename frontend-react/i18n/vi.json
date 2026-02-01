@@ -1,5 +1,5 @@
 {
-  "yournamecoffee": "Your Name Coffee",  
+  "yournamecoffee": "Eatzy Coffee",  
   "search": "Tìm kiếm",
 
   "categories": "Danh mục",
@@ -34,6 +34,7 @@
   "promodecodes_gifts": "Mã giảm giá và thẻ quà tặng",
   "wallet": "Ví",    
   "chat_support": "Liên hệ hỗ trợ",    
+  "ai_support": "AI hỗ trợ",    
   
   "chat_title": "Nhập tin nhắn !",
   "call_title": "Hãy liên lạc nếu bạn cần !",
@@ -53,7 +54,7 @@
   "unpay": "Hủy thanh toán",
   "payed": "Đã thanh toán",
 
-  "order_successful_title": "Your Name chân thành cảm ơn  quý khách !",
+  "order_successful_title": "EatZy chân thành cảm ơn  quý khách !",
   "order_successful_descript": "Đơn hàng của bạn bạn sẽ được giao sớm nhất có thể !",
   "countinue_shopping": "Tiếp tục mua sắm",
   "view_order": "Xem lịch sử đơn hàng",
@@ -77,7 +78,7 @@
   "dont_have_account": "Bạn chưa có tài khoản ?",
   "already_have_account": "Bạn đã có tài khoản ?",
 
-  "welcome_back": "Chào Mừng Trở Lại Với Your Name !",
+  "welcome_back": "Chào Mừng Trở Lại Với EatZy !",
   "sigin_title": "Hãy đăng nhập để tiếp tục",
   "remember_me": "Ghi nhớ",
   "forgot_password": "Quên mật khẩu?",    

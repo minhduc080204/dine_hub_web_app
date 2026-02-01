@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="{{ route('admin.dashboard.index') }}" class="logo d-flex align-items-center">
             <img src="/storage/images/products/logo-Photoroom.png" alt="" height="100%">
-            <span class="d-none d-lg-block">Your Name</span>
+            <span class="d-none d-lg-block">EatZy - Admin</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->

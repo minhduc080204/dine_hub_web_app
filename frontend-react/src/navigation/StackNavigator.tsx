@@ -7,8 +7,9 @@ import { theme } from '../constants';
 import { AuthContext } from '../context/AuthContext';
 import { Stack, useAppNavigation } from '../hooks';
 import { screens } from '../screens';
-import Chat from '../screens/tabs/Chat';
+import Chat from '../screens/Chat';
 import TabNavigator from './TabNavigator';
+import AiChat from '../screens/AiChat';
 
 const StackNavigator: React.FC = () => {
   const { userInfor } = useContext(AuthContext);
@@ -22,7 +23,7 @@ const StackNavigator: React.FC = () => {
     const channel = pusher.subscribe('commonroom');
     channel.bind('CommonChannel', (data: any) => {
       if (data && data.message) {
-        if (userInfor.id == data.userId && data.role == 'admin') {
+        if (userInfor && userInfor.id == data.userId && data.role == 'admin') {
           showMessage({
             message: 'You have message from Admin',
             description: `Admin: ${data.message}`,
@@ -54,11 +55,16 @@ const StackNavigator: React.FC = () => {
       <Stack.Screen
         name='TabNavigator'
         component={TabNavigator}
-        options={{ headerShown: false, title: 'Your Name Coffee' }}
+        options={{ headerShown: false, title: 'EatZy Coffee' }}
       />
       <Stack.Screen
         name='Chat'
         component={Chat}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='AiChat'
+        component={AiChat}
         options={{ headerShown: false }}
       />
       <Stack.Screen

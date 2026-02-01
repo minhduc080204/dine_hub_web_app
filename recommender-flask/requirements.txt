@@ -1,0 +1,12 @@
+# Web Framework
+Flask
+
+# Data Processing & Math
+numpy
+pandas
+
+# Machine Learning (cho Recommender System)
+scikit-learn
+
+pymysql
+sqlalchemy
