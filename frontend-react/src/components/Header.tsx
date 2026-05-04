@@ -124,7 +124,7 @@ const Header: React.FC<Props> = ({
           }}
         >
           <Image
-            source={{ uri: userAvatar }}
+            source={{ uri: userInfor? userInfor.picture : "https://george-fx.github.io/dine-hub/10.jpg" }}
             style={{
               width: 22,
               height: 22,
@@ -245,6 +245,13 @@ const Header: React.FC<Props> = ({
           onPress={() => {
             setShowModal(false);
             navigation.navigate('Chat');
+          }}
+        />
+        <BurgerProfileItem
+          text={t('ai_support')}
+          onPress={() => {
+            setShowModal(false);
+            navigation.navigate('AiChat');
           }}
         />
         <BurgerProfileItem

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     ScrollView,
     Text,
@@ -9,87 +9,148 @@ import {
     ViewStyle
 } from 'react-native';
 
-import { Path, Svg } from 'react-native-svg';
-import { svg } from '../../assets/svg';
-import { components } from '../../components';
-import Image from '../../components/custom/Image';
-import { theme } from '../../constants';
-import { AuthContext } from '../../context/AuthContext';
-import { useAppNavigation } from '../../hooks';
-import { useGetMessageMutation, useSendMessageMutation } from '../../store/slices/apiSlice';
-import { MessageType } from '../../types';
-import { homeIndicatorHeight } from '../../utils';
-import Pusher from 'pusher-js';
 import { t } from 'i18next';
+import { Path, Svg } from 'react-native-svg';
+import { svg } from '../assets/svg';
+import { components } from '../components';
+import Image from '../components/custom/Image';
+import { theme } from '../constants';
+import { MessageType } from '../types';
+import { homeIndicatorHeight } from '../utils';
+import TypingFade from '../components/custom/TypingFade';
 
 
-const Chat: React.FC = (): JSX.Element => {
-    const navigation = useAppNavigation();
+const urlAiChat = "http://localhost:5678/webhook/eatzy-chat"
+const AiChat: React.FC = (): JSX.Element => {
     const scrollViewRef = useRef<ScrollView>(null);
-    const { userInfor } = useContext(AuthContext);
-    const [getMessage, { data, error, isLoading }] = useGetMessageMutation();
-
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState<MessageType[]>([]);
 
-    const [sendMessage] = useSendMessageMutation();
-
     useEffect(() => {
         setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd({ animated: true });
+            scrollViewRef.current?.scrollToEnd({ animated: true });
         }, 1000);
-      }, []);
+    }, [messages.length]);
 
-    useEffect(() => {        
-        const fetchMessages = async () => {
-            try {
-                const response: any = await getMessage({ userId: userInfor.id });
-                if (response?.data) {
-                    setMessages(response.data);                    
-                }
+    // const handleSendMessage = async () => {
+    //     if (message.trim()) {
+    //         try {
+    //             const mess= ""+message
+    //             setMessage("")
+    //             setMessages(prev => [...prev, {
+    //                 content: mess,
+    //                 userId: 1,
+    //                 role: "user",
+    //                 time: Date.now().toString(),
+    //             }]);
+    //             const res = await fetch(urlAiChat, {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json"
+    //                 },
+    //                 body: JSON.stringify({
+    //                     message: mess
+    //                 })
+    //             });
 
-            } catch (err) {
-                console.error("Error fetching messages:", err);
+    //             const reply = await res.text();
+
+    //             const botMsg: MessageType = {
+    //                 userId: 1,
+    //                 content: reply,
+    //                 role: "admin",
+    //                 time: Date.now().toString()
+    //             };
+
+    //             setMessages(prev => [...prev, botMsg]);
+    //         } catch (err) {      
+    //             console.log(err);                          
+    //             setMessages(prev => [
+    //                 ...prev,
+    //                 {
+    //                     userId: 1,
+    //                     content: "❌ Không thể kết nối tới Eatzy AI",
+    //                     role: "admin",
+    //                     time: Date.now().toString()
+    //                 }
+    //             ]);
+    //         }finally{
+    //             setMessage("")
+    //         }
+
+    //     }
+    // }
+    const handleSendMessage = async () => {
+        if (!message.trim()) return;
+
+        const mess = "" + message;
+        setMessage("");
+
+        // 1. Push user message
+        setMessages(prev => [
+            ...prev,
+            {
+                content: mess,
+                userId: 1,
+                role: "user",
+                time: Date.now().toString()
             }
-        };
+        ]);
 
-        fetchMessages();
-    }, [getMessage]);
-
-    useEffect(() => {
-        const pusher = new Pusher('905ea1087d251dc4a082', {
-            cluster: 'ap1',
-        });
-
-        const channel = pusher.subscribe('chatroom' + userInfor.id);
-        channel.bind('MessageSent', (data: any) => {
-            if (data && data.message) {
-                const mess: MessageType = { content: data.message, role: data.role, userId: userInfor.id }
-                setMessages((prevMessages) => [...prevMessages, mess]);
-                setTimeout(() => {
-                    scrollViewRef.current?.scrollToEnd({ animated: true });
-                  }, 1000);
+        // 2. Push typing indicator
+        const typingId = Date.now().toString() + "_typing";
+        setMessages(prev => [
+            ...prev,
+            {
+                content: "",
+                userId: 0,
+                role: "admin",
+                time: typingId,
+                typing: true
             }
-        });
+        ]);
 
-        return () => {
-            channel.unbind_all();
-            channel.unsubscribe();
-        };
-    }, []);
+        try {
+            const res = await fetch(urlAiChat, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: mess
+                })
+            });
 
-    const handleSendMessage = async () => {        
-        if (message.trim()) {
-            const mess: MessageType = { userId: userInfor.id, content: message }
-            setMessage("");
-            try {
-                await sendMessage(mess);                
-                scrollViewRef.current?.scrollToEnd({ animated: true });
-            } catch (error) {
-                console.error("Error sending message:", error);
-            }
+            const reply = await res.text();
+
+            // 3. Replace typing with bot message
+            setMessages(prev =>
+                prev
+                    .filter(m => m.time !== typingId)
+                    .concat({
+                        userId: 1,
+                        content: reply,
+                        role: "admin",
+                        time: Date.now().toString()
+                    })
+            );
+        } catch (err) {
+            console.log(err);
+
+            // Remove typing & show error
+            setMessages(prev =>
+                prev
+                    .filter(m => m.time !== typingId)
+                    .concat({
+                        userId: 1,
+                        content: "❌ Không thể kết nối tới Eatzy AI",
+                        role: "admin",
+                        time: Date.now().toString()
+                    })
+            );
         }
-    }
+    };
+
 
     const renderStatusBar = () => {
         return <components.StatusBar />;
@@ -107,7 +168,7 @@ const Chat: React.FC = (): JSX.Element => {
     };
 
     const renderContent = () => {
-        if (isLoading) {
+        if (false) {
             return <components.Loader />;
         }
         return (
@@ -163,14 +224,19 @@ const Chat: React.FC = (): JSX.Element => {
                 return (
                     <View key={'message' + index} style={boxStyle}>
                         <Image
-                            source={{ uri: message.role == 'admin' ? 'https://george-fx.github.io/dine-hub/10.jpg' : 'x' }}
+                            source={{ uri: message.role == 'admin' ? 'https://cdn-icons-png.flaticon.com/512/8649/8649607.png' : 'x' }}
                             style={{
                                 width: message.role == 'admin' ? 40 : 0,
                                 height: message.role == 'admin' ? 40 : 0,
                                 borderRadius: 50,
                             }}
                         />
-                        <Text style={textStyle}>{message.content}</Text>
+                        {/* <Text style={textStyle}>{message.content}</Text> */}
+                        {message.typing ? (
+                            <TypingFade style={textStyle}/>
+                        ) : (
+                            <Text style={textStyle}>{message.content}</Text>
+                        )}
                     </View>
 
                 );
@@ -275,4 +341,4 @@ const Chat: React.FC = (): JSX.Element => {
     );
 };
 
-export default Chat;
+export default AiChat;

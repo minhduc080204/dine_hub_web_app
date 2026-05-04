@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }: any) => {
   const [userInfor, setUserInfor] = useState<any | null>(null);
   const dispatch = useDispatch();
 
-  const redirectUri = AuthSession.makeRedirectUri({ scheme: 'dinehub' });
+  const redirectUri = AuthSession.makeRedirectUri({ scheme: 'eatzy' });
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     webClientId: "529775059239-o4e6r433b2l2uun0rj370arli9bgq516.apps.googleusercontent.com",
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }: any) => {
         const res = await axiosInstance.post(ENDPOINTS.auth.check, { email });
  
         console.log("ressssss", res);
-        if (res.data.user.id) {
+        if (res.data&& res.data.user &&res.data.user.id) {
           const token = res.data.access_token;
 
           const user = {

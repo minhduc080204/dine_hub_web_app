@@ -76,17 +76,17 @@ $(document).ready(function () {
 // </script>
 // {{-- ======================== TEST ======================== --}}
 // {{-- <script>
-const test = document.querySelector(".img-test");
-test.addEventListener("change", function () {
-    console.log(test.files[0].name);
-});
+// const test = document.querySelector(".img-test");
+// test.addEventListener("change", function () {
+//     console.log(test.files[0].name);
+// });
 // </script> --}}
 
 // {{-- ======================== MESSAGE ======================== --}}
 {
     /* <script> */
 }
-const BASE_URL = "http://38.54.30.126:8000/";
+const BASE_URL = "http://localhost:8000/";
 window.addEventListener("beforeunload", function () {
     localStorage.clear();
 });
@@ -105,7 +105,9 @@ var pusher = new Pusher("905ea1087d251dc4a082", {
     cluster: "ap1",
 });
 
-var storedUserIds = JSON.parse(localStorage.getItem("userIds")) || [];
+var storedUserIds = JSON.parse(localStorage.getItem("chat_userId")) || [];
+console.log(storedUserIds, "OKKK");
+
 
 if (storedUserIds.length > 0) {
     storedUserIds.forEach(function (userId) {
@@ -198,4 +200,3 @@ function subscribeToChatroom(userId) {
         $("#box-status-item" + userId).prependTo("#box-status-list");
     });
 }
-// </script>

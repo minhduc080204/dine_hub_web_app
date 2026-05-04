@@ -32,9 +32,9 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         if ($request->input('action') == 'accept') {
-            $order->order_status = 'accepted'; 
+            $order->order_status = 'Accepted'; 
         } elseif ($request->input('action') == 'cancel') {
-            $order->order_status = 'canceled'; 
+            $order->order_status = 'Canceled'; 
         }
         $order->save();
         toastr()->success('Đơn hàng đã được cập nhật!');

@@ -1,6 +1,7 @@
 import type { ProductType } from './ProductType';
 
 export type RootStackParamList = {
+  AiChat: undefined;
   Chat: undefined;
   Search: undefined;
   Filter: undefined;

@@ -89,11 +89,11 @@ input:focus {
     
 }
 
-.Completed{
+.Accepted{
     background-color:  rgb(25, 135, 84);
 }
 
-.Cancelled{
+.Canceled{
     background-color:   rgb(220, 53, 69);
 }
 
