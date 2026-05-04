@@ -15,7 +15,7 @@ export const AuthContext = createContext<any>(null);
 WebBrowser.maybeCompleteAuthSession();
 export const AuthProvider = ({ children }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [userToken, setUserToken] = useState<string | null>(localStorage.getItem('userToken'));
+  const [userToken, setUserToken] = useState<string | null>(null);
   const [userInfor, setUserInfor] = useState<any | null>(null);
   const dispatch = useDispatch();
 
