@@ -124,7 +124,7 @@ const Header: React.FC<Props> = ({
           }}
         >
           <Image
-            source={{ uri: userAvatar }}
+            source={{ uri: userInfor? userInfor.picture : "https://george-fx.github.io/dine-hub/10.jpg" }}
             style={{
               width: 22,
               height: 22,

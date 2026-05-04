@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "dine_hub",
-    "slug": "dinehub",
+    "name": "eatzy",
+    "slug": "eatzy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,21 +16,21 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.minhduc08022004.dine_hub"
+      "bundleIdentifier": "com.minhduc08022004.eatzy"
     },
-    "scheme": "dinehub",
+    "scheme": "eatzy",
     "android": {
       "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.minhduc08022004.dine_hub",
+      "package": "com.minhduc08022004.eatzy",
       "intentFilters": [
         {
           "action": "VIEW",
           "data": {
-            "scheme": "dinehub",
+            "scheme": "eatzy",
             "host": "auth"
           },
           "category": [
@@ -45,7 +45,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "da90374d-599c-49a7-9b97-8b3fe8aad06a"
+        "projectId": "c536db99-a52a-4088-8cf2-894bcfca7c81"
       }
     },
     "plugins": [
@@ -59,6 +59,7 @@
         }
       ],
       "expo-secure-store"
-    ]
+    ],
+    "owner": "minhduc08022004"
   }
 }
